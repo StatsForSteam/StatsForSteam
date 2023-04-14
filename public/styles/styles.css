@@ -1,0 +1,27 @@
+#wrapper{
+	display: flex;
+    flex-direction: row;
+}
+
+#login{
+    flex: 5;
+    background-color: #1363DF;
+    padding: 20px;
+}
+
+#preview{
+    flex: 5;
+    background-color: #47B5FF;
+    padding: 20px;
+}
+
+
+body{background-color: #06283D}
+
+form{
+    background-color: #DFF6FF;
+    color: #DFF6FF;
+    border: 1px solid #DFF6FF;
+    border-radius: 5px;
+    padding: 5px;
+}
