@@ -2,17 +2,33 @@
 import json
 from urllib.request import urlopen
 
-#sample data
+#sample data using  steamid and rocket leauge
 steamid = "76561198124232839"
 appid = "252950"
 key = "5C64A7A9201C80E03A4895782AED6716"
 
+
+
+#GETS THE NAME OF A USER FROM THEIR STEAMID
+def getUserName(steamid, key):
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    return data_json['response']['players'][0]['personaname']
+#print(getUserName(steamid, key))
+
+#GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
+def getUserProfilePicture(steamid, key):
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    return data_json['response']['players'][0]['avatarfull']
+#print(getUserProfilePicture(steamid, key))
+
 #GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
 def getAchievments(appid, steamid, key):
     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appid+"&key="+key+"&steamid=" + steamid
-    # store the response of URL
     response = urlopen(url)
-    # storing the JSON response from URL into data
     data_json = json.loads(response.read())
     achieved = []
     notachieved = []
@@ -24,7 +40,7 @@ def getAchievments(appid, steamid, key):
 
     return achieved, notachieved
 #achieved, notachieved = getAchievments(appid, steamid, key)
-
+#print(achieved, notachieved)
 
 
 #RETURNS UNLOCKED ACHIEVMENT ICON URL
@@ -37,7 +53,6 @@ def getAchievmentIcon(appid, key, achievmentName):
         if(i['name'] == achievmentName):
             return data_json['game']['availableGameStats']['achievements'][k]['icon']
         k += 1
-
 #iconURL = getAchievmentIcon(appid, key, "TheStreak")
 #print(iconURL)
 
@@ -52,9 +67,8 @@ def getLockedAchievmentIcon(appid, key, achievmentName):
         if(i['name'] == achievmentName):
             return data_json['game']['availableGameStats']['achievements'][k]['icongray']
         k += 1
-
-greyIconURL = getLockedAchievmentIcon(appid, key, "TheStreak")
-print(greyIconURL)
+#greyIconURL = getLockedAchievmentIcon(appid, key, "Trifecta")
+#print(greyIconURL)
 
 
 
