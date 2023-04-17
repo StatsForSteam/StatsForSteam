@@ -1,4 +1,3 @@
-
 import json
 from urllib.request import urlopen
 
@@ -6,8 +5,6 @@ from urllib.request import urlopen
 steamid = "76561198124232839"
 appid = "252950"
 key = "5C64A7A9201C80E03A4895782AED6716"
-
-
 
 #GETS THE NAME OF A USER FROM THEIR STEAMID
 def getUserName(steamid, key):
