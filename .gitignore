@@ -1,19 +1,11 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Node modules
+/client/node_modules/
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+/backend/venv/
 
-# testing
-/coverage
+#API Key
+/backend/SteamAPI.json
 
 # production
 /build
@@ -25,7 +17,6 @@ venv.bak/
 .env.test.local
 .env.production.local
 __pycache__
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
