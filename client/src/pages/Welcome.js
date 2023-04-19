@@ -1,4 +1,4 @@
-import "./Welcome.css";
+import "./Welcome.scss";
 import LoginButton from "../components/buttons/LoginButton";
 
 function Welcome() {

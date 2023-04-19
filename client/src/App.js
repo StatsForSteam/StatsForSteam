@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import Welcome from './pages/Welcome';
 import Home from './pages/Home'
 
+
 function App() {
   return(
     <BrowserRouter>
@@ -18,3 +19,4 @@ function App() {
 }
 
 export default App;
+
