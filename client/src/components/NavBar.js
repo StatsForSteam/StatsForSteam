@@ -1,23 +1,40 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import LoginButton from '../components/buttons/LoginButton';
 import './NavBar.scss';
 
-
 function NavBar(){
+
+    const location = useLocation()
+
+    // Welcome Page
+    if (location.pathname === "/"){
+      return null
+    }
+    
     return(
-        <Navbar class="navbar">
-      <Container>
-        <Navbar.Brand href="#home">Stats For Steam</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text>
+      <Navbar class="navbar" expand="lg">
+      <Container fluid>
+        <Navbar.Brand bsPrefix="navbarlogo"><Nav.Link href="/">Stats For Steam</Nav.Link></Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-2 my-lg-0"
+            style={{ maxHeight: '200px'}}
+            navbarScroll
+          >
+            <Nav.Link href="/home">Home</Nav.Link>
+          </Nav>
+          <Form className="d-flex">
+            <LoginButton />
+          </Form>
         </Navbar.Collapse>
       </Container>
-    </Navbar>   
+    </Navbar>
     )
 }
 

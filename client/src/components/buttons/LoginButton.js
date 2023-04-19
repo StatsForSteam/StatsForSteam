@@ -1,7 +1,14 @@
-import "./LoginButton.css"
+import './LoginButton.scss';
+import { Link } from 'react-router-dom';
 
 function LoginButton(){
-    return (<button class="loginButton">Login with Steam</button>)
+    return (
+        <div>
+            <Link to="/login">
+                <button class="loginButton">Login</button>
+            </Link>
+        </div>
+    )
 }
 
 export default LoginButton;
