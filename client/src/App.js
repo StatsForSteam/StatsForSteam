@@ -1,7 +1,8 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Welcome from './pages/Welcome';
-import Home from './pages/Home'
+import Profile from './pages/Profile';
+import Achievements from './pages/Achievements';
 
 function App() {
   return(
@@ -10,7 +11,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/Achievements" element={<Achievements />} />
         </Routes>
       </div>
     </BrowserRouter>
