@@ -16,7 +16,6 @@ function Achievements(){
             {AchievementCards}
         </div>
     )
-
 }
  export default Achievements;
  

@@ -1,0 +1,14 @@
+.AchievementCard{
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover{
+        transform: scale(1.05);
+    }
+    
+}
+
+
