@@ -1,6 +1,10 @@
-from flask import redirect, request, session, url_for
+from flask import redirect, request, session, url_for, g
 from json import dumps, loads
 from urllib.parse import urlencode
+
+def test():
+    value = {"user" : g.user}
+    return dumps(value)
 
 def SteamLogin():
     OpenID_Parameters = {
@@ -17,5 +21,5 @@ def SteamLogin():
 
 def AuthorizeData():
     Received_Steam_Info_JSON = loads(dumps(request.args))
-    session['user'] = Received_Steam_Info_JSON['openid.claimed_id']
-    return redirect(session['url'])
+    g.user = Received_Steam_Info_JSON['openid.claimed_id']
+    return redirect("http://127.0.0.1:5000/home")

@@ -11,11 +11,12 @@ appid = "252950"
 key = SteamAPIJson["STEAMAPIKEY"]
 
 #GETS THE NAME OF A USER FROM THEIR STEAMID
-def getUserName(steamid, key):
+def getUserName():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
     response = urlopen(url)
     data_json = json.loads(response.read())
-    return data_json['response']['players'][0]['personaname']
+    username = {"username" : data_json['response']['players'][0]['personaname']}
+    return json.dumps(username)
 #print(getUserName(steamid, key))
 
 #GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
