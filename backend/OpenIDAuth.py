@@ -17,7 +17,9 @@ def SteamLogin():
     }
 
     OpenID_Parameters_URL = urlencode(OpenID_Parameters)
-    return redirect('https://steamcommunity.com/openid/login' + "?" + OpenID_Parameters_URL)
+    OpenID_URL = ('https://steamcommunity.com/openid/login' + "?" + OpenID_Parameters_URL)
+    OpenID = {"OpenIDUrl" : OpenID_URL}
+    return dumps(OpenID)
 
 def AuthorizeData():
     Received_Steam_Info_JSON = loads(dumps(request.args))
