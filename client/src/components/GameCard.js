@@ -12,25 +12,27 @@ function GameCard(){
     const amountOfAchievementsCompleted = 65;
 
     return (
-        <Card border="dark" style={{ width: '27.5rem'}}>
-            <Card.Img variant="top" src={img} />
-            <Card.Body>
-                <Card.Title>{title}</Card.Title>
-                <Card.Text>
-                    {completed ? (
-                        <div>
-                            Completed All Achievements
-                            <span id="boot-icon" class="bi bi-check-lg icon-green"></span>
-                        </div>
-                    ) : (
-                        <div>
-                            Currently: {amountOfAchievementsCompleted} / {amountOfAchievements}
-                        </div>
-                    )}
-                </Card.Text>
-                <ViewAchievements />
-            </Card.Body>
-        </Card>
+        <div class ="GameCard">
+            <Card border="dark" style={{ width: '27.5rem'}}>
+                <Card.Img variant="top" src={img} />
+                <Card.Body>
+                    <Card.Title>{title}</Card.Title>
+                    <Card.Text>
+                        {completed ? (
+                            <div>
+                                Completed All Achievements
+                                <span id="boot-icon" class="bi bi-check-lg icon-green"></span>
+                            </div>
+                        ) : (
+                            <div>
+                                Currently: {amountOfAchievementsCompleted} / {amountOfAchievements}
+                            </div>
+                        )}
+                    </Card.Text>
+                    <ViewAchievements />
+                </Card.Body>
+            </Card>
+        </div>
     )
 }
 

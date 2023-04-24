@@ -2,8 +2,10 @@
 
 .cardFlex{
     display: flex;
-    padding: 10px;
-    gap: 10px;
-    flex-wrap: wrap;
+    padding: 15px;
+    gap: 15px;
+    flex-wrap: wrap; 
+    justify-content: center;
+
 }
 

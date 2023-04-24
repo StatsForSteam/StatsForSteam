@@ -1,4 +1,4 @@
-import AchievementCard from "../components/GameCard";
+import GameCard from "../components/GameCard";
 import React, {useEffect} from 'react';
 import "./Profile.scss";
 
@@ -13,7 +13,7 @@ function Profile() {
   const GamesOwned = 50;
   const cards = [];
   for (let i = 0; i < GamesOwned; i++) {
-    cards.push(<AchievementCard />);
+    cards.push(<GameCard />);
   }
   return (
     <div class="cardFlex">
