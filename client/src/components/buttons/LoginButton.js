@@ -8,11 +8,9 @@ function LoginButton(){
     useEffect(() => {
         fetch('/login').then(response => 
             response.json().then(data => {
-            console.log(OpenIDLink)
             setOpenIDLink(data["OpenIDUrl"]);
-            console.log(OpenIDLink)
         }))
-    }, []);
+    }, [OpenIDLink]);
 
     return (
         <div>

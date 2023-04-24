@@ -9,7 +9,14 @@ function Welcome() {
           console.log(data);
       }))
     }, []);
-      
+    
+    useEffect(() => {
+      fetch('/test').then(response => 
+        response.json().then(data => {
+          console.log(data);
+      }))
+    }, []);
+
     return(
       <div>
         <h1 class="welcomeHeader"> Stats For Steam </h1>

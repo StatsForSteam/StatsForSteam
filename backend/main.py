@@ -5,18 +5,9 @@ app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.secret_key = 'random'
 
-app.add_url_rule('/test', view_func=OpenIDAuth.test)
 app.add_url_rule('/login', view_func=OpenIDAuth.SteamLogin)
 app.add_url_rule('/authorize', view_func=OpenIDAuth.AuthorizeData)
 app.add_url_rule('/getUserName', view_func=getData.getUserName)
-
-@app.before_request
-def before_request():
-    g.user = "76561198124232839"
-
-    #g.user = None
-    #if 'openid' in session:
-    #   g.user = 76561198124232839 #Get from Database
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
