@@ -6,7 +6,7 @@ with open('SteamAPI.json') as SteamAPIFile:
     SteamAPIJson = json.load(SteamAPIFile)
 
 #sample data using  steamid and rocket leauge
-steamid = "76561198124232839"
+steamid = "76561198833526844"
 appid = "252950"
 key = SteamAPIJson["STEAMAPIKEY"]
 
@@ -20,12 +20,14 @@ def getUserName():
 #print(getUserName(steamid, key))
 
 #GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
-def getUserProfilePicture(steamid, key):
+def getUserProfilePicture():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
     response = urlopen(url)
     data_json = json.loads(response.read())
-    return data_json['response']['players'][0]['avatarfull']
-#print(getUserProfilePicture(steamid, key))
+    pfp = {"pfp" : data_json['response']['players'][0]['avatarfull']}
+    return json.dumps(pfp)
+    
+#print(getUserProfilePicture())
 
 #GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
 def getAchievments(appid, steamid, key):

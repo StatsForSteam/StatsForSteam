@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -8,8 +8,25 @@ import LoginButton from '../components/buttons/LoginButton';
 import './NavBar.scss';
 
 function NavBar(){
-    const username = "Callum";
-    const pfp = "https://avatars.akamai.steamstatic.com/7d110e40accc4fda1623106c001b558f07556bdb_medium.jpg";
+  const [Username, setUsername] = React.useState();
+  const [ProfilePicture, setProfilePicture] = React.useState();
+
+  useEffect(() => {
+    fetch('/getUserName').then(response => 
+      response.json().then(data => {
+        setUsername(data.username);
+    }))
+
+    fetch('/getUserProfilePicture').then(response =>
+      response.json().then(data1 => {
+        setProfilePicture(data1.pfp);
+        console.log(data1);
+      }
+      ))
+  }, [Username, ProfilePicture]);
+   
+    const username = Username;
+    const pfp = ProfilePicture;
     const location = useLocation()
     const loggedIn = true;
 
