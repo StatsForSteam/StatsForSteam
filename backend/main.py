@@ -12,6 +12,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.add_url_rule('/login', view_func=OpenIDAuth.SteamLogin)
 app.add_url_rule('/authorize', view_func=OpenIDAuth.AuthorizeData)
 app.add_url_rule('/getUserName', view_func=getData.getUserName)
+app.add_url_rule('/getUserProfilePicture', view_func=getData.getUserProfilePicture)
 
 @app.before_request
 def check_user_log_in():
