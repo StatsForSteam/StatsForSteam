@@ -1,14 +1,17 @@
 import GameCard from "../components/GameCard";
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./Profile.scss";
 
 function Profile() {
+  const [UserID, setUserID] = useState();
+  
   useEffect(() => {
-    fetch('/getUserName').then(response => 
-      response.json().then(data => {
-        console.log(data);
-    }))
-  }, []);
+      fetch('/getUserID').then(response => 
+          response.json().then(data => {
+          setUserID(data['username']);
+          console.log(UserID);
+      }))
+  }, [UserID]);
 
   const GamesOwned = 50;
   const cards = [];
@@ -18,6 +21,7 @@ function Profile() {
   
   return (
     <div class="cardFlex">
+      {UserID}
       {cards}
     </div>
   );

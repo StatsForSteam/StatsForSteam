@@ -7,6 +7,9 @@
 #API Key
 /backend/SteamAPI.json
 
+#Secret Key
+/backend/FlaskSecretKey.json
+
 # production
 /build
 
