@@ -1,12 +1,22 @@
 import './LoginButton.scss';
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
 
 function LoginButton(){
+
+    const [OpenIDLink, setOpenIDLink] = useState();
+
+    useEffect(() => {
+        fetch('/login').then(response => 
+            response.json().then(data => {
+            setOpenIDLink(data["OpenIDUrl"]);
+        }))
+    }, [OpenIDLink]);
+
     return (
         <div>
-            <Link to="/login">
-                <button class="loginButton">Login</button>
-            </Link>
+            <a href={OpenIDLink}>
+                Login with Steam!
+            </a>
         </div>
     )
 }

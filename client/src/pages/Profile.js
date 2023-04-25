@@ -15,6 +15,7 @@ function Profile() {
   for (let i = 0; i < GamesOwned; i++) {
     cards.push(<GameCard />);
   }
+  
   return (
     <div class="cardFlex">
       {cards}
