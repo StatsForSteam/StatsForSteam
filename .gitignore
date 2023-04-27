@@ -10,6 +10,13 @@
 #Secret Key
 /backend/FlaskSecretKey.json
 
+#Flask Session
+/backend/flask_session/
+
+#SSL Cert
+/backend/cert.pem
+/backend/key.pem
+
 # production
 /build
 

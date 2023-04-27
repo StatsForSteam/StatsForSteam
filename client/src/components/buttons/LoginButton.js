@@ -14,7 +14,7 @@ function LoginButton(){
 
     return (
         <div>
-            <a href={OpenIDLink}>
+            <a href="https://localhost:8080/login?login=true">
                 Login with Steam!
             </a>
         </div>
