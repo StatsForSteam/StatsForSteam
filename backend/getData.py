@@ -1,5 +1,6 @@
 import json
 from urllib.request import urlopen
+from flask import request
 
 # Loading the API Key
 #with open('SteamAPI.json') as SteamAPIFile:
@@ -47,6 +48,11 @@ def getAchievments(appid, steamid, key):
 #achieved, notachieved = getAchievments(appid, steamid, key)
 #print(achieved, notachieved)
 
+def getAchievementTest():
+    appid = request.get_json()
+    print(appid)
+    data = {"data" : appid}
+    return json.dumps(data)
 
 #RETURNS UNLOCKED ACHIEVMENT ICON URL
 def getAchievmentIcon(appid, key, achievmentName):

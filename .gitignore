@@ -7,6 +7,13 @@
 #API Key
 /backend/SteamAPI.json
 
+#SSL Key
+/backend/cert.pem
+/backend/key.pem
+
+#Flask Session
+/backend/flask_session/
+
 # production
 /build
 

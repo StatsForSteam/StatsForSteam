@@ -30,7 +30,7 @@ function GameCard(props){
                             </div>
                         )}
                     </Card.Text>
-                    <ViewAchievements />
+                    <ViewAchievements appid = {props.appid}/>
                 </Card.Body>
             </Card>
         </div>

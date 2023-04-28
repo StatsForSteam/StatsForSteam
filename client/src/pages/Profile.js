@@ -31,7 +31,7 @@ function Profile() {
 //load cards for each game into an array 
   const cards = [];
   for (let i = 0; i < numGames; i++) {
-    cards.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} />);
+    cards.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]}/>);
   }
   //display the cards 
   return (

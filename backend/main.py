@@ -8,6 +8,7 @@ app.secret_key = 'random'
 app.add_url_rule('/login', view_func=OpenIDAuth.SteamLogin)
 app.add_url_rule('/authorize', view_func=OpenIDAuth.AuthorizeData)
 app.add_url_rule('/getUserName', view_func=getData.getUserName)
+app.add_url_rule('/getAchievementTest', view_func=getData.getAchievementTest, methods=["POST"])
 app.add_url_rule('/getUserProfilePicture', view_func=getData.getUserProfilePicture)
 app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getNumberOfGames', view_func=getData.getNumberOfGames)
