@@ -1,5 +1,6 @@
 import './LoginButton.scss';
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 
 function LoginButton(){
 
@@ -15,7 +16,7 @@ function LoginButton(){
     return (
         <div>
             <a href="https://localhost:8080/login?login=true">
-                Login with Steam!
+                Login
             </a>
         </div>
     )
