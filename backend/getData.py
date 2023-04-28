@@ -37,22 +37,7 @@ def getUserProfilePicture():
     
 #print(getUserProfilePicture())
 
-#GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
-def getAchievments(appid, steamid, key):
-    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appid+"&key="+key+"&steamid=" + steamid
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    achieved = []
-    notachieved = []
-    for i in data_json['playerstats']['achievements']:
-        if(i['achieved'] == 1):
-            achieved.append(i['apiname'])
-        else:
-            notachieved.append(i['apiname'])
 
-    return achieved, notachieved
-#achieved, notachieved = getAchievments(appid, steamid, key)
-#print(achieved, notachieved)
 
 def getAchievementTest():
     appid = request.get_json()
@@ -60,32 +45,52 @@ def getAchievementTest():
     data = {"data" : appid}
     return json.dumps(data)
 
-#RETURNS UNLOCKED ACHIEVMENT ICON URL
-def getAchievmentIcon(appid, key, achievmentName):
+def getUnlockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
     response = urlopen(url)
     data_json = json.loads(response.read())
     k = 0
+    icons = []
     for i in data_json['game']['availableGameStats']['achievements']:
-        if(i['name'] == achievmentName):
-            return data_json['game']['availableGameStats']['achievements'][k]['icon']
+        icons.append(data_json['game']['availableGameStats']['achievements'][k]['icon'])
         k += 1
-#iconURL = getAchievmentIcon(appid, key, "TheStreak")
-#print(iconURL)
-
+    return icons
+#print(getAchievementIcon2("311210")[1])
 
 #RETURNS LOCKED/GREYED OUT ACHIEVMENT ICON URL
-def getLockedAchievmentIcon(appid, key, achievmentName):
+def getLockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
     response = urlopen(url)
     data_json = json.loads(response.read())
     k = 0
+    greyIcons = []
     for i in data_json['game']['availableGameStats']['achievements']:
-        if(i['name'] == achievmentName):
-            return data_json['game']['availableGameStats']['achievements'][k]['icongray']
+        greyIcons.append(data_json['game']['availableGameStats']['achievements'][k]['icongray'])
         k += 1
-#greyIconURL = getLockedAchievmentIcon(appid, key2, "Trifecta")
-#print(greyIconURL)
+    return greyIcons
+#print(getLockedIcons("311210"))
+
+
+#GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
+def getAchievements(appid):
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appid+"&key="+key+"&steamid=" + steamid+"&l=en"
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    achieved = []
+    notachieved = []
+    icons = getUnlockedIcons(appid)
+    greyIcons = getLockedIcons(appid)
+    j=0
+    for i in data_json['playerstats']['achievements']:
+        if(i['achieved'] == 1):
+            achieved.append([i['name'],i['description'],icons[j]])
+        else:
+            notachieved.append([i['name'],i['description'],greyIcons[j]])
+        j+=1
+    #return(achieved, notachieved)
+    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j}, ensure_ascii=False)
+x = getAchievements("311210")
+print(x)
 
 
 #Gets a list of all the games a user owns and their app id's
