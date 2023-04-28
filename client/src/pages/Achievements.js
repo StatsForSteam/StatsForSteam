@@ -40,5 +40,5 @@ function Achievements(props){
         </div>
     )
 }
- export default Achievements;
- 
+
+export default Achievements;
