@@ -20,7 +20,6 @@ function NavBar(){
     fetch('/getUserProfilePicture').then(response =>
       response.json().then(data1 => {
         setProfilePicture(data1.pfp);
-        console.log(data1);
       }
       ))
   }, [Username, ProfilePicture]);
