@@ -9,18 +9,19 @@ from flask import request, session, g
 
 #sample data using  steamid and rocket leauge
 
-def steamid():
-    from main import app
-    with app.app_context():
-        return(session['id'])
+#def steamid():
+#    from main import app
+#    with app.app_context():
+#        return(session['id'])
 
+steamid = "76561198124232839"
 appid = "252950"
 #key = SteamAPIJson["STEAMAPIKEY"]
 key = "047B197FC03B9D958391FCE24289B157"
 
 #GETS THE NAME OF A USER FROM THEIR STEAMID
 def getUserName():
-    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
     response = urlopen(url)
     data_json = json.loads(response.read())
     username = {"username" : data_json['response']['players'][0]['personaname']}
@@ -29,7 +30,7 @@ def getUserName():
 
 #GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
 def getUserProfilePicture():
-    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid
     response = urlopen(url)
     data_json = json.loads(response.read())
     pfp = {"pfp" : data_json['response']['players'][0]['avatarfull']}
@@ -89,13 +90,10 @@ def getAchievements(appid):
         j+=1
     #return(achieved, notachieved)
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j}, ensure_ascii=False)
-x = getAchievements("311210")
-print(x)
-
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
+    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid+"&include_played_free_games=true&include_appinfo=true&format=json"
     response = urlopen(url)
     data_json = json.loads(response.read())
     games = []
@@ -121,7 +119,7 @@ def getUserGamesHeaders():
 
 
 def getNumberOfGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
+    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid+"&include_played_free_games=true&include_appinfo=true&format=json"
     response = urlopen(url)
     data_json = json.loads(response.read())
     GamesOwned = {"GamesOwned" : data_json['response']['game_count'] }
@@ -152,7 +150,7 @@ def getNumberOfGames():
 
 #GETS ALL GAMES AND THEIR PLAYTIMES FOR A SPECIFIC USER
 def getOwnedGamesTimes(steamid, key):
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()
+    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid
     response = urlopen(url)
     data_json = json.loads(response.read())
     gameAndTimes = []
