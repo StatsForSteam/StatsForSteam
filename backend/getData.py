@@ -3,6 +3,7 @@ from urllib.request import urlopen
 from flask import request, session, g
 
 
+
 # Loading the API Key
 #with open('SteamAPI.json') as SteamAPIFile:
     #SteamAPIJson = json.load(SteamAPIFile)
