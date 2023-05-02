@@ -1,5 +1,13 @@
 @import "../../index.scss";
 
+.loginButtonFlex{
+  display: flex;
+  padding: 15px;
+  gap: 15px;
+  flex-wrap: wrap; 
+  justify-content: center;
+}
+
 .loginButton {
   appearance: button;
   backface-visibility: hidden;

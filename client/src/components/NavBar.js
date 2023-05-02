@@ -36,7 +36,7 @@ function NavBar(){
 
   if(loggedIn === true){
     return(
-        <Navbar class="navbar" expand="lg">
+        <Navbar className="navbar" expand="lg">
         <Container fluid>
           <Navbar.Brand bsPrefix="navbarlogo"><Nav.Link href="/">Stats For Steam</Nav.Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -46,10 +46,10 @@ function NavBar(){
               style={{ maxHeight: '200px'}}
               navbarScroll
             >
-              <Nav.Link href="/Profile">Profile</Nav.Link>
+              <Nav.Link href="/profile">Profile</Nav.Link>
             </Nav>
-            <Navbar.Text class = "username">{username}  </Navbar.Text>
-            <Navbar.Text><img class="pfp" src={pfp} /></Navbar.Text>
+            <Navbar.Text class="username">{username}  </Navbar.Text>
+            <Navbar.Text><img class="pfp" src={pfp} alt="Profile"/></Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>

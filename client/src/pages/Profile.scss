@@ -9,3 +9,19 @@
 
 }
 
+.loading{
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loadingText{
+    color: $secondary-color;
+    text-align: center;
+    font-size: 1.75rem;
+    padding-bottom: 1rem;
+}
+
