@@ -15,11 +15,14 @@ function LoginButton(){
 
     return (
         <div>
-            <a href="https://localhost:8080/login?login=true">
+           {/* <a href="https://localhost:8080/login?login=true">
                 Login
-            </a>
+    </a> */}
+
+        <Link to="/Profile"> Profile Redirect </Link>
         </div>
     )
 }
 
 export default LoginButton;
+

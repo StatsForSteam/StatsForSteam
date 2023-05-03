@@ -4,11 +4,34 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
 import React from 'react';
 
+
+
 function GameCard(props){
    
-    const completed = true;
-    const amountOfAchievements = 147;
-    const amountOfAchievementsCompleted = 65;
+    //  const appid = props.appid;
+    // //  const [achievedLen , setAchievedLen] = React.useState( () => {
+    // //     fetch('/getAchievements', {
+    // //       method: "POST",
+    // //       body: JSON.stringify(appid),
+    // //       headers: { "content-type": "application/json" },
+    // //     }).then(response =>
+    // //       response.json().then(data => {
+    // //         setAchievedLen(data.achievedlength);
+    // //       }))
+    // //   });
+      
+    // //   const [notachievedLen , setnotAchievedLen] = React.useState( () => {
+    // //     fetch('/getAchievements', {
+    // //       method: "POST",
+    // //       body: JSON.stringify(appid),
+    // //       headers: { "content-type": "application/json" },
+    // //     }).then(response =>
+    // //       response.json().then(data => {
+    // //         setnotAchievedLen(data.notachievedlength);
+    // //       }))
+    // //   });
+        
+const completed = false;  
   
 //props.name is the name of the game
 //props.header is the header image of the game
@@ -26,7 +49,7 @@ function GameCard(props){
                             </div>
                         ) : (
                             <div>
-                                Currently: {amountOfAchievementsCompleted} / {amountOfAchievements}
+                                Currently: {2} / {5} Achievements
                             </div>
                         )}
                     </Card.Text>

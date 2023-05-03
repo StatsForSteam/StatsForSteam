@@ -7,37 +7,88 @@ import { useState, useEffect } from "react";
 
 function Achievements(props){
   const { state } = useLocation();
-  const AchievementIcon = "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/252950/9974f05905881b45c7a2dbbd3c84d5e8c57fa01a.jpg"
-  const NumGameAchievements = 20;
-  const AchievementCards = [];
-
   const appid = state;
+   
 
-  useEffect(() => {
-    fetch('/getAchievementTest', {
+    const [achieved, setAchieved] = React.useState( () => {
+    fetch('/getAchievements', {
       method: "POST",
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },
-    })
-      .then((res) => {
-        if (!res.ok) return Promise.reject(res);
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data)
-      })
-      .catch(console.error);
+    }).then(response =>
+      response.json().then(data => {
+        setAchieved(data.achieved);
+      }))
   });
 
-  for (let i = 0; i < NumGameAchievements; i++) {
-    AchievementCards.push(<AchievementCard />);
-  }
+  const [notachieved, setnotAchieved] = React.useState( () => {
+    fetch('/getAchievements', {
+      method: "POST",
+      body: JSON.stringify(appid),
+      headers: { "content-type": "application/json" },
+    }).then(response =>
+      response.json().then(data => {
+        setnotAchieved(data.notachieved);
+      }))
+  });
+
+const [achievedLen , setAchievedLen] = React.useState( () => {
+  fetch('/getAchievements', {
+    method: "POST",
+    body: JSON.stringify(appid),
+    headers: { "content-type": "application/json" },
+  }).then(response =>
+    response.json().then(data => {
+      setAchievedLen(data.achievedlength);
+    }))
+});
+
+const [notachievedLen , setnotAchievedLen] = React.useState( () => {
+  fetch('/getAchievements', {
+    method: "POST",
+    body: JSON.stringify(appid),
+    headers: { "content-type": "application/json" },
+  }).then(response =>
+    response.json().then(data => {
+      setnotAchievedLen(data.notachievedlength);
+    }))
+});
+
+//  useEffect(() => {
+//     fetch('/getAchievementTest', {
+//       method: "POST",
+//       body: JSON.stringify(appid),
+//       headers: { "content-type": "application/json" },
+//     })
+//       .then((res) => {
+//         if (!res.ok) return Promise.reject(res);
+//         return res.json();
+//       })
+//       .then((data) => {
+//         console.log(data)
+//       })
+//       .catch(console.error);
+//   }); 
+
+
+
+const UnlockedAchievements = [];
+for (let i = 0; i < achievedLen; i++) {
+  UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]}/>);
+}
+const LockedAchievements = [];
+for (let i = 0; i < notachievedLen; i++) {
+  LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]}/>);
+}
+
+
     return(
-        <div>
+      
           <div class="AchievementCardFlex">
-            {AchievementCards}
+            {UnlockedAchievements}
+            {LockedAchievements}
           </div>
-        </div>
+       
     )
 }
 

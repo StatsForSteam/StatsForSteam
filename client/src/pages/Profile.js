@@ -3,17 +3,7 @@ import React, {useState, useEffect} from 'react';
 import "./Profile.scss";
 
 function Profile() {
-  const [UserID, setUserID] = useState();
-  
-  useEffect(() => {
-      fetch('/getUserID').then(response => 
-          response.json().then(data => {
-          setUserID(data['username']);
-          console.log(UserID);
-      }))
-  }, [UserID]);
 
-  const [numGames, setGamesOwned] = React.useState();
 //get a users games titles with a json containing array
   const [userGames, setUserGames] = React.useState( () => {
     fetch('/getUserGames').then(response =>
@@ -30,6 +20,7 @@ function Profile() {
   });
 
 //get the number of games a user owns
+const [numGames, setGamesOwned] = React.useState();
   useEffect(() => {
     fetch('/getNumberOfGames').then(response =>
       response.json().then(data => {
@@ -40,12 +31,11 @@ function Profile() {
 //load cards for each game into an array 
   const cards = [];
   for (let i = 0; i < numGames; i++) {
-    cards.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]}/>);
+    cards.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]} />);
   }
   //display the cards 
   return (
     <div class="cardFlex">
-      {UserID}
       {cards}
     </div>
   );
