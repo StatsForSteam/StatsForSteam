@@ -2,22 +2,27 @@ import json
 from urllib.request import urlopen
 from flask import request, session, g
 
+#Loading the API Key
+with open('SteamAPI.json') as SteamAPIFile:
+    SteamAPIJson = json.load(SteamAPIFile)
 
 # Loading the API Key
 #with open('SteamAPI.json') as SteamAPIFile:
     #SteamAPIJson = json.load(SteamAPIFile)
 
+#sample data using  steamid and rocket leauge
 
 #def steamid():
     #from main import app
    # with app.app_context():
         #return(session['id'])
 
-#appid = "252950"
-#key = SteamAPIJson["STEAMAPIKEY"]
-key = "047B197FC03B9D958391FCE24289B157"
-#Steamid = steamid()
-Steamid = "76561198833526844"
+appid = "252950"
+key = SteamAPIJson["STEAMAPIKEY"]
+
+#steamid = "76561198124232839"
+#key = "047B197FC03B9D958391FCE24289B157"
+
 #GETS THE NAME OF A USER FROM THEIR STEAMID
 def getUserName():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+Steamid
@@ -36,8 +41,6 @@ def getUserProfilePicture():
     return json.dumps(pfp)
     
 #print(getUserProfilePicture())
-
-
 
 def getAchievementTest():
     appid = request.get_json()
@@ -73,7 +76,7 @@ def getLockedIcons(appid):
 #GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
 def getAchievements():
     appid = request.get_json()
-    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + Steamid+"&l=en"
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
     response = urlopen(url)
     data_json = json.loads(response.read())
     achieved = []
@@ -87,9 +90,8 @@ def getAchievements():
         else:
             notachieved.append([i['name'],i['description'],greyIcons[j]])
         j+=1
-    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
-
-
+    #return(achieved, notachieved)
+    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j}, ensure_ascii=False)
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():

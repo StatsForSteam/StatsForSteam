@@ -1,9 +1,9 @@
 import OpenIDAuth, json, getData
-from flask import Flask, session, g, redirect
+from flask import Flask, session, g, redirect, send_from_directory
 from flask_session import Session
 from flask_cors import CORS
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../client/public/index.html')
 app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -25,6 +25,11 @@ def check_user_log_in():
         g.user = session['id']
     else:
         g.user = 'none'    
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
     app.run(ssl_context=('cert.pem', 'key.pem'), host = 'localhost', port = 8080, debug = True, use_reloader=True)

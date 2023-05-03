@@ -7,7 +7,6 @@
 #API Key
 /backend/SteamAPI.json
 
-<<<<<<< HEAD
 #Secret Key
 /backend/FlaskSecretKey.json
 
@@ -18,16 +17,6 @@
 /backend/cert.pem
 /backend/key.pem
 
-||||||| b6df5b48
-=======
-#SSL Key
-/backend/cert.pem
-/backend/key.pem
-
-#Flask Session
-/backend/flask_session/
-
->>>>>>> main
 # production
 /build
 
