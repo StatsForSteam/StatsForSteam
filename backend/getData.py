@@ -3,20 +3,7 @@ from urllib.request import urlopen
 from flask import request, session, g
 
 
-# Loading the API Key
-#with open('SteamAPI.json') as SteamAPIFile:
-    #SteamAPIJson = json.load(SteamAPIFile)
-
-
-#def steamid():
-    #from main import app
-   # with app.app_context():
-        #return(session['id'])
-
-#appid = "252950"
-#key = SteamAPIJson["STEAMAPIKEY"]
 key = "047B197FC03B9D958391FCE24289B157"
-#Steamid = steamid()
 Steamid = "76561198833526844"
 #GETS THE NAME OF A USER FROM THEIR STEAMID
 def getUserName():
