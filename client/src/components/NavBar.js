@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
-import LoginButton from '../components/buttons/LoginButton';
 import './NavBar.scss';
 
 function NavBar(){
@@ -27,14 +25,12 @@ function NavBar(){
     const username = Username;
     const pfp = ProfilePicture;
     const location = useLocation()
-    const loggedIn = true;
 
     // Welcome Page
-    if (location.pathname === "/"){
+    if (location.pathname === "/" || location.pathname === "/404"){
       return null
     }
 
-  if(loggedIn === true){
     return(
         <Navbar className="navbar" expand="lg">
         <Container fluid>
@@ -54,8 +50,7 @@ function NavBar(){
         </Container>
       </Navbar>
     )
-  }
-  }
+}
 
 export default NavBar;
 

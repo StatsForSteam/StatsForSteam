@@ -3,11 +3,10 @@ import React from 'react';
 import './Achievements.scss';
 import AchievementCard from '../components/AchievementCard';
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 function Achievements(props){
   const { state } = useLocation();
-  const AchievementIcon = "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/252950/9974f05905881b45c7a2dbbd3c84d5e8c57fa01a.jpg"
   const NumGameAchievements = 20;
   const AchievementCards = [];
 
