@@ -36,11 +36,6 @@ def getUserProfilePicture():
     
 #print(getUserProfilePicture())
 
-def getAchievementTest():
-    appid = request.get_json()
-    print(appid)
-    return json.dumps({"data" : appid})
-
 def getUnlockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
     response = urlopen(url)
@@ -84,6 +79,7 @@ def getAchievements():
             notachieved.append([i['name'],i['description'],greyIcons[j]])
         j+=1
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
+
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():

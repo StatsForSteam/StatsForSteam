@@ -3,7 +3,7 @@ import React from 'react';
 import './Achievements.scss';
 import AchievementCard from '../components/AchievementCard';
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Achievements(props){
   const { state } = useLocation();
@@ -49,4 +49,3 @@ function Achievements(props){
   }
 
 export default Achievements;
-
