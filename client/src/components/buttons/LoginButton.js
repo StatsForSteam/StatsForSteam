@@ -14,12 +14,12 @@ function LoginButton(){
     }, [OpenIDLink]);
 
     return (
-        <div>
-           {/* <a href="https://localhost:8080/login?login=true">
-                Login
-    </a> */}
-
-        <Link to="/Profile"> Profile Redirect </Link>
+        <div className="loginButtonFlex">
+            <Link to="https://localhost:8080/login?login=true">
+                <button type="button" class="btn btn-primary">
+                    Login with Steam
+                </button>
+            </Link>
         </div>
     )
 }

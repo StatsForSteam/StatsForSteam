@@ -1,0 +1,28 @@
+@import "../index.scss";
+
+body{
+    background-color: $primary-color !important;
+}
+
+section {
+    display: flex;
+    display: -webkit-flex;
+}
+section h1 {
+    /* Key Part */
+    margin: auto;
+}
+
+.NotFoundHeader{
+    color: $secondary-color;
+    text-align: center;
+    font-size: 3.5rem;
+}
+
+.NotFoundDescription{
+    color: $secondary-color;
+    text-align: center;
+    font-size: 1.75rem;
+    padding-bottom: 1rem;
+}
+

@@ -2,36 +2,31 @@ import Card from 'react-bootstrap/Card';
 import ViewAchievements from './buttons/ViewAchievements';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 
 function GameCard(props){
    
-    //  const appid = props.appid;
-    // //  const [achievedLen , setAchievedLen] = React.useState( () => {
-    // //     fetch('/getAchievements', {
-    // //       method: "POST",
-    // //       body: JSON.stringify(appid),
-    // //       headers: { "content-type": "application/json" },
-    // //     }).then(response =>
-    // //       response.json().then(data => {
-    // //         setAchievedLen(data.achievedlength);
-    // //       }))
-    // //   });
-      
-    // //   const [notachievedLen , setnotAchievedLen] = React.useState( () => {
-    // //     fetch('/getAchievements', {
-    // //       method: "POST",
-    // //       body: JSON.stringify(appid),
-    // //       headers: { "content-type": "application/json" },
-    // //     }).then(response =>
-    // //       response.json().then(data => {
-    // //         setnotAchievedLen(data.notachievedlength);
-    // //       }))
-    // //   });
-        
-const completed = false;  
+     const appid = props.appid;
+     const [achievedLen , setAchievedLen] = React.useState();
+     const [notachievedLen , setnotAchievedLen] = React.useState();
+
+     useEffect(() => {
+        fetch('/getAchievements', {
+          method: "POST",
+          body: JSON.stringify(appid),
+          headers: { "content-type": "application/json" },
+        }).then(response =>
+          response.json().then(data =>{
+            setAchievedLen(data.achievedlength);
+            setnotAchievedLen(data.notachievedlength);
+          }))
+      }, []);
+
+
+const completed = false;
+ 
   
 //props.name is the name of the game
 //props.header is the header image of the game
@@ -49,7 +44,7 @@ const completed = false;
                             </div>
                         ) : (
                             <div>
-                                Currently: {2} / {5} Achievements
+                                Currently: {achievedLen} / {notachievedLen} Achievements
                             </div>
                         )}
                     </Card.Text>

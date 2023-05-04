@@ -2,25 +2,24 @@ import json
 from urllib.request import urlopen
 from flask import request, session, g
 
+#Loading the API Key
+with open('SteamAPI.json') as SteamAPIFile:
+    SteamAPIJson = json.load(SteamAPIFile)
 
-# Loading the API Key
-#with open('SteamAPI.json') as SteamAPIFile:
-    #SteamAPIJson = json.load(SteamAPIFile)
-
-
-#def steamid():
-    #from main import app
-   # with app.app_context():
-        #return(session['id'])
+def steamid():
+    from main import app
+    with app.app_context():
+        return(session['id'])
 
 #appid = "252950"
-#key = SteamAPIJson["STEAMAPIKEY"]
-key = "047B197FC03B9D958391FCE24289B157"
-#Steamid = steamid()
-Steamid = "76561198833526844"
+#Steamid = "76561198833526844"
+#key = "047B197FC03B9D958391FCE24289B157"
+appid = "252950"
+key = SteamAPIJson["STEAMAPIKEY"]
+
 #GETS THE NAME OF A USER FROM THEIR STEAMID
 def getUserName():
-    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+Steamid
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
     data_json = json.loads(response.read())
     username = {"username" : data_json['response']['players'][0]['personaname']}
@@ -29,15 +28,13 @@ def getUserName():
 
 #GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
 def getUserProfilePicture():
-    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+Steamid
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
     data_json = json.loads(response.read())
     pfp = {"pfp" : data_json['response']['players'][0]['avatarfull']}
     return json.dumps(pfp)
     
 #print(getUserProfilePicture())
-
-
 
 def getAchievementTest():
     appid = request.get_json()
@@ -69,11 +66,10 @@ def getLockedIcons(appid):
     return greyIcons
 #print(getLockedIcons("311210"))
 
-
 #GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
 def getAchievements():
     appid = request.get_json()
-    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + Steamid+"&l=en"
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
     response = urlopen(url)
     data_json = json.loads(response.read())
     achieved = []
@@ -89,11 +85,9 @@ def getAchievements():
         j+=1
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
 
-
-
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+Steamid+"&include_played_free_games=true&include_appinfo=true&format=json"
+    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
     response = urlopen(url)
     data_json = json.loads(response.read())
     games = []
@@ -117,32 +111,14 @@ def getUserGamesHeaders():
     return gameURLs
 #print(getUserGamesHeaders())
 
-
 def getNumberOfGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+Steamid+"&include_played_free_games=true&include_appinfo=true&format=json"
+    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
     response = urlopen(url)
     data_json = json.loads(response.read())
     GamesOwned = {"GamesOwned" : data_json['response']['game_count'] }
     return json.dumps(GamesOwned)
 
 #print(getNumberOfGames())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #this stuff below I am having trouble with
 #i am trying to get an array with [name of game, playtime]
@@ -162,11 +138,3 @@ def getOwnedGamesTimes(steamid, key):
         #gameAndTimes.append([name, i['playtime_forever']])
     return gameAndTimes
 #gameAndTimes = getOwnedGamesTimes(steamid, key)
-
-
-
-
-
-
-
-
