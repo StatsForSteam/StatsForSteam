@@ -9,7 +9,7 @@ def login():
     shouldLogin = request.args.get('login')
     if shouldLogin is not None:
         steamLogin = SteamSignIn()
-        return steamLogin.RedirectUser(steamLogin.ConstructURL('https://localhost:8080/authorize'))
+        return steamLogin.RedirectUser(steamLogin.ConstructURL('http://127.0.0.1:5000/authorize'))
 
 def authorize():
     returnData = request.values

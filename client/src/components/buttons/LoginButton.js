@@ -5,7 +5,7 @@ function LoginButton(){
 
     return (
         <div className="loginButtonFlex">
-            <Link to="https://localhost:8080/login?login=true">
+            <Link to="http://127.0.0.1:5000/login?login=true">
                 <button type="button" class="btn btn-primary">
                     Login with Steam
                 </button>
