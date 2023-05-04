@@ -39,8 +39,7 @@ def getUserProfilePicture():
 def getAchievementTest():
     appid = request.get_json()
     print(appid)
-    data = {"data" : appid}
-    return json.dumps(data)
+    return json.dumps({"data" : appid})
 
 def getUnlockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
@@ -69,14 +68,15 @@ def getLockedIcons(appid):
 
 
 #GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
-def getAchievements(appid):
-    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appid+"&key="+key+"&steamid=" + steamid() +"&l=en"
+def getAchievements():
+    appid = request.get_json()
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
     response = urlopen(url)
     data_json = json.loads(response.read())
     achieved = []
     notachieved = []
-    icons = getUnlockedIcons(appid)
-    greyIcons = getLockedIcons(appid)
+    icons = getUnlockedIcons(str(appid))
+    greyIcons = getLockedIcons(str(appid))
     j=0
     for i in data_json['playerstats']['achievements']:
         if(i['achieved'] == 1):
@@ -84,8 +84,9 @@ def getAchievements(appid):
         else:
             notachieved.append([i['name'],i['description'],greyIcons[j]])
         j+=1
-    #return(achieved, notachieved)
-    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j}, ensure_ascii=False)
+    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
+
+
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():

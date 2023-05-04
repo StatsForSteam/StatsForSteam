@@ -2,13 +2,31 @@ import Card from 'react-bootstrap/Card';
 import ViewAchievements from './buttons/ViewAchievements';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+
 
 function GameCard(props){
    
-    const completed = true;
-    const amountOfAchievements = 147;
-    const amountOfAchievementsCompleted = 65;
+     const appid = props.appid;
+     const [achievedLen , setAchievedLen] = React.useState();
+     const [notachievedLen , setnotAchievedLen] = React.useState();
+
+     useEffect(() => {
+        fetch('/getAchievements', {
+          method: "POST",
+          body: JSON.stringify(appid),
+          headers: { "content-type": "application/json" },
+        }).then(response =>
+          response.json().then(data =>{
+            setAchievedLen(data.achievedlength);
+            setnotAchievedLen(data.notachievedlength);
+          }))
+      }, []);
+
+
+const completed = false;
+ 
   
 //props.name is the name of the game
 //props.header is the header image of the game
@@ -26,7 +44,7 @@ function GameCard(props){
                             </div>
                         ) : (
                             <div>
-                                Currently: {amountOfAchievementsCompleted} / {amountOfAchievements}
+                                Currently: {achievedLen} / {notachievedLen} Achievements
                             </div>
                         )}
                     </Card.Text>
