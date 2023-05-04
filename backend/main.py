@@ -26,4 +26,4 @@ def check_user_log_in():
         g.user = 'none'    
 
 if __name__ == "__main__":
-    app.run(ssl_context=('cert.pem', 'key.pem'), host = 'localhost', port = 8080, debug = True, use_reloader=True)
+    app.run(debug = True, use_reloader=True)
