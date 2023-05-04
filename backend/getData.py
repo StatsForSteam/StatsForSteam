@@ -80,6 +80,19 @@ def getAchievements():
         j+=1
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
 
+def getAchievementAmounts():
+    appid = request.get_json()
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    j=0
+    k=0
+    for i in data_json['playerstats']['achievements']:
+        if(i['achieved'] == 1):
+            j+=1
+        else:
+            k+=1
+    return json.dumps({"achieved":j, "notachieved":k}, ensure_ascii=False)
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():

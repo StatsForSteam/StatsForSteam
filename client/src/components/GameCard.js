@@ -9,30 +9,30 @@ import React, {useState, useEffect} from 'react';
 function GameCard(props){
    
      const appid = props.appid;
-     const [achievedLen , setAchievedLen] = React.useState();
-     const [notachievedLen , setnotAchievedLen] = React.useState();
+     const [achieved , setAchievedLen] = React.useState();
+     const [notachieved , setnotAchievedLen] = React.useState();
 
      useEffect(() => {
-        fetch('/getAchievements', {
+        fetch('/getAchievementAmounts', {
           method: "POST",
           body: JSON.stringify(appid),
           headers: { "content-type": "application/json" },
         }).then(response =>
           response.json().then(data =>{
-            setAchievedLen(data.achievedlength);
-            setnotAchievedLen(data.notachievedlength);
+            setAchievedLen(data.achieved);
+            setnotAchievedLen(data.notachieved);
           }))
       }, []);
 
+    let completed = false;
+    let hasAchievements = false;
 
-const completed = false;
- 
-  
-//props.name is the name of the game
-//props.header is the header image of the game
-    return (
+    if(achieved != null && notachieved != null){ hasAchievements = true;}
+    if(achieved == notachieved && hasAchievements == true){completed = true;}
+    
+    return( hasAchievements ? (
         <div class ="GameCard">
-            <Card border="dark" style={{ width: '27.5rem'}}>
+            <Card border="dark" style={{ width: '27.5rem'}} >
                 <Card.Img variant="top" src={props.header} />
                 <Card.Body>
                     <Card.Title>{props.name}</Card.Title>
@@ -44,16 +44,17 @@ const completed = false;
                             </div>
                         ) : (
                             <div>
-                                Currently: {achievedLen} / {notachievedLen} Achievements
+                                Currently: {achieved} / {notachieved} Achievements
                             </div>
                         )}
                     </Card.Text>
                     <ViewAchievements appid = {props.appid}/>
                 </Card.Body>
             </Card>
-        </div>
-    )
+        </div> ) : (
+            null)
+    )   
+
 }
 
 export default GameCard;
-
