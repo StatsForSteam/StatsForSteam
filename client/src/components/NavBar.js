@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,24 +6,19 @@ import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
 
 function NavBar(){
-  const [Username, setUsername] = React.useState();
-  const [ProfilePicture, setProfilePicture] = React.useState();
+  const [Username, setUsername] = useState();
+  const [ProfilePicture, setProfilePicture] = useState();
 
   useEffect(() => {
-    fetch('/getUserName').then(response => 
-      response.json().then(data => {
-        setUsername(data.username);
-    }))
+    Promise.all([
+      fetch('/getUserName'),
+      fetch('/getUserProfilePicture')
+    ]).then(([userResponse, userPfpResponse]) => {
+      userResponse.json().then(data => setUsername(data.username));
+      userPfpResponse.json().then(data => setProfilePicture(data.pfp));
+    })
+  }, []);
 
-    fetch('/getUserProfilePicture').then(response =>
-      response.json().then(data1 => {
-        setProfilePicture(data1.pfp);
-      }
-      ))
-  }, [Username, ProfilePicture]);
-   
-    const username = Username;
-    const pfp = ProfilePicture;
     const location = useLocation()
 
     // Welcome Page
@@ -44,8 +39,8 @@ function NavBar(){
             >
               <Nav.Link href="/Profile">Profile</Nav.Link>
             </Nav>
-            <Navbar.Text class = "username">{username}  </Navbar.Text>
-            <Navbar.Text><img class="pfp" src={pfp} /></Navbar.Text>
+            <Navbar.Text class = "username">{Username}  </Navbar.Text>
+            <Navbar.Text><img class="pfp" src={ProfilePicture} /></Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
