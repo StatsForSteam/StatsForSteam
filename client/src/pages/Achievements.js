@@ -40,7 +40,7 @@ function Achievements(props){
 
       return(
         
-            <div class="AchievementCardFlex">
+            <div className="AchievementCardFlex">
               {UnlockedAchievements}
               {LockedAchievements}
             </div>

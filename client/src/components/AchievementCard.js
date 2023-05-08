@@ -5,7 +5,7 @@ import './AchievementCard.scss';
 
 function AchievementCard(props) {
     return (
-      <div class="AchievementCard">
+      <div className="AchievementCard">
         <Card>
             <Card.Header as="h5">{props.title}</Card.Header>
             <Card.Body>

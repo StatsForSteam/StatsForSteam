@@ -27,7 +27,7 @@ function NavBar(){
     }
 
     return(
-        <Navbar class="navbar" expand="lg">
+        <Navbar className="navbar" expand="lg">
         <Container fluid>
           <Navbar.Brand bsPrefix="navbarlogo"><Nav.Link href="/">Stats For Steam</Nav.Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -39,8 +39,8 @@ function NavBar(){
             >
               <Nav.Link href="/Profile">Profile</Nav.Link>
             </Nav>
-            <Navbar.Text class = "username">{Username}  </Navbar.Text>
-            <Navbar.Text><img class="pfp" src={ProfilePicture} /></Navbar.Text>
+            <Navbar.Text className = "username">{Username}  </Navbar.Text>
+            <Navbar.Text><img className ="pfp" src={ProfilePicture} /></Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>

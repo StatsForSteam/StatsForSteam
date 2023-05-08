@@ -31,7 +31,7 @@ function GameCard(props){
     if(achieved == notachieved && hasAchievements == true){completed = true;}
     
     return( hasAchievements ? (
-        <div class ="GameCard">
+        <div className ="GameCard">
             <Card border="dark" style={{ width: '27.5rem'}} >
                 <Card.Img variant="top" src={props.header} />
                 <Card.Body>

@@ -23,7 +23,7 @@ function Profile() {
         if (userGames.length && gameHeader.length && (typeof numGames !== "undefined")){
           const cardArray = []
           for (let i = 0; i < numGames; i++) {
-            cardArray.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]}/>);
+            cardArray.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]} key = {userGames[i][1]}/>);
           }
           setCards(cardArray);
           setDataFetched(true)
