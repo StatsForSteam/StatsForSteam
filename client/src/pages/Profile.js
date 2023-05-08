@@ -13,13 +13,11 @@ function Profile() {
         Promise.all([
         fetch('/getUserGames'),
         fetch('/getUserGamesHeaders'),
-        fetch('/getNumberOfGames')
-      ]).then(([userGamesResponse, userGamesHeadersResponse, getUserNumberOfGamesResponse]) => {
-        
+      ]).then(([userGamesResponse, userGamesHeadersResponse]) => {
+      
         userGamesResponse.json().then(data => setUserGames(data.games));
-        userGamesHeadersResponse.json().then(data => setGameHeaders(data.gameHeaders));
-        getUserNumberOfGamesResponse.json().then(data => setGamesOwned(data.GamesOwned));
-
+        userGamesHeadersResponse.json().then(data =>{setGameHeaders(data.gameHeaders); setGamesOwned(data.GamesOwned)});
+      
         if (userGames.length && gameHeader.length && (typeof numGames !== "undefined")){
           const cardArray = []
           for (let i = 0; i < numGames; i++) {
@@ -28,7 +26,7 @@ function Profile() {
           setCards(cardArray);
           setDataFetched(true)
         }
-      })
+      },)
     }
   })
   
