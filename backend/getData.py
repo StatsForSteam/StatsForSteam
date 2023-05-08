@@ -116,16 +116,11 @@ def getUserGamesHeaders():
     gameURLs = []
     for i in gameIDs:
         gameURLs.append(url.replace(appID, str(i[1])))
-    gameURLs = json.dumps({"gameHeaders":gameURLs})
+    gameURLs = json.dumps({"gameHeaders":gameURLs, "GamesOwned":len(gameURLs)})
     return gameURLs
 #print(getUserGamesHeaders())
 
-def getNumberOfGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    GamesOwned = {"GamesOwned" : data_json['response']['game_count'] }
-    return json.dumps(GamesOwned)
+
 
 #print(getNumberOfGames())
 
