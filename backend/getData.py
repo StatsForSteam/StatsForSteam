@@ -82,17 +82,23 @@ def getAchievements():
 
 def getAchievementAmounts():
     appid = request.get_json()
+    print(appid)
     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    j=0
-    k=0
-    for i in data_json['playerstats']['achievements']:
-        if(i['achieved'] == 1):
-            j+=1
-        else:
+    try:
+        response = urlopen(url)
+        data_json = json.loads(response.read())
+    except:
+        return json.dumps({"achieved":0, "notachieved":0})
+    try:
+        j=0
+        k=0
+        for i in data_json['playerstats']['achievements']:
+            if(i['achieved'] == 1):
+                j+=1
             k+=1
-    return json.dumps({"achieved":j, "notachieved":k}, ensure_ascii=False)
+        return json.dumps({"achieved":j, "notachieved":k}, ensure_ascii=False)
+    except:
+        return json.dumps({"achieved":0, "notachieved":0})
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():
@@ -101,18 +107,8 @@ def getUserGames():
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
     for i in data_json['response']['games']:
-        games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid']))])
+            games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid']))])
     return json.dumps({"games" : games})
-    
-    # gameIDs = getUserGames()
-    # gameIDs = json.loads(gameIDs)
-    # gameIDs = gameIDs['games']
-    # gameURLs = []
-    # for i in gameIDs:
-    #     gameURLs.append(url.replace(appID, str(i[1])))
-    # gameURLs = json.dumps({"gameHeaders":gameURLs, "GamesOwned":len(gameURLs)})
-    # return gameURLs
-
 
 
 #print(getNumberOfGames())
