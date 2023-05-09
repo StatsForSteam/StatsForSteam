@@ -5,7 +5,7 @@ from pysteamsignin.steamsignin import SteamSignIn
 
 def login():
     if 'id' in session:
-        return redirect("https://localhost:3000/profile")
+        return redirect("http://localhost:3000/profile")
     shouldLogin = request.args.get('login')
     if shouldLogin is not None:
         steamLogin = SteamSignIn()
@@ -16,4 +16,4 @@ def authorize():
     steamLogin = SteamSignIn()
     steamID = steamLogin.ValidateResults(returnData)
     session['id'] = steamID
-    return redirect("https://localhost:3000/profile")
+    return redirect("http://localhost:3000/profile")

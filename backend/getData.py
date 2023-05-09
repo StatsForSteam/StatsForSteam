@@ -96,29 +96,22 @@ def getAchievementAmounts():
 
 #Gets a list of all the games a user owns and their app id's
 def getUserGames():
-    url = "https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json"
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    games = []
-    for i in data_json['response']['games']:
-        games.append([i['name'], i['appid']])
-    games = json.dumps({"games" : games})
-    return games
-#print(getUserGames())
-
-#Gets a list off all urls for the header images of the games a user owns. These match index of above function
-def getUserGamesHeaders():
     appID = "temp"
-    url = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
-    gameIDs = getUserGames()
-    gameIDs = json.loads(gameIDs)
-    gameIDs = gameIDs['games']
-    gameURLs = []
-    for i in gameIDs:
-        gameURLs.append(url.replace(appID, str(i[1])))
-    gameURLs = json.dumps({"gameHeaders":gameURLs, "GamesOwned":len(gameURLs)})
-    return gameURLs
-#print(getUserGamesHeaders())
+    games = []
+    headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
+    data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
+    for i in data_json['response']['games']:
+        games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid']))])
+    return json.dumps({"games" : games})
+    
+    # gameIDs = getUserGames()
+    # gameIDs = json.loads(gameIDs)
+    # gameIDs = gameIDs['games']
+    # gameURLs = []
+    # for i in gameIDs:
+    #     gameURLs.append(url.replace(appID, str(i[1])))
+    # gameURLs = json.dumps({"gameHeaders":gameURLs, "GamesOwned":len(gameURLs)})
+    # return gameURLs
 
 
 

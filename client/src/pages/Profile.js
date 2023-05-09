@@ -4,32 +4,21 @@ import "./Profile.scss";
 
 function Profile() {
   const [cards, setCards] = useState();
-  const [numGames, setGamesOwned] = useState();
-  const [userGames, setUserGames] = useState({userGames:[]});
-  const [gameHeader, setGameHeaders] = useState({gameHeader:[]});
   const [dataFetched, setDataFetched] = useState(false);
+
   useEffect(() => {
-    if (!dataFetched){
-        Promise.all([
-        fetch('/getUserGames'),
-        fetch('/getUserGamesHeaders'),
-      ]).then(([userGamesResponse, userGamesHeadersResponse]) => {
-      
-        userGamesResponse.json().then(data => setUserGames(data.games));
-        userGamesHeadersResponse.json().then(data =>{setGameHeaders(data.gameHeaders); setGamesOwned(data.GamesOwned)});
-      
-        if (userGames.length && gameHeader.length && (typeof numGames !== "undefined")){
+    fetch('/getUserGames').then(response => 
+        response.json().then(data => {
+          const userGames = data.games
           const cardArray = []
-          for (let i = 0; i < numGames; i++) {
-            cardArray.push(<GameCard name= {userGames[i][0]} header = {gameHeader[i]} appid = {userGames[i][1]} key = {userGames[i][1]}/>);
+          for (let i = 0; i < 40; i++) {
+            cardArray.push(<GameCard name= {userGames[i][0]} header = {userGames[i][2]} appid = {userGames[i][1]} key = {userGames[i][1]}/>);
           }
           setCards(cardArray);
-          setDataFetched(true)
-        }
-      },)
-    }
-  })
-  
+          setDataFetched(true);
+    }))
+  }, []);
+
   return (
     <div>
       {dataFetched ? 
