@@ -10,7 +10,8 @@ function GameCard(props){
      const appid = props.appid;
      const [achieved , setAchievedLen] = React.useState();
      const [notachieved , setnotAchievedLen] = React.useState();
-     const [hasAchievements, setHasAchievements] = React.useState(true);
+     let hasAchievements = true;
+     let completed = false;
 
      useEffect(() => {
         fetch('/getAchievementAmounts', {
@@ -19,15 +20,14 @@ function GameCard(props){
           headers: { "content-type": "application/json" },
         }).then(response =>
           response.json().then(data =>{
-            if(data.achieved && data.notachieved === 0){hasAchievements = false; }
             setAchievedLen(data.achieved);
             setnotAchievedLen(data.notachieved);
           }))
       }, []);
 
-    let completed = false;
     
-    if(achieved == notachieved && hasAchievements == true){completed = true;}
+    
+    
     
     return( hasAchievements ? (
         <div className ="GameCard">
