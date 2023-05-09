@@ -39,7 +39,7 @@ function GameCard(props){
                         {completed ? (
                             <div>
                                 Completed All Achievements
-                                <span id="boot-icon" class="bi bi-check-lg icon-green"></span>
+                                <span id="boot-icon" className="bi bi-check-lg icon-green"></span>
                             </div>
                         ) : (
                             <div>
