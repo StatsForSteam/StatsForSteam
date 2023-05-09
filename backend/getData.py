@@ -11,31 +11,26 @@ def steamid():
     with app.app_context():
         return(session['id'])
 
-#appid = "252950"
-#Steamid = "76561198833526844"
-#key = "047B197FC03B9D958391FCE24289B157"
-appid = "252950"
 key = SteamAPIJson["STEAMAPIKEY"]
 
-#GETS THE NAME OF A USER FROM THEIR STEAMID
+#GETS THE NAME OF A USER 
 def getUserName():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
     data_json = json.loads(response.read())
     username = {"username" : data_json['response']['players'][0]['personaname']}
     return json.dumps(username)
-#print(getUserName())
 
-#GETS THE PROFILE PICTURE OF A USER FROM THEIR STEAMID
+
+#GETS THE PROFILE PICTURE OF A USER 
 def getUserProfilePicture():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
     data_json = json.loads(response.read())
     pfp = {"pfp" : data_json['response']['players'][0]['avatarfull']}
     return json.dumps(pfp)
-    
-#print(getUserProfilePicture())
 
+#RETURNS UNLOCKED/GREYED OUT ACHIEVMENT ICON URL
 def getUnlockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
     response = urlopen(url)
@@ -46,7 +41,7 @@ def getUnlockedIcons(appid):
         icons.append(data_json['game']['availableGameStats']['achievements'][k]['icon'])
         k += 1
     return icons
-#print(getAchievementIcon2("311210")[1])
+
 
 #RETURNS LOCKED/GREYED OUT ACHIEVMENT ICON URL
 def getLockedIcons(appid):
@@ -59,9 +54,9 @@ def getLockedIcons(appid):
         greyIcons.append(data_json['game']['availableGameStats']['achievements'][k]['icongray'])
         k += 1
     return greyIcons
-#print(getLockedIcons("311210"))
 
-#GETS ACHIEVEMENTS FOR A SPECIFIC USER IN A SPECIFIC GAME
+
+#Gets all the info for an achievement card
 def getAchievements():
     appid = request.get_json()
     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
@@ -80,6 +75,7 @@ def getAchievements():
         j+=1
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved)}, ensure_ascii=False)
 
+#Gets the amount of achievements a user has achieved and not achieved
 def getAchievementAmounts():
     appid = request.get_json()
     print(appid)
@@ -100,7 +96,7 @@ def getAchievementAmounts():
     except:
         return json.dumps({"achieved":0, "notachieved":0})
 
-#Gets a list of all the games a user owns and their app id's
+#Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"
     games = []
@@ -111,7 +107,10 @@ def getUserGames():
     return json.dumps({"games" : games})
 
 
-#print(getNumberOfGames())
+
+
+
+
 
 #this stuff below I am having trouble with
 #i am trying to get an array with [name of game, playtime]

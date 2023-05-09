@@ -2,14 +2,14 @@ import Card from 'react-bootstrap/Card';
 import ViewAchievements from './buttons/ViewAchievements';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
-import React, {useState, useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 
 
 
 function GameCard(props){
      const appid = props.appid;
-     const [achieved , setAchievedLen] = React.useState();
-     const [notachieved , setnotAchievedLen] = React.useState();
+     const [achieved , setAchievedLen] = useState();
+     const [notachieved , setnotAchievedLen] = useState();
      let hasAchievements = true;
      let completed = false;
 
@@ -23,11 +23,8 @@ function GameCard(props){
             setAchievedLen(data.achieved);
             setnotAchievedLen(data.notachieved);
           }))
-      }, []);
+      }, [appid]);
 
-    
-    
-    
     
     return( hasAchievements ? (
         <div className ="GameCard">
