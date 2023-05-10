@@ -1,11 +1,49 @@
+@import "../index.scss";
 
 .AchievementCardFlex{
 
     display: flex;
     padding: 10px;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
    
+}
+
+.Circle{
+    width: 20%;
+}
+
+.Dashboard{
+    gap: 10px;
+    padding: 10px;
+    margin: 10px;
+    border: 3px solid $secondary-color;
+    border-radius: 10px;
+    background-color: $quaternary-color;
+}
+
+
+
+.loading{
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loadingText{
+    color: $secondary-color;
+    text-align: center;
+    font-size: 1.75rem;
+    padding-bottom: 1rem;
+}
+
+.searchBar{
+    display:flex;
+    justify-content: center;
+    padding: 10px;
 }
 

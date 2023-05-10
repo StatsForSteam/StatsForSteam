@@ -23,12 +23,19 @@ function Profile() {
     }))
   }, []);
 
+  if (!dataFetched) {
+    return (
+      <div className="loading">
+        <h2 className="loadingText">Loading...</h2>
+        <div className="spinner-border text-primary" role="status">
+          <span className="sr-only"></span>
+        </div>
+      </div>
+    );
+  }
+
   return (
-
-
-
     <div>
-      
       <div className="searchBar"> 
         <Form>
           <Form.Group>
@@ -36,8 +43,6 @@ function Profile() {
           </Form.Group>
         </Form>
       </div>
-      
-      {dataFetched ? (
         <div className="cardFlex">
           {cards && cards.filter((val) => {
             if (searchTerm === "") {
@@ -46,17 +51,8 @@ function Profile() {
               return val
             }
           })}
-        </div>
-      ) : (
-        <div className="loading">
-          <h2 className="loadingText"> Loading...</h2>
-          <div className="spinner-border text-primary" role="status">
-            <span className="sr-only"></span>
-          </div>
-        </div>
-      )}
+        </div> 
   </div>
-
   );
 }
 

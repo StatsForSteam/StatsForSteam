@@ -2,13 +2,11 @@ import Card from 'react-bootstrap/Card';
 import ViewAchievements from './buttons/ViewAchievements';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
-import React, {useEffect,useState} from 'react';
+
 
 
 
 function GameCard(props){
-     const appid = props.appid;
-
 
     
     return( 
