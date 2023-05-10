@@ -7,11 +7,17 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-
+import {Container, Row, Col} from 'react-bootstrap';
 
 function Achievements(props){
   const { state } = useLocation();
-  const appid = state;
+  const appid = state.props.appid;
+  const name = state.props.name;
+  const header = state.props.header;
+  const playtime = state.props.playtime;
+
+  console.log("informatin passed to achievements page: ", appid, name, header, playtime);
+
 
   const [achieved, setAchieved] = useState();
   const [notachieved, setnotAchieved] = useState();
@@ -60,16 +66,20 @@ function Achievements(props){
 
       return(
         <div>
-            <div className="Dashboard">
-              <div className="Circle">
-                  <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
-                    textColor: '#1363DF',
-                    backgroundColor: 'black',
-                    pathColor: '#1363DF',
-                    trailColor: '#DFF6FF',
-                    })}/>
-                </div>   
-              </div>
+          <div className="Dashboard">
+             <Container fluid>
+                <Row>
+                  <Col><div className="Circle">
+                      <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
+                                            textColor: '#1363DF',
+                                            backgroundColor: '#06283D',
+                                            pathColor: '#1363DF',
+                                            trailColor: '#06283D',
+                                            })}/></div></Col>
+                  <Col><h1>{name}</h1><img src={header}></img> <h2>{playtime} hrs</h2></Col>
+                </Row>
+              </Container>
+            </div>
               <div className="searchBar"> 
                 <Form>
                   <Form.Group>
@@ -77,6 +87,7 @@ function Achievements(props){
                   </Form.Group>
                 </Form>
               </div>
+
             <div className="AchievementCardFlex">
               {UnlockedAchievements && UnlockedAchievements.filter((val) => {
                 if (searchTerm === "") {
@@ -93,6 +104,7 @@ function Achievements(props){
                 }
               })}
             </div>
+            
         </div>
       )
   }

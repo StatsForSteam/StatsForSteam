@@ -6,7 +6,7 @@ function ViewAchievements(props){
         <div>
             <Link 
                 to={"/Achievements"}
-                state={props.appid}
+                state={props}
             >
                 <button className="viewAchievementsButton ">View Stats</button>
             </Link>

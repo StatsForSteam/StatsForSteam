@@ -20,7 +20,7 @@ function GameCard(props){
                                 Currently: {props.playtime} hours
                             </div>
                     </Card.Text>
-                    <ViewAchievements appid = {props.appid}/>
+                    <ViewAchievements props = {props}/>
                 </Card.Body>
             </Card>
         </div> 
