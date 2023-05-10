@@ -8,47 +8,24 @@ import React, {useEffect,useState} from 'react';
 
 function GameCard(props){
      const appid = props.appid;
-     const [achieved , setAchievedLen] = useState();
-     const [notachieved , setnotAchievedLen] = useState();
-     let hasAchievements = true;
-     let completed = false;
 
-     useEffect(() => {
-        fetch('/getAchievementAmounts', {
-          method: "POST",
-          body: JSON.stringify(appid),
-          headers: { "content-type": "application/json" },
-        }).then(response =>
-          response.json().then(data =>{
-            setAchievedLen(data.achieved);
-            setnotAchievedLen(data.notachieved);
-          }))
-      }, [appid]);
 
     
-    return( hasAchievements ? (
+    return( 
         <div className ="GameCard">
             <Card border="dark" style={{ width: '27.5rem'}} >
                 <Card.Img variant="top" src={props.header} />
                 <Card.Body>
                     <Card.Title>{props.name}</Card.Title>
                     <Card.Text>
-                        {completed ? (
                             <div>
-                                Completed All Achievements
-                                <span id="boot-icon" className="bi bi-check-lg icon-green"></span>
+                                Currently: {props.playtime} hours
                             </div>
-                        ) : (
-                            <div>
-                                Currently: {achieved} / {notachieved} Achievements
-                            </div>
-                        )}
                     </Card.Text>
                     <ViewAchievements appid = {props.appid}/>
                 </Card.Body>
             </Card>
-        </div> ) : (
-            null)
+        </div> 
     )   
 
 }

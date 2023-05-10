@@ -78,7 +78,6 @@ def getAchievements():
 #Gets the amount of achievements a user has achieved and not achieved
 def getAchievementAmounts():
     appid = request.get_json()
-    print(appid)
     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
     try:
         response = urlopen(url)
@@ -103,7 +102,8 @@ def getUserGames():
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
     for i in data_json['response']['games']:
-            games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid']))])
+            games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1)])
+            print(i['playtime_forever'])
     return json.dumps({"games" : games})
 
 

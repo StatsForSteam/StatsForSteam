@@ -9,10 +9,10 @@ function Achievements(props){
   const { state } = useLocation();
   const appid = state;
 
-  const [achieved, setAchieved] = React.useState();
-  const [notachieved, setnotAchieved] = React.useState();
-  const [achievedLen , setAchievedLen] = React.useState();
-  const [notachievedLen , setnotAchievedLen] = React.useState();
+  const [achieved, setAchieved] = useState();
+  const [notachieved, setnotAchieved] = useState();
+  const [achievedLen , setAchievedLen] = useState();
+  const [notachievedLen , setnotAchievedLen] = useState();
 
   useEffect(() => {
     fetch('/getAchievements', {

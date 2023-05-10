@@ -16,7 +16,7 @@ function Profile() {
           const numGames = data.games.length
           const cardArray = []
           for (let i = 0; i < numGames; i++) {
-            cardArray.push(<GameCard name= {userGames[i][0]} header = {userGames[i][2]} appid = {userGames[i][1]} key = {userGames[i][1]}/>);
+            cardArray.push(<GameCard name= {userGames[i][0]} header = {userGames[i][2]} appid = {userGames[i][1]} key = {userGames[i][1]} playtime={userGames[i][3]}/>);
           }
           setCards(cardArray);
           setDataFetched(true);
