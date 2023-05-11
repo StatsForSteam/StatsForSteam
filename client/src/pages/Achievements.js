@@ -9,14 +9,14 @@ import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
 
-function Achievements(props){
+function Achievements(){
   const { state } = useLocation();
   const appid = state.props.appid;
   const name = state.props.name;
   const header = state.props.header;
   const playtime = state.props.playtime;
 
-  console.log("informatin passed to achievements page: ", appid, name, header, playtime);
+  console.log("information passed to achievements page: ", appid, name, header, playtime);
 
 
   const [achieved, setAchieved] = useState();
@@ -25,6 +25,7 @@ function Achievements(props){
   const [notachievedLen , setnotAchievedLen] = useState();
   const [percentage, setPercentage] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [playerCount, setPlayerCount] = useState(0);
   const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
@@ -39,9 +40,11 @@ function Achievements(props){
         setAchievedLen(data.achievedlength);
         setnotAchievedLen(data.notachievedlength);
         setPercentage(data.achievementPercentage);
+        setPlayerCount(data.playerCount);
         setDataFetched(true);
       }))
   }, []);
+
 
 
   if (!dataFetched) {
@@ -76,7 +79,7 @@ function Achievements(props){
                                             pathColor: '#1363DF',
                                             trailColor: '#06283D',
                                             })}/></div></Col>
-                  <Col><h1>{name}</h1><img src={header}></img> <h2>{playtime} hrs</h2></Col>
+                  <Col><h1>{name}</h1><img src={header}></img> <h2>{playtime} hrs on record</h2><h2>{playerCount} current players</h2></Col>
                 </Row>
               </Container>
             </div>

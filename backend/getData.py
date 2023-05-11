@@ -60,9 +60,18 @@ def getLockedIcons(appid):
 def getAchievements():
     try:
         appid = request.get_json()
+        #URL is for achievements
         url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
+        #URL2 is for player count 
+        url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key="+key+"&appid=+"+str(appid)
+        #URL3 is for achievement percentages
+        #url3 = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?access_token="+key+"&gameid=+"+str(appid)
         response = urlopen(url)
+        response2 = urlopen(url2)
+        #response3 = urlopen(url3)
         data_json = json.loads(response.read())
+        data_json2 = json.loads(response2.read())
+        #data_json3 = json.loads(response3.read())
     except:
         return json.dumps({"hasAchievements":"false"}) 
     try:
@@ -77,9 +86,7 @@ def getAchievements():
             else:
                 notachieved.append([i['name'],i['description'],greyIcons[j]])
             j+=1
-        print(   int( (len(achieved)/j*100))    )
-        print(len(achieved)/j*100)
-        return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100))}, ensure_ascii=False)
+        return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
     except:
         return json.dumps({"hasAchievements":"false"})
     
