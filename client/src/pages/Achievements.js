@@ -79,7 +79,7 @@ function Achievements(){
                                             pathColor: '#1363DF',
                                             trailColor: '#06283D',
                                             })}/></div></Col>
-                  <Col><h1>{name}</h1><img src={header}></img> </Col>
+                  <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
                 </Row>
                 <Row>
                   <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen}</h2></Col>
