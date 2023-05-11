@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Card} from 'react-bootstrap';
 
 function Achievements(){
   const { state } = useLocation();
@@ -57,14 +57,14 @@ function Achievements(){
       </div>
     );
   }
-
+ 
   const UnlockedAchievements = [];
   for (let i = 0; i < achievedLen; i++) {
-    UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]}/>);
+    UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]} percentage = {achieved[i][3].toString()}/>);
   }
   const LockedAchievements = [];
   for (let i = 0; i < notachievedLen; i++) {
-    LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]}/>);
+    LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3].toString()}/>);
   }
 
       return(
@@ -79,7 +79,12 @@ function Achievements(){
                                             pathColor: '#1363DF',
                                             trailColor: '#06283D',
                                             })}/></div></Col>
-                  <Col><h1>{name}</h1><img src={header}></img> <h2>{playtime} hrs on record</h2><h2>{playerCount} current players</h2></Col>
+                  <Col><h1>{name}</h1><img src={header}></img> </Col>
+                </Row>
+                <Row>
+                  <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen}</h2></Col>
+               <Col><h2>{playtime} hrs on record</h2>
+                <h2>{playerCount} current players</h2></Col>
                 </Row>
               </Container>
             </div>

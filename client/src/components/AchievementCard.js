@@ -10,6 +10,7 @@ function AchievementCard(props) {
             <Card.Header as="h5">{props.title}</Card.Header>
             <Card.Body>
             <img src={props.img}/>
+            {props.percentage}% of players have unlocked this achievement
                 <Card.Text>
                   {props.description.length > 0 ? props.description : "No Description Available"}
                 </Card.Text>

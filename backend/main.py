@@ -14,7 +14,6 @@ app.add_url_rule('/getUserName', view_func=getData.getUserName)
 app.add_url_rule('/getUserProfilePicture', view_func=getData.getUserProfilePicture)
 app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
-app.add_url_rule('/getAchievementAmounts', view_func=getData.getAchievementAmounts, methods=["POST"])
 
 @app.before_request
 def check_user_log_in():
