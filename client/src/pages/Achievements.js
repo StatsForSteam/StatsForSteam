@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Container, Row, Col, Card} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 function Achievements(){
   const { state } = useLocation();

@@ -1,3 +1,5 @@
+@import "../index.scss";
+
 .AchievementCard{
     transition: all 0.2s ease-in-out;
     cursor: pointer;
@@ -6,3 +8,18 @@
     }
     
 }
+
+.achievementLogo{
+    width: 64px;
+    height: 64px;
+    margin: 5px;
+}
+
+.percentage{
+margin-top: 10px;
+}
+
+.achievementInfo {
+    display: flex;
+  }
+  
