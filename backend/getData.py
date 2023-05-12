@@ -103,6 +103,7 @@ def getUserGames():
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
     for i in data_json['response']['games']:
             games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1)])
+    games.sort(key=lambda x: x[3], reverse=True)
     return json.dumps({"games" : games})
 
 
