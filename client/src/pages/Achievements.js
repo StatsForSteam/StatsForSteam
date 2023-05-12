@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
 
 function Achievements(){
+  console.log("Achievements page rendered");
   const { state: { props: { appid, name, header, playtime } } } = useLocation();
 
   console.log("information passed to achievements page: ", appid, name, header, playtime);
@@ -22,8 +23,10 @@ function Achievements(){
         [searchTerm, setSearchTerm] = useState(""),
         [playerCount, setPlayerCount] = useState(0),
         [dataFetched, setDataFetched] = useState(false),
-        [hasAchievements, setHasAchievements] = useState(false);
-  
+        [hasAchievements, setHasAchievements] = useState(false),
+        [showLocked, setShowLocked] = useState(true),
+        [showUnlocked, setShowUnlocked] = useState(true);
+
   useEffect(() => {
     fetch('/getAchievements', {
       method: "POST",
@@ -62,9 +65,19 @@ function Achievements(){
   for (let i = 0; i < notachievedLen; i++) {
     LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3]} achieved = {notachieved[i][4]}/>);
   }
+
+  const onFilterChange = (event) => {
+    if (event.target.id === "unlocked") {
+      setShowUnlocked(!showUnlocked);
+    } 
+    if(event.target.id === "locked") {
+      setShowLocked(!showLocked);}
+    }
+
   if (hasAchievements) {
       return(
         <div>
+
           <div className="Dashboard">
              <Container fluid>
                 <Row>
@@ -84,23 +97,40 @@ function Achievements(){
                 </Row>
               </Container>
             </div>
-              <div className="searchBar"> 
+
+              <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
                       <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
-                  </Form.Group>
-                                  
+                  </Form.Group>                
                 </Form>
+                  <div className="radioButtons">
+                  <Form.Check
+                      defaultChecked
+                      label="Unlocked"
+                      id="unlocked"
+                      value="unlocked"
+                      onChange={onFilterChange}
+                    />
+                    <Form.Check
+                      defaultChecked
+                      label="Locked"
+                      id="locked"
+                      value="locked"
+                      onChange={onFilterChange}
+                    />
+                 </div>
               </div> 
+
             <div className="AchievementCardFlex">
-              {UnlockedAchievements && UnlockedAchievements.filter((val) => {
+              {showUnlocked && UnlockedAchievements && UnlockedAchievements.filter((val) => {
                 if (searchTerm === "") {
                   return val
                 } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
               })}
-              {LockedAchievements && LockedAchievements.filter((val) => {
+              {showLocked && LockedAchievements && LockedAchievements.filter((val) => {
                 if (searchTerm === "") {
                   return val
                 } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {

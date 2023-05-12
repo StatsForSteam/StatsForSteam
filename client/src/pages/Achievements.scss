@@ -46,10 +46,22 @@ h2{
     padding-bottom: 1rem;
 }
 
-.searchBar{
+.searchAndradio{
     display:flex;
     justify-content: center;
     padding: 10px;
+}
+.radioButtons{
+    color:white;
+    margin-left: 10px;
+    #unlocked{
+        background-color: none;
+        border-radius: 10px;
+    }
+    #locked{
+        background-color: none;
+        border-radius: 10px;
+    }
 }
 
 #gameImg{
@@ -58,6 +70,5 @@ h2{
     border-width: 3px;
     border-style: solid;
 }
-
 
 
