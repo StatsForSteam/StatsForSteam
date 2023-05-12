@@ -73,7 +73,9 @@ def getAchievements():
         data_json2 = json.loads(response2.read())
         data_json3 = json.loads(response3.read())
     except:
-        return json.dumps({"hasAchievements":"false"}) 
+        response2 = urlopen(url2)
+        data_json2 = json.loads(response2.read())
+        return json.dumps({"hasAchievements":False,"playerCount": data_json2['response']['player_count']}) 
     try:
         achieved = []
         notachieved = []
@@ -88,9 +90,9 @@ def getAchievements():
                     else:
                         notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1)])
             j+=1
-        return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
+        return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
     except:
-        return json.dumps({"hasAchievements":"false"})
+        return json.dumps({"hasAchievements":False})
   
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():

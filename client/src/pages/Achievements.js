@@ -27,7 +27,7 @@ function Achievements(){
   const [searchTerm, setSearchTerm] = useState("");
   const [playerCount, setPlayerCount] = useState(0);
   const [dataFetched, setDataFetched] = useState(false);
-
+const [hasAchievements, setHasAchievements] = useState(false);
   useEffect(() => {
     fetch('/getAchievements', {
       method: "POST",
@@ -41,11 +41,10 @@ function Achievements(){
         setnotAchievedLen(data.notachievedlength);
         setPercentage(data.achievementPercentage);
         setPlayerCount(data.playerCount);
+        setHasAchievements(data.hasAchievements);
         setDataFetched(true);
       }))
   }, []);
-
-
 
   if (!dataFetched) {
     return (
@@ -72,15 +71,15 @@ function Achievements(){
           <div className="Dashboard">
              <Container fluid>
                 <Row>
-                  <Col><div className="Circle">
+                  <Col>{hasAchievements ? (<div className="Circle">
                       <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
                                             textColor: '#1363DF',
                                             backgroundColor: '#06283D',
                                             pathColor: '#1363DF',
                                             trailColor: '#06283D',
-                                            })}/></div></Col>
+                                            })}/></div>):(null)}</Col>
                   <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
-                </Row>
+                </Row> 
                 <Row>
                   <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen}</h2></Col>
                <Col><h2>{playtime} hrs on record</h2>
@@ -88,14 +87,17 @@ function Achievements(){
                 </Row>
               </Container>
             </div>
+
+            {hasAchievements ? (
               <div className="searchBar"> 
                 <Form>
                   <Form.Group>
                       <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>
                 </Form>
-              </div>
+              </div> ) : (null)}
 
+          { hasAchievements ? (
             <div className="AchievementCardFlex">
               {UnlockedAchievements && UnlockedAchievements.filter((val) => {
                 if (searchTerm === "") {
@@ -111,8 +113,8 @@ function Achievements(){
                   return val
                 }
               })}
-            </div>
-            
+            </div> ) : (null)}
+
         </div>
       )
   }
