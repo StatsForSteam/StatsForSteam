@@ -10,41 +10,38 @@ import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
 
 function Achievements(){
-  const { state } = useLocation();
-  const appid = state.props.appid;
-  const name = state.props.name;
-  const header = state.props.header;
-  const playtime = state.props.playtime;
+  const { state: { props: { appid, name, header, playtime } } } = useLocation();
 
   console.log("information passed to achievements page: ", appid, name, header, playtime);
-
-
-  const [achieved, setAchieved] = useState();
-  const [notachieved, setnotAchieved] = useState();
-  const [achievedLen , setAchievedLen] = useState();
-  const [notachievedLen , setnotAchievedLen] = useState();
-  const [percentage, setPercentage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [playerCount, setPlayerCount] = useState(0);
-  const [dataFetched, setDataFetched] = useState(false);
-const [hasAchievements, setHasAchievements] = useState(false);
+  
+  const [achieved, setAchieved] = useState(),
+        [notachieved, setnotAchieved] = useState(),
+        [achievedLen , setAchievedLen] = useState(),
+        [notachievedLen , setnotAchievedLen] = useState(),
+        [percentage, setPercentage] = useState(0),
+        [searchTerm, setSearchTerm] = useState(""),
+        [playerCount, setPlayerCount] = useState(0),
+        [dataFetched, setDataFetched] = useState(false),
+        [hasAchievements, setHasAchievements] = useState(false);
+  
   useEffect(() => {
     fetch('/getAchievements', {
       method: "POST",
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },
     }).then(response =>
-      response.json().then(data => {
-        setAchieved(data.achieved);
-        setnotAchieved(data.notachieved);
-        setAchievedLen(data.achievedlength);
-        setnotAchievedLen(data.notachievedlength);
-        setPercentage(data.achievementPercentage);
-        setPlayerCount(data.playerCount);
-        setHasAchievements(data.hasAchievements);
+      response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount, hasAchievements }) => {
+        setAchieved(achieved);
+        setnotAchieved(notachieved);
+        setAchievedLen(achievedlength);
+        setnotAchievedLen(notachievedlength);
+        setPercentage(achievementPercentage);
+        setPlayerCount(playerCount);
+        setHasAchievements(hasAchievements);
         setDataFetched(true);
       }))
   }, []);
+  
 
   if (!dataFetched) {
     return (
@@ -59,11 +56,11 @@ const [hasAchievements, setHasAchievements] = useState(false);
  
   const UnlockedAchievements = [];
   for (let i = 0; i < achievedLen; i++) {
-    UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]} percentage = {achieved[i][3].toString()}/>);
+    UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]} percentage = {achieved[i][3]} achieved = {achieved[i][4]} />);
   }
   const LockedAchievements = [];
   for (let i = 0; i < notachievedLen; i++) {
-    LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3].toString()}/>);
+    LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3]} achieved = {notachieved[i][4]}/>);
   }
   if (hasAchievements) {
       return(
@@ -92,6 +89,7 @@ const [hasAchievements, setHasAchievements] = useState(false);
                   <Form.Group>
                       <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>
+                                  
                 </Form>
               </div> 
             <div className="AchievementCardFlex">
@@ -135,9 +133,6 @@ const [hasAchievements, setHasAchievements] = useState(false);
             </div>
         </div>
       )
-
-
-
   }
 
 export default Achievements;

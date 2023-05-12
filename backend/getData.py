@@ -86,12 +86,13 @@ def getAchievements():
             for k in data_json3['achievementpercentages']['achievements']:
                 if(i['apiname'] == k['name']):
                     if(i['achieved'] == 1):
-                        achieved.append([i['name'],i['description'],icons[j],round(k['percent'],1)])
+                        achieved.append([i['name'],i['description'],icons[j],round(k['percent'],1),True])
                     else:
-                        notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1)])
+                        notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1),False])
             j+=1
         return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
     except:
+        print("No Achievements")
         return json.dumps({"hasAchievements":False})
   
 #Gets all the info for each gamecard [title,appid,headerurl]
