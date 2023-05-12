@@ -65,19 +65,19 @@ const [hasAchievements, setHasAchievements] = useState(false);
   for (let i = 0; i < notachievedLen; i++) {
     LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3].toString()}/>);
   }
-
+  if (hasAchievements) {
       return(
         <div>
           <div className="Dashboard">
              <Container fluid>
                 <Row>
-                  <Col>{hasAchievements ? (<div className="Circle">
+                  <Col><div className="Circle">
                       <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
                                             textColor: '#1363DF',
                                             backgroundColor: '#06283D',
                                             pathColor: '#1363DF',
                                             trailColor: '#06283D',
-                                            })}/></div>):(null)}</Col>
+                                            })}/></div></Col>
                   <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
                 </Row> 
                 <Row>
@@ -87,17 +87,13 @@ const [hasAchievements, setHasAchievements] = useState(false);
                 </Row>
               </Container>
             </div>
-
-            {hasAchievements ? (
               <div className="searchBar"> 
                 <Form>
                   <Form.Group>
                       <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>
                 </Form>
-              </div> ) : (null)}
-
-          { hasAchievements ? (
+              </div> 
             <div className="AchievementCardFlex">
               {UnlockedAchievements && UnlockedAchievements.filter((val) => {
                 if (searchTerm === "") {
@@ -113,10 +109,35 @@ const [hasAchievements, setHasAchievements] = useState(false);
                   return val
                 }
               })}
-            </div> ) : (null)}
+            </div> 
 
+        </div> 
+      ) }
+//dashboard for no achievements
+      return(
+        <div>
+          <div className="Dashboard">
+             <Container fluid>
+                <Row>
+                  <Col>
+                    <div>
+                      <h1>This game has no achievements</h1>
+                    </div>
+                  </Col>
+                  <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
+                </Row> 
+                <Row>
+                  <Col></Col>
+               <Col><h2>{playtime} hrs on record</h2>
+                <h2>{playerCount} current players</h2></Col>
+                </Row>
+              </Container>
+            </div>
         </div>
       )
+
+
+
   }
 
 export default Achievements;
