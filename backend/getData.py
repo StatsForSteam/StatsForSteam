@@ -9,6 +9,7 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
+        return"76561198124232839"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -100,6 +101,10 @@ def getUserGames():
     for i in data_json['response']['games']:
             games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1)])
     return json.dumps({"games" : games})
+
+
+
+    
 
 
 
