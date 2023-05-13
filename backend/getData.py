@@ -9,7 +9,7 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
-        return"76561198124232839"
+        return"76561198144940421"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -18,15 +18,20 @@ key = SteamAPIJson["STEAMAPIKEY"]
 def getUserName():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
+    print(session.sid)
     data_json = json.loads(response.read())
     username = {"username" : data_json['response']['players'][0]['personaname']}
     return json.dumps(username)
 
+def getSessionSID():
+    data = {"sessionSID" : session.sid}
+    return json.dumps(data)
 
 #GETS THE PROFILE PICTURE OF A USER 
 def getUserProfilePicture():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key="+key+"&steamids="+steamid()
     response = urlopen(url)
+    print(session.sid)
     data_json = json.loads(response.read())
     pfp = {"pfp" : data_json['response']['players'][0]['avatarfull']}
     return json.dumps(pfp)
@@ -98,6 +103,7 @@ def getAchievements():
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"
+    print(session.sid)
     games = []
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())

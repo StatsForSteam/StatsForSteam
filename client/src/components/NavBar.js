@@ -8,22 +8,23 @@ import './NavBar.scss';
 function NavBar(){
   const [Username, setUsername] = useState();
   const [ProfilePicture, setProfilePicture] = useState();
+  const location = useLocation()
 
-  useEffect(() => {
-    Promise.all([
-      fetch('/getUserName'),
-      fetch('/getUserProfilePicture')
-    ]).then(([userResponse, userPfpResponse]) => {
-      userResponse.json().then(data => setUsername(data.username));
-      userPfpResponse.json().then(data => setProfilePicture(data.pfp));
-    })
-  }, []);
-
-    const location = useLocation()
-
-    // Welcome Page
-    if (location.pathname === "/" || location.pathname === "/404"){
-      return null
+  // Welcome Page{
+    useEffect(() => {
+      if (!(location.pathname === "/" || location.pathname === "/404")){
+        Promise.all([
+          fetch('/getUserName'),
+          fetch('/getUserProfilePicture')
+        ]).then(([userResponse, userPfpResponse]) => {
+          userResponse.json().then(data => setUsername(data.username));
+          userPfpResponse.json().then(data => setProfilePicture(data.pfp));
+        })
+      }
+    }, []);
+    
+    if ((location.pathname === "/" || location.pathname === "/404")){
+      return null;
     }
 
     return(
@@ -48,4 +49,3 @@ function NavBar(){
 }
 
 export default NavBar;
-
