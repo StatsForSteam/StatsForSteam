@@ -21,7 +21,7 @@ function NavBar(){
           userPfpResponse.json().then(data => setProfilePicture(data.pfp));
         })
       }
-    }, []);
+    }, [location]);
     
     if ((location.pathname === "/" || location.pathname === "/404")){
       return null;

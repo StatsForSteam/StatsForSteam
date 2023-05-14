@@ -9,7 +9,7 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
-        return"76561198144940421"
+        return"76561198124232839"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -103,7 +103,6 @@ def getAchievements():
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"
-    print(session.sid)
     games = []
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
@@ -111,10 +110,3 @@ def getUserGames():
             games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1)])
     games.sort(key=lambda x: x[3], reverse=True)
     return json.dumps({"games" : games})
-
-
-
-    
-
-
-

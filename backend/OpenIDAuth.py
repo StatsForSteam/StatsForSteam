@@ -3,6 +3,11 @@ from json import dumps, loads
 from urllib.parse import urlencode
 from pysteamsignin.steamsignin import SteamSignIn
 
+def checkUserStatus():
+    if 'id' in session:
+        return dumps(True)
+    return dumps(False)
+
 def login():
     if 'id' in session:
         return redirect("http://localhost:3000/profile")

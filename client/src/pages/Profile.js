@@ -10,13 +10,6 @@ function Profile() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch('/getSessionSID').then(response => 
-        response.json().then(data => {
-          console.log(data)
-    }))
-  }, []);
-
-  useEffect(() => {
     fetch('/getUserGames').then(response => 
         response.json().then(data => {
           const userGames = data.games

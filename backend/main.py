@@ -22,6 +22,7 @@ app.config['MYSQL_DB'] = DatabaseCredentialsJson['DB']
 
 mysql = MySQL(app)
 
+app.add_url_rule('/checkUserStatus', view_func=OpenIDAuth.checkUserStatus)
 app.add_url_rule('/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/authorize', view_func=OpenIDAuth.authorize)
 app.add_url_rule('/getUserName', view_func=getData.getUserName)
