@@ -68,10 +68,10 @@ function Achievements(){
 
   const onFilterChange = (event) => {
     if (event.target.id === "unlocked") {
-      setShowUnlocked(!showUnlocked);
+      setShowLocked(!showLocked);
     } 
     if(event.target.id === "locked") {
-      setShowLocked(!showLocked);}
+      setShowUnlocked(!showUnlocked);}
     }
 
   if (hasAchievements) {
@@ -105,20 +105,36 @@ function Achievements(){
                   </Form.Group>                
                 </Form>
                   <div className="radioButtons">
+                    {showUnlocked ? (
                   <Form.Check
-                      defaultChecked
                       label="Unlocked"
                       id="unlocked"
                       value="unlocked"
                       onChange={onFilterChange}
-                    />
+                    /> ):(
+
+                  <Form.Check
+                      disabled
+                      label="Unlocked"
+                      id="unlocked"
+                      value="unlocked"
+                      onChange={onFilterChange}
+                    />)}
+                    {showLocked ? (
                     <Form.Check
-                      defaultChecked
                       label="Locked"
                       id="locked"
                       value="locked"
                       onChange={onFilterChange}
-                    />
+                    /> ):(
+
+                      <Form.Check
+                      disabled
+                      label="Locked"
+                      id="locked"
+                      value="locked"
+                      onChange={onFilterChange}
+                    />)}
                  </div>
               </div> 
 
