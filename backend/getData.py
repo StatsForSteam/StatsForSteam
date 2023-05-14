@@ -9,7 +9,6 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
-        return"76561198124232839"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -98,15 +97,24 @@ def getAchievements():
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"
-    games = []
+    recentGames = []
+    playedGames = []
+    notPlayedGames = []
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
     for i in data_json['response']['games']:
-            games.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1)])
-    games.sort(key=lambda x: x[3], reverse=True)
-    return json.dumps({"games" : games})
-
-
+            #if the game has not been played
+            if(i['playtime_forever'] == 0):
+                notPlayedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])),0,0])
+            #if the game has been played but not in the last 2 weeks
+            elif('playtime_2weeks' not in i):
+                playedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),0])
+            #if the game has been played in the last 2 weeks
+            else:
+                recentGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),round(i['playtime_2weeks']/60,1)])
+    playedGames.sort(key=lambda x: x[3], reverse=True)
+    recentGames.sort(key=lambda x: x[3], reverse=True)
+    return json.dumps({"notPlayedGames" : notPlayedGames, "playedGames" : playedGames, "recentGames" : recentGames}, ensure_ascii=False)
 
     
 
