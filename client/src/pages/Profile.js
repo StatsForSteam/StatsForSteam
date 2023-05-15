@@ -119,14 +119,14 @@ function Profile() {
                 {showPlayed && playedGames && playedGames.filter((val) => {
                 if (searchTerm === "") {
                   return val
-                } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
               })}
               {showNotPlayed && notPlayedGames && notPlayedGames.filter((val) => {
                 if (searchTerm === "") {
                   return val
-                } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
               })}
