@@ -12,7 +12,7 @@ function NavBar(){
 
   // Welcome Page{
     useEffect(() => {
-      if (!(location.pathname === "/" || location.pathname === "/404")){
+      if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
         Promise.all([
           fetch('/getUserName'),
           fetch('/getUserProfilePicture')
@@ -23,7 +23,7 @@ function NavBar(){
       }
     }, [location]);
     
-    if ((location.pathname === "/" || location.pathname === "/404")){
+    if ((location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
       return null;
     }
 

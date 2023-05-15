@@ -9,7 +9,6 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
-        return"76561198124232839"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -24,6 +23,7 @@ def getUserName():
     return json.dumps(username)
 
 def getSessionSID():
+    print(session.sid)
     data = {"sessionSID" : session.sid}
     return json.dumps(data)
 
