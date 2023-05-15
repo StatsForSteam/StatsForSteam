@@ -14,6 +14,13 @@ def checkUserStatus():
     
     return dumps(data)
 
+def logout():
+    if 'id' in session:
+        session.pop('id', None)
+        return dumps(True)
+    
+    return dumps(False)
+
 def login():
     OpenID_Parameters = {
         'openid.ns': "http://specs.openid.net/auth/2.0",

@@ -1,16 +1,17 @@
 @import "../../index.scss";
 
-.loginButtonFlex{
+.logoutButtonFlex{
   display: flex;
   padding: 15px;
-  gap: 15px;
+  gap: 10px;
   flex-wrap: wrap; 
   justify-content: center;
 }
-
-.loginInnerButtonFlex{
+ 
+.logoutInnerButtonFlex{
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-size: 30px;
+  gap: 10px;
+  font-size: 1rem;
+  color: $primary-color
 }

@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
+import LogoutButton from './buttons/LogoutButton';
 
 function NavBar(){
   const [Username, setUsername] = useState();
@@ -42,6 +43,7 @@ function NavBar(){
             </Nav>
             <Navbar.Text className = "username">{Username}  </Navbar.Text>
             <Navbar.Text><img className ="pfp" src={ProfilePicture} /></Navbar.Text>
+            <Navbar.Text><LogoutButton /></Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
