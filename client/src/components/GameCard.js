@@ -15,7 +15,9 @@ function GameCard(props) {
         <Card border="dark" style={{ width: '27.5rem' }}>
           <Card.Img variant="top" src={headerImage} onError={handleHeaderError} />
           <Card.Body>
-            <Card.Title>{props.name}</Card.Title>
+            <Card.Title>
+              {props.name.length > 37 ? `${props.name.slice(0, 37)}...` : props.name}
+            </Card.Title>
             <Card.Text>
               <div>Currently: {props.playtime} hours</div>
             </Card.Text>
@@ -23,6 +25,7 @@ function GameCard(props) {
           </Card.Body>
         </Card>
       </div>
+
     ) : null
   );
 }

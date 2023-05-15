@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import './AchievementCard.scss';
-import {BsFillUnlockFill,BsFillLockFill} from 'react-icons/bs';
 import {FaLockOpen,FaLock} from 'react-icons/fa';
 
 function AchievementCard(props) {
@@ -9,7 +8,7 @@ function AchievementCard(props) {
       <div className="AchievementCard">
   <Card>
     <Card.Header as="h5"> {props.title}{props.achieved ? (
-            <FaLockOpen id="openLock"/>) : <FaLock id="closedLock"/>}</Card.Header>
+            <FaLockOpen id="Lock"/>) : <FaLock id="Lock"/>}</Card.Header>
     <Card.Body>
       <div className="achievementInfo">
         <img className="achievementLogo" src={props.img}/>
@@ -34,3 +33,5 @@ function AchievementCard(props) {
 }
 
 export default AchievementCard;
+
+
