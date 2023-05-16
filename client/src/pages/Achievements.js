@@ -81,21 +81,29 @@ function Achievements(){
           <div className="Dashboard">
              <Container fluid>
                 <Row>
-                  <Col><div className="Circle">
-                      <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
-                                            textColor: '#1363DF',
-                                            backgroundColor: '#06283D',
-                                            pathColor: '#1363DF',
-                                            trailColor: '#06283D',
-                                            })}/></div></Col>
-                  <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
-                </Row> 
-                <Row>
-                  <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h2></Col>
-               <Col><h2>{playtime} hrs on record</h2>
-                <h2>{playerCount} current players</h2>
-                <h2>Last Played: {lastplayed}</h2>
-                </Col>
+                  <Col> 
+                      <div className="Circle">
+                        <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
+                                              textColor: '#1363DF',
+                                              backgroundColor: '#06283D',
+                                              pathColor: '#1363DF',
+                                              trailColor: '#06283D',
+                                              })}/>
+                      </div>
+                      <h3>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h3>
+                    
+                  </Col>
+                  <Col>
+                    <h1>{name}</h1>
+                    <div class="underGameTitle">
+                      <h3>{playtime} hrs on record</h3>
+                      <h3>{playerCount} current players</h3>
+                      <h3>Last Played: {lastplayed}</h3> 
+                    </div>
+                  </Col>
+                  <Col>
+                    <img id="gameImg"src={header}></img> 
+                  </Col>
                 </Row>
               </Container>
             </div>
