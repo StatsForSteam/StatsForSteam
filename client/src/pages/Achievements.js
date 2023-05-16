@@ -11,7 +11,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 
 function Achievements(){
   console.log("Achievements page rendered");
-  const { state: { props: { appid, name, header, playtime } } } = useLocation();
+  const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
 
   console.log("information passed to achievements page: ", appid, name, header, playtime);
   
@@ -91,9 +91,11 @@ function Achievements(){
                   <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
                 </Row> 
                 <Row>
-                  <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen}</h2></Col>
+                  <Col><h2>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h2></Col>
                <Col><h2>{playtime} hrs on record</h2>
-                <h2>{playerCount} current players</h2></Col>
+                <h2>{playerCount} current players</h2>
+                <h2>Last Played: {lastplayed}</h2>
+                </Col>
                 </Row>
               </Container>
             </div>
@@ -173,7 +175,9 @@ function Achievements(){
                 <Row>
                   <Col></Col>
                <Col><h2>{playtime} hrs on record</h2>
-                <h2>{playerCount} current players</h2></Col>
+                <h2>{playerCount} current players</h2>
+                <h2>Last Played: {lastplayed}</h2>
+                </Col>
                 </Row>
               </Container>
             </div>

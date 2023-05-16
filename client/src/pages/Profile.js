@@ -26,12 +26,13 @@ function Profile() {
           const cards2 = [];
           const cards3 = [];
           for (let i = 0; i < recentGames.length; i++) {
-            cards1.push(<GameCard name= {recentGames[i][0]} header = {recentGames[i][2]} appid = {recentGames[i][1]} key = {recentGames[i][1]} playtime={recentGames[i][3]}/>);
+            cards1.push(<GameCard name= {recentGames[i][0]} header = {recentGames[i][2]} appid = {recentGames[i][1]} key = {recentGames[i][1]} playtime={recentGames[i][3]} lastplayed={recentGames[i][5]}/>);
           }
          setRecentGames(cards1);
           
          for (let i = 0; i < playedGames.length; i++) {
-            cards2.push(<GameCard name= {playedGames[i][0]} header = {playedGames[i][2]} appid = {playedGames[i][1]} key = {playedGames[i][1]} playtime={playedGames[i][3]}/>);
+            cards2.push(<GameCard name= {playedGames[i][0]} header = {playedGames[i][2]} appid = {playedGames[i][1]} key = {playedGames[i][1]} playtime={playedGames[i][3]} lastplayed={playedGames[i][5]}/>);
+            console.log(playedGames[i][5])
           }
           setPlayedGames(cards1.concat(cards2).sort((b, a) => a.props.playtime - b.props.playtime));
 

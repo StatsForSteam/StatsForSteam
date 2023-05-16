@@ -20,6 +20,7 @@ function GameCard(props) {
             </Card.Title>
             <Card.Text>
               <div>Currently: {props.playtime} hours</div>
+              <div>Last Played: {props.lastplayed}</div>
             </Card.Text>
             <ViewAchievements props={props} />
           </Card.Body>

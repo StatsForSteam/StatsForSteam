@@ -1,6 +1,8 @@
 import json
 from urllib.request import urlopen
 from flask import request, session, g
+import datetime
+
 
 #Loading the API Key
 with open('SteamAPI.json') as SteamAPIFile:
@@ -9,7 +11,6 @@ with open('SteamAPI.json') as SteamAPIFile:
 def steamid():
     from main import app
     with app.app_context():
-        return "76561198144940421"
         return(session['id'])
 
 key = SteamAPIJson["STEAMAPIKEY"]
@@ -109,15 +110,22 @@ def getUserGames():
                 notPlayedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])),0,0])
             #if the game has been played but not in the last 2 weeks
             elif('playtime_2weeks' not in i):
-                playedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),0])
+                playedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),0,get_date_from_unix_timestamp(i["rtime_last_played"])])
             #if the game has been played in the last 2 weeks
             else:
-                recentGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),round(i['playtime_2weeks']/60,1)])
+                recentGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1),round(i['playtime_2weeks']/60,1),get_date_from_unix_timestamp(i["rtime_last_played"])])
     playedGames.sort(key=lambda x: x[3], reverse=True)
     recentGames.sort(key=lambda x: x[3], reverse=True)
     return json.dumps({"notPlayedGames" : notPlayedGames, "playedGames" : playedGames, "recentGames" : recentGames}, ensure_ascii=False)
 
-    
+def get_date_from_unix_timestamp(seconds):
+    result_date = datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=seconds)
+    day_formatted = result_date.strftime("%B %e, %Y").replace('  ', ' ').strip()
+    print(day_formatted)
+    return day_formatted
+
+
+
 
 
 
