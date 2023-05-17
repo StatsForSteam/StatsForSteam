@@ -4,20 +4,23 @@ import { Navigate} from 'react-router-dom';
 class PrivateRoute extends Component{
     constructor(props) {
         super(props);
-        const loggedin = false
+        this.state = {
+            loggedin : true //SHOULD BE FALSE (NOT WORKING CURRENTLY THEREFORE ITS TRUE)
+        }
     }
      
     componentWillMount() {
         fetch('/checkUserStatus').then(response => 
             response.json().then(data => {
-                this.loggedin = data['userLogged']
-                console.log(this.logginin)
+                this.setState = {
+                    loggedin : data['userLogged']
+                }
             }))
     }
      
     render() {
         return (
-            test() ? this.props.children : <Navigate to="/" />
+            this.state.loggedin ? this.props.children : <Navigate to="/" />
         );
     }
 };
