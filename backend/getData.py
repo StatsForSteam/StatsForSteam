@@ -23,6 +23,9 @@ def getUserName():
     username = {"username" : data_json['response']['players'][0]['personaname']}
     return json.dumps(username)
 
+def getSessionSID():
+    data = {"sessionSID" : session.sid}
+    return json.dumps(data)
 
 #GETS THE PROFILE PICTURE OF A USER 
 def getUserProfilePicture():
@@ -93,7 +96,6 @@ def getAchievements():
             j+=1
         return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
     except:
-        print("No Achievements")
         return json.dumps({"hasAchievements":False})
   
 #Gets all the info for each gamecard [title,appid,headerurl]
@@ -121,11 +123,4 @@ def getUserGames():
 def get_date_from_unix_timestamp(seconds):
     result_date = datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=seconds)
     day_formatted = result_date.strftime("%B %e, %Y").replace('  ', ' ').strip()
-    print(day_formatted)
     return day_formatted
-
-
-
-
-
-

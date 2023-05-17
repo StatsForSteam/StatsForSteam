@@ -6,32 +6,34 @@ import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
 import '../index.scss';
 import {AiFillHome} from 'react-icons/ai';
+import LogoutButton from './buttons/LogoutButton';
 
 function NavBar(){
   const [Username, setUsername] = useState();
   const [ProfilePicture, setProfilePicture] = useState();
+  const location = useLocation()
 
-  useEffect(() => {
-    Promise.all([
-      fetch('/getUserName'),
-      fetch('/getUserProfilePicture')
-    ]).then(([userResponse, userPfpResponse]) => {
-      userResponse.json().then(data => setUsername(data.username));
-      userPfpResponse.json().then(data => setProfilePicture(data.pfp));
-    })
-  }, []);
-
-    const location = useLocation()
-
-    // Welcome Page
-    if (location.pathname === "/" || location.pathname === "/404"){
-      return null
+  // Welcome Page{
+    useEffect(() => {
+      if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
+        Promise.all([
+          fetch('/getUserName'),
+          fetch('/getUserProfilePicture')
+        ]).then(([userResponse, userPfpResponse]) => {
+          userResponse.json().then(data => setUsername(data.username));
+          userPfpResponse.json().then(data => setProfilePicture(data.pfp));
+        })
+      }
+    }, [location]);
+    
+    if ((location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
+      return null;
     }
 
     return(
         <Navbar className="navbar" expand="lg">
         <Container fluid>
-          <Navbar.Brand bsPrefix="navbarlogo"><Nav.Link href="/">Stats For Steam</Nav.Link></Navbar.Brand>
+          <Navbar.Brand bsPrefix="navbarlogo">Stats For Steam</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -43,6 +45,7 @@ function NavBar(){
             </Nav>
             <Navbar.Text style={{ color: 'var(--tertiary-color)', fontWeight: 500 }} >{Username}  </Navbar.Text>
             <Navbar.Text><img className ="pfp" src={ProfilePicture} /></Navbar.Text>
+            <Navbar.Text><LogoutButton /></Navbar.Text>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -50,4 +53,3 @@ function NavBar(){
 }
 
 export default NavBar;
-

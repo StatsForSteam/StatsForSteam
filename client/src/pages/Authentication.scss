@@ -1,0 +1,32 @@
+@import "../index.scss";
+
+.cardFlex{
+    display: flex;
+    padding: 15px;
+    gap: 15px;
+    flex-wrap: wrap; 
+    justify-content: center;
+
+}
+
+.loading{
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loadingText{
+    color: $secondary-color;
+    text-align: center;
+    font-size: 1.75rem;
+    padding-bottom: 1rem;
+}
+
+.searchBar{
+    display:flex;
+    justify-content: center;
+    padding: 10px;
+}
