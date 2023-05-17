@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
+import '../index.scss';
+import {AiFillHome} from 'react-icons/ai';
 
 function NavBar(){
   const [Username, setUsername] = useState();
@@ -37,9 +39,9 @@ function NavBar(){
               style={{ maxHeight: '200px'}}
               navbarScroll
             >
-              <Nav.Link href="/Profile">Profile</Nav.Link>
+              <Nav.Link style={{ color: 'var(--tertiary-color)',}} href="/Profile"><AiFillHome id="home"/></Nav.Link>
             </Nav>
-            <Navbar.Text className = "username">{Username}  </Navbar.Text>
+            <Navbar.Text style={{ color: 'var(--tertiary-color)', fontWeight: 500 }} >{Username}  </Navbar.Text>
             <Navbar.Text><img className ="pfp" src={ProfilePicture} /></Navbar.Text>
           </Navbar.Collapse>
         </Container>

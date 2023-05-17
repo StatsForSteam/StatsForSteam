@@ -3,6 +3,7 @@ import ViewAchievements from './buttons/ViewAchievements';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
 import { useState } from 'react';
+import '../index.scss';
 
 function GameCard(props) {
   const [hasHeader, setHasHeader] = useState(true);
@@ -12,20 +13,27 @@ function GameCard(props) {
   return (
     headerImage ? (
       <div className="GameCard">
-        <Card border="dark" style={{ width: '27.5rem' }}>
-          <Card.Img variant="top" src={headerImage} onError={handleHeaderError} />
-          <Card.Body>
-            <Card.Title>
-              {props.name.length > 37 ? `${props.name.slice(0, 37)}...` : props.name}
-            </Card.Title>
-            <Card.Text>
-              <div>Currently: {props.playtime} hours</div>
-              <div>Last Played: {props.lastplayed}</div>
-            </Card.Text>
+  <Card style={{ backgroundColor: 'var(--secondary-color)', width: '27.5rem' }} border="dark">
+    <Card.Img variant="top" src={headerImage} onError={handleHeaderError} />
+    <Card.Body>
+      <Card.Title style={{ color: 'var(--tertiary-color)' }}>
+        {props.name.length > 37 ? `${props.name.slice(0, 37)}...` : props.name}
+      </Card.Title>
+      <Card.Text>
+       <div id="under-header">
+          <div>
+            <div style={{ color: 'var(--quaternary-color)' }}>Currently: {props.playtime} hours</div>
+            <div style={{ color: 'var(--quaternary-color)' }}>Last Played: {props.lastplayed}</div>
+          </div>
+          <div>
             <ViewAchievements props={props} />
-          </Card.Body>
-        </Card>
-      </div>
+          </div>
+        </div>
+      </Card.Text>
+    </Card.Body>
+  </Card>
+</div>
+
 
     ) : null
   );

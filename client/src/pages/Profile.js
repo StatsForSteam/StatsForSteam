@@ -2,7 +2,7 @@ import GameCard from "../components/GameCard";
 import React, {useState, useEffect} from 'react';
 import "./Profile.scss";
 import Form from 'react-bootstrap/Form';
-
+import "../index.scss";
 
 function Profile() {
   const [dataFetched, setDataFetched] = useState(false);
@@ -77,12 +77,12 @@ function Profile() {
       <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
-                      <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
+                      <Form.Control size="lg" type="input" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>                
                 </Form>
                   <div className="radioButtons">
                   {disabled1 ? (
-                  <Form.Check
+                  <Form.Check 
                   disabled
                       label="Recently Played"
                       id="recent"

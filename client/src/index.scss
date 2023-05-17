@@ -1,4 +1,32 @@
-$primary-color: #06283D;
-$secondary-color: #1363DF;
-$tertiary-color: #47B5FF;
-$quaternary-color: #DFF6FF;
+$primary-color: #1C1C1C; //background
+$secondary-color: #262626; //gamecards
+$tertiary-color: #47B5FF; //titles 
+$quaternary-color: #DFF6FF; //other text
+$quinary-color: #0d304d;
+
+:root {
+    --primary-color: #1C1C1C;
+    --secondary-color: #262626;
+    --tertiary-color: #47B5FF;
+    --quaternary-color: #DFF6FF;
+  }
+  
+
+
+//RADIO BUTTONS AND SEARCH BAR
+  .searchAndradio{
+    display:flex;
+    justify-content: center;
+    padding: 10px;
+}
+.radioButtons{
+    color: $quaternary-color;
+    margin-left: 10px;
+    opacity: 0.7;
+}
+
+
+
+
+
+    

@@ -8,6 +8,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
+import "../index.scss";
 
 function Achievements(){
   console.log("Achievements page rendered");
@@ -84,10 +85,10 @@ function Achievements(){
                   <Col> 
                       <div className="Circle">
                         <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
-                                              textColor: '#1363DF',
-                                              backgroundColor: '#06283D',
-                                              pathColor: '#1363DF',
-                                              trailColor: '#06283D',
+                                              textColor: 'var(--quaternary-color)',
+                                              backgroundColor: 'var(--primary-color)',
+                                              pathColor: 'var(--quaternary-color)',
+                                              trailColor: 'var(--primary-color)',
                                               })}/>
                       </div>
                       <h3>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h3>
@@ -111,7 +112,7 @@ function Achievements(){
               <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
-                      <Form.Control size="lg" type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
+                      <Form.Control size="lg" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>                
                 </Form>
                   <div className="radioButtons">

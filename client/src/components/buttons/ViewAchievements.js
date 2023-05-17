@@ -1,5 +1,6 @@
 import './ViewAchievements.scss';
 import { Link } from 'react-router-dom';
+import {ImStatsBars} from 'react-icons/im';
 
 function ViewAchievements(props){
     return (
@@ -8,7 +9,7 @@ function ViewAchievements(props){
                 to={"/Achievements"}
                 state={props}
             >
-                <button className="viewAchievementsButton ">View Stats</button>
+                <button className="viewAchievementsButton "><ImStatsBars/></button>
             </Link>
         </div>
     )
