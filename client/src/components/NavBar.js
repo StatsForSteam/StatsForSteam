@@ -31,7 +31,7 @@ function NavBar(){
     return(
         <Navbar className="navbar" expand="lg">
         <Container fluid>
-          <Navbar.Brand bsPrefix="navbarlogo"><Nav.Link href="/">Stats For Steam</Nav.Link></Navbar.Brand>
+          <Navbar.Brand bsPrefix="navbarlogo">Stats For Steam</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
