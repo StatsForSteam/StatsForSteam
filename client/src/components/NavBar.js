@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
@@ -9,6 +8,7 @@ import {AiFillHome} from 'react-icons/ai';
 import LogoutButton from './buttons/LogoutButton';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+
 function NavBar(){
   const [Username, setUsername] = useState();
   const [ProfilePicture, setProfilePicture] = useState();
@@ -59,7 +59,7 @@ function NavBar(){
           {Username}
         </Navbar.Text>
         <Navbar.Text>
-          <img className="pfp" src={ProfilePicture} />
+          <img alt="user steam logo" className="pfp" src={ProfilePicture} />
         </Navbar.Text>
       </Navbar.Collapse>
     </Navbar>

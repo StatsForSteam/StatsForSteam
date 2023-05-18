@@ -33,7 +33,6 @@ function Profile() {
           
          for (let i = 0; i < playedGames.length; i++) {
             cards2.push(<GameCard name= {playedGames[i][0]} header = {playedGames[i][2]} appid = {playedGames[i][1]} key = {playedGames[i][1]} playtime={playedGames[i][3]} lastplayed={playedGames[i][5]}/>);
-            console.log(playedGames[i][5])
           }
           setPlayedGames(cards1.concat(cards2).sort((b, a) => a.props.playtime - b.props.playtime));
 
@@ -48,7 +47,14 @@ function Profile() {
 
 
 
- const onFilterChange = (event) => {
+  
+  if (!dataFetched) {
+    return (
+        <Loading />
+    );
+  }
+  
+  const onFilterChange = (event) => {
     if (event.target.id === "recent") {
       setShowRecent(!showRecent);
       setShowPlayed(!showPlayed);
@@ -60,13 +66,7 @@ function Profile() {
       setDisabled1(!disabled1);
     }
   }
-
   
-  if (!dataFetched) {
-    return (
-        <Loading />
-    );
-  }
 
   return (
     <div>
@@ -76,6 +76,7 @@ function Profile() {
                       <Form.Control size="lg" type="input" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>                
                 </Form>
+
                   <div className="radioButtons">
                   {disabled1 ? (
                   <Form.Check 
@@ -112,6 +113,7 @@ function Profile() {
                   } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                     return val
                   }
+                  return null;
                 })}
                 {showPlayed && playedGames && playedGames.filter((val) => {
                 if (searchTerm === "") {
@@ -119,6 +121,7 @@ function Profile() {
                 } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
+                return null;
               })}
               {showNotPlayed && notPlayedGames && notPlayedGames.filter((val) => {
                 if (searchTerm === "") {
@@ -126,10 +129,13 @@ function Profile() {
                 } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
+                return null;
               })}
               </div>
   </div>
   );
+
+  
 }
 
 export default Profile;

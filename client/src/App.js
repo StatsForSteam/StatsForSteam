@@ -9,8 +9,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return(
-    <BrowserRouter>
-      <div>
+    <BrowserRouter>     
         <NavBar />
           <Routes>
             <Route exact path="/" element={<Welcome />} />
@@ -23,8 +22,7 @@ function App() {
             <Route exact path="/authentication" element={<Authentication />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/404" element={<NotFound />} />
-          </Routes>
-      </div>
+          </Routes>  
     </BrowserRouter>
   )
 }

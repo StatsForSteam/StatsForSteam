@@ -14,11 +14,8 @@ import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/b
 import { IconContext } from "react-icons";
 
 function Achievements(){
-  console.log("Achievements page rendered");
-  const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
 
-  console.log("information passed to achievements page: ", appid, name, header, playtime);
-  
+  const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
   const [achieved, setAchieved] = useState(),
         [notachieved, setnotAchieved] = useState(),
         [achievedLen , setAchievedLen] = useState(),
@@ -47,7 +44,7 @@ function Achievements(){
         setHasAchievements(hasAchievements);
         setDataFetched(true);
       }))
-  }, []);
+  }, [appid]);
   
 
   if (!dataFetched) {
@@ -102,7 +99,7 @@ function Achievements(){
                     </ul>
                   </Col>
                   <Col>
-                    <img id="gameImg"src={header}></img> 
+                    <img alt="steam header" id="gameImg"src={header}></img> 
                   </Col>
                 </Row>
               </Container>
@@ -155,6 +152,7 @@ function Achievements(){
                 } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
+                return null;
               })}
               {showLocked && LockedAchievements && LockedAchievements.filter((val) => {
                 if (searchTerm === "") {
@@ -162,6 +160,7 @@ function Achievements(){
                 } else if (val.props.title.toLowerCase().includes(searchTerm.toLowerCase())) {
                   return val
                 }
+                return null;
               })}
             </div> 
 
@@ -178,7 +177,7 @@ function Achievements(){
                       <h1>This game has no achievements</h1>
                     </div>
                   </Col>
-                  <Col><h1>{name}</h1><img id="gameImg"src={header}></img> </Col>
+                  <Col><h1>{name}</h1><img alt="steam header" id="gameImg"src={header}></img> </Col>
                 </Row> 
                 <Row>
                   <Col></Col>

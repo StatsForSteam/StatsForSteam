@@ -1,6 +1,6 @@
 import './LoginButton.scss';
 import { Link } from 'react-router-dom';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { BsSteam } from 'react-icons/bs';
 
 function LoginButton(props){
