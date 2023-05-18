@@ -20,8 +20,6 @@
     width:30%;
 }
 
-
-
 h1{
     padding: 10px;
     color: $tertiary-color;
@@ -30,22 +28,6 @@ h1{
 h2,h3{
     padding: 10px;
     color: $quaternary-color;
-}
-
-.loading{
-    height: 100%;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.loadingText{
-    color: $secondary-color;
-    text-align: center;
-    font-size: 1.75rem;
-    padding-bottom: 1rem;
 }
 
 #gameImg{

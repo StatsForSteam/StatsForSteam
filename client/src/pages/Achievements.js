@@ -9,6 +9,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
 import "../index.scss";
+import Loading from "../components/Loading";
 
 function Achievements(){
   console.log("Achievements page rendered");
@@ -49,12 +50,7 @@ function Achievements(){
 
   if (!dataFetched) {
     return (
-      <div className="loading">
-        <h2 className="loadingText">Loading...</h2>
-        <div className="spinner-border text-primary" role="status">
-          <span className="sr-only"></span>
-        </div>
-      </div>
+      <Loading/>
     );
   }
  
