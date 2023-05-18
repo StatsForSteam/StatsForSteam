@@ -31,7 +31,7 @@ function Welcome() {
           <div>
             <nav class="navbar navbar-light bg-light">
               <a class="navbar-brand mx-auto">This website is currently in beta. 
-              Check out the progress our <a href="https://github.com/StatsForSteam/StatsForSteam" 
+              Check out the progress on our <a href="https://github.com/StatsForSteam/StatsForSteam" 
               target="blank" >GitHub!</a></a>
             </nav>
             <h1 className="welcomeHeader"> Stats For Steam </h1>
