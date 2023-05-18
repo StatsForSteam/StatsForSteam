@@ -144,7 +144,7 @@ function Achievements(){
                     />)}
                  </div>
               </div> 
-                <CardGroup className="cardGroup">
+                <div className="cards">
                 <Row xs={1} md={2} lg={4} className="g-4">
                   {showUnlocked &&
                     UnlockedAchievements &&
@@ -171,7 +171,7 @@ function Achievements(){
                       return null;
                     })}
                 </Row>
-              </CardGroup>
+                </div>
         </div> 
       ) }
 //dashboard for no achievements
