@@ -10,12 +10,9 @@
 }
 
 .loading{
-    height: 100%;
-    padding: 10px;
-    display: flex;
+     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
 .loadingText{
@@ -25,8 +22,3 @@
     padding-bottom: 1rem;
 }
 
-.searchBar{
-    display:flex;
-    justify-content: center;
-    padding: 10px;
-}

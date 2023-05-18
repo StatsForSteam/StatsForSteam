@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import "./Authentication.scss";
-
+import Loading from "../components/Loading";
 function Authentication() {
     const [successfulLogin, setSuccessfulLogin] = useState(null);
 
@@ -27,12 +27,7 @@ function Authentication() {
             )
             } else {
             return (
-                <div className="loading">
-                    <h2 className="loadingText">Authenticating</h2>
-                    <div className="spinner-border text-primary" role="status">
-                        <span className="sr-only"></span>
-                    </div>
-                </div>
+                <Loading/>
             )
             }
         })()}
