@@ -1,14 +1,22 @@
 @import "../index.scss";
 
-.AchievementCardFlex{
-
+.cardGroup {
+    margin-top: 20px;
+    margin-left: 8%;
+    margin-right: 8%;
+  }
+  
+  .cardGroup .row > div {
     display: flex;
-    padding: 10px;
-    gap: 15px;
-    flex-wrap: wrap;
     justify-content: center;
-   
-}
+  }
+  
+  .cardGroup .row > div > div {
+    width: 100%;
+    // max-width: 300px; /* Adjust the max-width as needed */
+    min-width: 350px;
+  }
+
 .Dashboard{
     margin: 10px;
     padding: 10px;

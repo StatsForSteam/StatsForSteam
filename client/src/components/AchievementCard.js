@@ -13,16 +13,7 @@ function AchievementCard(props) {
     <Card.Body>
       <div className="achievementInfo">
         <img className="achievementLogo" src={props.img}/>
-        {props.description.length > 0 ?
-          <p style={{ whiteSpace: 'pre-line' }}>
-            {props.description.replace(
-              new RegExp(`(.{1,40})(\\s+|$)`, 'g'),
-              `$1\n`
-            )}
-          </p>
-          :
-          "No Description Available"
-        }
+        {props.description.length > 0 ? ( props.description) :("No Description Available")}
       </div>
       <div className="percentage">
           <Card.Subtitle className="mb-2 text-muted"> {props.percentage}% of players have unlocked this achievement</Card.Subtitle>
