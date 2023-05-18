@@ -10,6 +10,8 @@ import Form from 'react-bootstrap/Form';
 import {Container, Row, Col} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
+import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/bs";
+import { IconContext } from "react-icons";
 
 function Achievements(){
   console.log("Achievements page rendered");
@@ -88,15 +90,14 @@ function Achievements(){
                                               })}/>
                       </div>
                       <h3>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h3>
-                    
                   </Col>
                   <Col>
                     <h1>{name}</h1>
-                    <div class="underGameTitle">
-                      <h3>{playtime} hrs on record</h3>
-                      <h3>{playerCount} current players</h3>
-                      <h3>Last Played: {lastplayed}</h3> 
-                    </div>
+                    <ul>
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillClockFill size={40}/></IconContext.Provider> <span className="stats-spacing"> {playtime} <span className="stats-text"> hrs on record </span></span></h3> 
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsPeopleFill size={40}/></IconContext.Provider> <span className="stats-spacing">{playerCount} <span className="stats-text"> current players</span></span></h3>
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
+                    </ul>
                   </Col>
                   <Col>
                     <img id="gameImg"src={header}></img> 
