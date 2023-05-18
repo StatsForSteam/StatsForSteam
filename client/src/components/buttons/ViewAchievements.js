@@ -9,7 +9,7 @@ function ViewAchievements(props){
                 to={"/Achievements"}
                 state={props}
             >
-                <button className="viewAchievementsButton "><ImStatsBars/></button>
+                <button className="viewAchievementsButton"><ImStatsBars/></button>
             </Link>
         </div>
     )
