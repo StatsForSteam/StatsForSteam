@@ -47,7 +47,7 @@ function NavBar(){
 
           <OverlayTrigger
             placement="bottom"
-            overlay={<Tooltip>Profile</Tooltip>}
+            overlay={<Tooltip>Home</Tooltip>}
           >
             <Nav.Link style={{ color: 'var(--tertiary-color)' }} href="/Profile">
               <AiFillHome size={40} />
