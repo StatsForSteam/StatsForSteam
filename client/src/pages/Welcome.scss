@@ -5,15 +5,26 @@ body{
 }
 
 .welcomeHeader{
-    color: $secondary-color;
+    color: $tertiary-color;
     text-align: center;
     font-size: 3.5rem;
 }
 
 .welcomeDescription{
-    color: $secondary-color;
+    color: $tertiary-color;
     text-align: center;
     font-size: 1.75rem;
     padding-bottom: 1rem;
 }
 
+@media (max-width: 625px) {
+    .navbar-brand{
+      font-size: 13px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .navbar-brand{
+      font-size: 10px !important;
+    }
+}
