@@ -59,10 +59,12 @@ function Achievements(){
   const UnlockedAchievements = [];
   for (let i = 0; i < achievedLen; i++) {
     UnlockedAchievements.push(<AchievementCard title = {achieved[i][0]} description = {achieved[i][1]} img = {achieved[i][2]} percentage = {achieved[i][3]} achieved = {achieved[i][4]} />);
+    UnlockedAchievements.sort((b,a) => a.props.percentage - b.props.percentage);
   }
   const LockedAchievements = [];
   for (let i = 0; i < notachievedLen; i++) {
     LockedAchievements.push(<AchievementCard title = {notachieved[i][0]} description = {notachieved[i][1]} img = {notachieved[i][2]} percentage = {notachieved[i][3]} achieved = {notachieved[i][4]}/>);
+    LockedAchievements.sort((b,a) => a.props.percentage - b.props.percentage);
   }
 
   const onFilterChange = (event) => {
