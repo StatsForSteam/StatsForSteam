@@ -1,6 +1,7 @@
 import './LogoutButton.scss';
 import { useNavigate } from 'react-router-dom';
 import { BsSteam } from 'react-icons/bs';
+import {RiLogoutBoxFill} from 'react-icons/ri';
 
 function LogoutButton(){
     
@@ -16,14 +17,11 @@ function LogoutButton(){
     }
 
     return (
-        <div className="logoutButtonFlex">
-                <button type="button" className="btn btn-primary btn-feature btn-sm" onClick={handleClick}>
-                    <div className="logoutInnerButtonFlex">
-                        Logout
-                        <BsSteam size={15}/>
-                    </div>
+   
+                <button id="logout" onClick={handleClick}>
+                   <RiLogoutBoxFill style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--tertiary-color)'}} size={40}/>
                 </button>
-        </div>
+        
     )
 }
 
