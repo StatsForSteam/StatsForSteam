@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Container, Row, Col, CardGroup} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
 import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/bs";
@@ -148,33 +148,19 @@ function Achievements(){
                 <Row xs={1} md={2} lg={4} className="g-4">
                   {showUnlocked &&
                     UnlockedAchievements &&
-                    UnlockedAchievements.filter((val) => {
-                      if (searchTerm === "") {
-                        return val;
-                      } else if (
-                        val.props.title.toLowerCase().includes(searchTerm.toLowerCase())
-                      ) {
-                        return val;
-                      }
-                      return null;
-                    })}
+                    UnlockedAchievements.filter((val) => (
+                      searchTerm === "" || val.props.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    ))}
                   {showLocked &&
                     LockedAchievements &&
-                    LockedAchievements.filter((val) => {
-                      if (searchTerm === "") {
-                        return val;
-                      } else if (
-                        val.props.title.toLowerCase().includes(searchTerm.toLowerCase())
-                      ) {
-                        return val;
-                      }
-                      return null;
-                    })}
+                    LockedAchievements.filter((val) => (
+                      searchTerm === "" || val.props.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    ))}
                 </Row>
                 </div>
         </div> 
       ) }
-      
+
 //dashboard for no achievements
       return(
         <div>

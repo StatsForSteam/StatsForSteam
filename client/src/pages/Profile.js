@@ -108,33 +108,17 @@ function Profile() {
               </div>
               <div className="card-container">
               <Row xs={1} md={2} lg={4} className="g-4">
-              {showRecent && recentGames && recentGames.filter((val) => {
-                  if (searchTerm === "") {
-                    return val
-                  } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return val
-                  }
-                  return null;
-                })}
-                {showPlayed && playedGames && playedGames.filter((val) => {
-                if (searchTerm === "") {
-                  return val
-                } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                  return val
-                }
-                return null;
-              })}
-              {showNotPlayed && notPlayedGames && notPlayedGames.filter((val) => {
-                if (searchTerm === "") {
-                  return val
-                } else if (val.props.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                  return val
-                }
-                return null;
-              })}
-                </Row>
-              </div>
-              
+                {showRecent && recentGames && recentGames.filter((val) => (
+                  searchTerm === "" || val.props.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ))}
+                {showPlayed && playedGames && playedGames.filter((val) => (
+                  searchTerm === "" || val.props.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ))}
+                {showNotPlayed && notPlayedGames && notPlayedGames.filter((val) => (
+                  searchTerm === "" || val.props.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ))}
+              </Row>
+              </div>   
   </div>
   );
 
