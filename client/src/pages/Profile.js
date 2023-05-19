@@ -79,34 +79,20 @@ function Profile() {
                   </Form.Group>                
                 </Form>
 
-                  <div className="radioButtons">
-                  {disabled1 ? (
-                  <Form.Check 
-                  disabled
-                      label="Recently Played"
-                      id="recent"
-                      onChange={onFilterChange}
-                    /> )
-                    : (
-                      <Form.Check
-                      label="Recently Played"
-                      id="recent"
-                      onChange={onFilterChange}
-                    /> )}
-                    
-                    {disabled2 ? (
-                    <Form.Check
-                    disabled
-                      label ="Not Played"
-                      id="played"
-                      onChange={onFilterChange}
-                    /> ) : (
-                      <Form.Check
-                      label ="Not Played"
-                      id="played"
-                      onChange={onFilterChange}
-                    /> )}
-                 </div>
+                <div className="radioButtons">
+                  <Form.Check
+                    disabled={disabled1}
+                    label="Recently Played"
+                    id="recent"
+                    onChange={onFilterChange}
+                  />
+                  <Form.Check
+                    disabled={disabled2}
+                    label="Not Played"
+                    id="played"
+                    onChange={onFilterChange}
+                  />
+                </div>
               </div>
               <div className="card-container">
               <Row xs={1} md={2} lg={4} className="g-4">

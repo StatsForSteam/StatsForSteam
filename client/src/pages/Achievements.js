@@ -111,39 +111,25 @@ function Achievements(){
                       <Form.Control size="lg" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>                
                 </Form>
+
                   <div className="radioButtons">
-                    {showUnlocked ? (
                   <Form.Check
-                      label="Unlocked"
-                      id="unlocked"
-                      value="unlocked"
-                      onChange={onFilterChange}
-                    /> ):(
-
+                    label="Unlocked"
+                    id="unlocked"
+                    value="unlocked"
+                    onChange={onFilterChange}
+                    disabled={!showUnlocked}
+                  />
                   <Form.Check
-                      disabled
-                      label="Unlocked"
-                      id="unlocked"
-                      value="unlocked"
-                      onChange={onFilterChange}
-                    />)}
-                    {showLocked ? (
-                    <Form.Check
-                      label="Locked"
-                      id="locked"
-                      value="locked"
-                      onChange={onFilterChange}
-                    /> ):(
-
-                      <Form.Check
-                      disabled
-                      label="Locked"
-                      id="locked"
-                      value="locked"
-                      onChange={onFilterChange}
-                    />)}
-                 </div>
+                    label="Locked"
+                    id="locked"
+                    value="locked"
+                    onChange={onFilterChange}
+                    disabled={!showLocked}
+                  />
+                </div>
               </div> 
+
                 <div className="card-container">
                 <Row xs={1} md={2} lg={4} className="g-4">
                   {showUnlocked &&
