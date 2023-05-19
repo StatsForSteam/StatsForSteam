@@ -189,9 +189,11 @@ function Achievements(){
                 </Row> 
                 <Row>
                   <Col></Col>
-               <Col><h2>{playtime} hrs on record</h2>
-                <h2>{playerCount} current players</h2>
-                <h2>Last Played: {lastplayed}</h2>
+               <Col><ul>
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillClockFill size={40}/></IconContext.Provider> <span className="stats-spacing"> {playtime} <span className="stats-text"> hrs on record </span></span></h3> 
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsPeopleFill size={40}/></IconContext.Provider> <span className="stats-spacing">{playerCount} <span className="stats-text"> current players</span></span></h3>
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
+                    </ul>
                 </Col>
                 </Row>
               </Container>
