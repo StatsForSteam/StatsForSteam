@@ -18,50 +18,32 @@ function Profile() {
   const [disabled2, setDisabled2] = useState(false);
 
   useEffect(() => {
-    fetch('/getUserGames')
-      .then(response => response.json())
-      .then(data => {
-        const { recentGames, playedGames, notPlayedGames } = data;
-        
-        const cards = recentGames.map(game => (
-          <GameCard
-            name={game[0]}
-            header={game[2]}
-            appid={game[1]}
-            key={game[1]}
-            playtime={game[3]}
-            lastplayed={game[5]}
-          />
-        ));
-        setRecentGames(cards);
-  
-        const playedCards = playedGames.map(game => (
-          <GameCard
-            name={game[0]}
-            header={game[2]}
-            appid={game[1]}
-            key={game[1]}
-            playtime={game[3]}
-            lastplayed={game[5]}
-          />
-        ));
-        const updatedPlayedGames = cards.concat(playedCards).sort((a, b) => b.props.playtime - a.props.playtime);
-        setPlayedGames(updatedPlayedGames);
-  
-        const notPlayedCards = notPlayedGames.map(game => (
-          <GameCard
-            name={game[0]}
-            header={game[2]}
-            appid={game[1]}
-            key={game[1]}
-            playtime={game[3]}
-          />
-        ));
-        setNotPlayedGames(notPlayedCards);
-        
-        setDataFetched(true);
-      });
+    fetch('/getUserGames').then(response => 
+        response.json().then(data => {
+          const recentGames = data.recentGames;
+          const playedGames = data.playedGames;
+          const notPlayedGames = data.notPlayedGames;
+          const cards1 = [];
+          const cards2 = [];
+          const cards3 = [];
+          for (let i = 0; i < recentGames.length; i++) {
+            cards1.push(<GameCard name= {recentGames[i][0]} header = {recentGames[i][2]} appid = {recentGames[i][1]} key = {recentGames[i][1]} playtime={recentGames[i][3]} lastplayed={recentGames[i][5]}/>);
+          }
+         setRecentGames(cards1);
+
+         for (let i = 0; i < playedGames.length; i++) {
+            cards2.push(<GameCard name= {playedGames[i][0]} header = {playedGames[i][2]} appid = {playedGames[i][1]} key = {playedGames[i][1]} playtime={playedGames[i][3]} lastplayed={playedGames[i][5]}/>);
+          }
+          setPlayedGames(cards1.concat(cards2).sort((b, a) => a.props.playtime - b.props.playtime));
+
+          for (let i = 0; i < notPlayedGames.length; i++) {
+            cards3.push(<GameCard name= {notPlayedGames[i][0]} header = {notPlayedGames[i][2]} appid = {notPlayedGames[i][1]} key = {notPlayedGames[i][1]} playtime={notPlayedGames[i][3]}/>);
+          }
+          setNotPlayedGames(cards3);
+          setDataFetched(true);
+    })) 
   }, []);
+ 
   
 
 
