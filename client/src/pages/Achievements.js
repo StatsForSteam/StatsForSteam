@@ -144,7 +144,7 @@ function Achievements(){
                     />)}
                  </div>
               </div> 
-                <div className="cards">
+                <div className="card-container">
                 <Row xs={1} md={2} lg={4} className="g-4">
                   {showUnlocked &&
                     UnlockedAchievements &&
@@ -174,6 +174,7 @@ function Achievements(){
                 </div>
         </div> 
       ) }
+      
 //dashboard for no achievements
       return(
         <div>

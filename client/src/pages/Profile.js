@@ -4,7 +4,7 @@ import "./Profile.scss";
 import Form from 'react-bootstrap/Form';
 import "../index.scss";
 import Loading from "../components/Loading";
-
+import Row from 'react-bootstrap/Row';
 function Profile() {
   const [dataFetched, setDataFetched] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -106,7 +106,8 @@ function Profile() {
                     /> )}
                  </div>
               </div>
-              <div className="cardFlex">
+              <div className="card-container">
+              <Row xs={1} md={2} lg={4} className="g-4">
               {showRecent && recentGames && recentGames.filter((val) => {
                   if (searchTerm === "") {
                     return val
@@ -131,7 +132,9 @@ function Profile() {
                 }
                 return null;
               })}
+                </Row>
               </div>
+              
   </div>
   );
 
