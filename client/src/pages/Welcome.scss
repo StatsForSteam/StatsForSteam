@@ -1,13 +1,10 @@
 @import "../index.scss";
 
-body{
-    background-color: $primary-color !important;
-}
-
 .welcomeHeader{
     color: $tertiary-color;
     text-align: center;
     font-size: 3.5rem;
+    
 }
 
 .welcomeDescription{
@@ -15,6 +12,7 @@ body{
     text-align: center;
     font-size: 1.75rem;
     padding-bottom: 1rem;
+    font-weight: 700;
 }
 
 @media (max-width: 625px) {
@@ -28,3 +26,16 @@ body{
       font-size: 10px !important;
     }
 }
+
+#container{margin-top: 13%;}
+  
+#backgroundOverlay{
+    background-color: rgba(0,0,0,0.877);
+    height: 100vh;
+}
+
+#background{
+    background-image: url('http://drive.google.com/uc?export=view&id=1XbMmIju62uT_jOVfQD2HoBPqKelsDM8s');
+    height: 100vh;
+}
+

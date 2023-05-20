@@ -8,7 +8,7 @@ function LoginButton(props){
         props.sessionSID ? (
             <div className="loginButtonFlex">
                 <Link to={"http://127.0.0.1:5000/login?session=" + props.sessionSID}>
-                    <button type="button" className="btn btn-primary btn-lg">
+                    <button style={{backgroundColor: 'var(--tertiary-color)'}}type="button" className="btn btn-primary btn-lg">
                         <div className="loginInnerButtonFlex">
                             Login with Steam
                             <BsSteam size={45}/>

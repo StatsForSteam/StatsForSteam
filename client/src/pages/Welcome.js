@@ -29,14 +29,20 @@ function Welcome() {
       } else {
         return (
           <div>
-            <nav class="navbar navbar-light bg-light">
-              <a class="navbar-brand mx-auto">This website is currently in beta. 
-              Check out the progress on our <a href="https://github.com/StatsForSteam/StatsForSteam" 
-              target="blank" >GitHub!</a></a>
-            </nav>
-            <h1 className="welcomeHeader"> Stats For Steam </h1>
-            <h2 className="welcomeDescription"> The best place to find steam achievements</h2>
-            <LoginButton sessionSID={sessionSID}/>
+            <div id="background">
+              <div id="backgroundOverlay">
+                  <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand mx-auto">This website is currently in beta. 
+                    Check out the progress on our <a href="https://github.com/StatsForSteam/StatsForSteam" 
+                    target="blank" >GitHub!</a></a>
+                  </nav>
+                    <div id="container">
+                        <h1 className="welcomeHeader"> Stats For Steam </h1>
+                        <h2 className="welcomeDescription"> The best place to find steam achievements</h2>
+                        <LoginButton sessionSID={sessionSID}/>  
+                     </div>
+                  </div>
+              </div>
           </div>
         )
       }

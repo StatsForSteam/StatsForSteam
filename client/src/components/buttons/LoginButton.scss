@@ -6,6 +6,7 @@
   gap: 15px;
   flex-wrap: wrap; 
   justify-content: center;
+
 }
 
 .loginInnerButtonFlex{
@@ -13,4 +14,10 @@
   align-items: center;
   gap: 16px;
   font-size: 30px;
+
 }
+
+button{
+  border: none !important;
+}
+
