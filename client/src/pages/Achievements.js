@@ -78,8 +78,8 @@ function Achievements(){
 
           <div className="Dashboard">
              <Container fluid>
-                <Row>
-                  <Col> 
+                <Row id="Row">
+                  <Col>
                       <div className="Circle">
                         <CircularProgressbar value={percentage} background={true} text={`${percentage}%`} styles={buildStyles({
                                               textColor: 'var(--quaternary-color)',
@@ -88,7 +88,7 @@ function Achievements(){
                                               trailColor: 'var(--primary-color)',
                                               })}/>
                       </div>
-                      <h3>Completed: {achievedLen} / {+achievedLen+notachievedLen} Achievements</h3>
+                      <h3>{achievedLen} / {+achievedLen+notachievedLen} completed</h3>
                   </Col>
                   <Col>
                     <h1>{name}</h1>
@@ -150,24 +150,23 @@ function Achievements(){
 //dashboard for no achievements
       return(
         <div>
-          <div className="Dashboard">
+           <div className="Dashboard">
              <Container fluid>
-                <Row>
-                  <Col>
-                    <div>
-                      <h1>This game has no achievements</h1>
-                    </div>
+                <Row id="Row">
+                  <Col> 
+                     <h1>This game has no achievements</h1>
                   </Col>
-                  <Col><h1>{name}</h1><img alt="steam header" id="gameImg"src={header}></img> </Col>
-                </Row> 
-                <Row>
-                  <Col></Col>
-               <Col><ul>
+                  <Col>
+                    <h1>{name}</h1>
+                    <ul>
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillClockFill size={40}/></IconContext.Provider> <span className="stats-spacing"> {playtime} <span className="stats-text"> hrs on record </span></span></h3> 
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsPeopleFill size={40}/></IconContext.Provider> <span className="stats-spacing">{playerCount} <span className="stats-text"> current players</span></span></h3>
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
                     </ul>
-                </Col>
+                  </Col>
+                  <Col>
+                    <img alt="steam header" id="gameImg"src={header}></img> 
+                  </Col>
                 </Row>
               </Container>
             </div>

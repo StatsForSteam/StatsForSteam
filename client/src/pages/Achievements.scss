@@ -7,9 +7,12 @@
     border-radius: 10px;
     background-color: $secondary-color;
 }
+#Row{
+   margin-top: 1%;
+}
 .Circle{
-    width:30%;
-    margin-left: 17%;
+    height: 230px;
+    width: 230px;
 }
 
 h1{
@@ -36,3 +39,6 @@ h2,h3{
 .stats-spacing{
     margin-left: 2%;
 }
+
+@media screen and (max-width: 450px) {#gameImg{width: 300px;}}
+

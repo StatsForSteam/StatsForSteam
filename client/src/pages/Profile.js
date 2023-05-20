@@ -71,7 +71,7 @@ function Profile() {
   
 
   return (
-    <div>
+    <>
       <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
@@ -107,7 +107,7 @@ function Profile() {
                 ))}
               </Row>
               </div>   
-  </div>
+  </>
   );
 
   

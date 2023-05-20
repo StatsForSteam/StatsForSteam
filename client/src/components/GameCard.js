@@ -13,7 +13,7 @@ function GameCard(props) {
   return (
     headerImage ? (
       <div className="GameCard">
-  <Card style={{ backgroundColor: 'var(--secondary-color)', width: '27.5rem' }} border="dark">
+  <Card style={{ backgroundColor: 'var(--secondary-color)'}} border="dark">
     <Card.Img variant="top" src={headerImage} onError={handleHeaderError} />
     <Card.Body>
       <Card.Title style={{ color: 'var(--tertiary-color)' }}>
