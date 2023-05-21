@@ -1,6 +1,7 @@
 FROM python:3
 
-WORKDIR /home/callum/Documents/statsforsteam/backend
+# Assuming the console is open inside /backend/
+WORKDIR ./
 
 ENV FLASK_APP=main.py 
 

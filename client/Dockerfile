@@ -1,10 +1,10 @@
 FROM node:14-slim
 
-WORKDIR /home/callum/Documents/statsforsteam/
+WORKDIR ./
 
 COPY ./package.json ./
 
-COPY ./yarn.lock ./
+COPY ./package-lock.json ./
 
 RUN npm install 
 
