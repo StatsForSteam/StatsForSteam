@@ -1,18 +1,16 @@
-version: "3.9"
+version: '3'
 services:
-  server:
-    build:  ./backend
-    ports: 
-    - "5000:5000"
-    volumes: 
-    - ./backend/
-    environment: 
-      FLASK_ENV: development
-  web:
-    build: ./client
-    ports: 
-      - "3000:3000"
-    volumes: 
-      - ./client/src/app
-    depends_on: 
-      - server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    depends_on:
+      - client
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
