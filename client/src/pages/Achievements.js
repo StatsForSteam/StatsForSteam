@@ -4,7 +4,6 @@ import './Achievements.scss';
 import AchievementCard from '../components/AchievementCard';
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
 import {Container, Row, Col, Image} from 'react-bootstrap';
