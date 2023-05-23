@@ -7,6 +7,7 @@ import Image from 'react-bootstrap/Image';
 
 function Dashboard(props){
     return(
+        <div className="Dashboard">
              <Container fluid>
                 <Row id="Row">
                   <Col>
@@ -33,6 +34,7 @@ function Dashboard(props){
                   </Col>
                 </Row>
               </Container>
+        </div>
     )
 }
 

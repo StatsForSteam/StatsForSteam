@@ -77,7 +77,7 @@ function Achievements(){
       return(
         <div>
 
-          <div className="Dashboard">
+        
           <Dashboard
             percentage={percentage}
             achievedLen={achievedLen}
@@ -88,7 +88,7 @@ function Achievements(){
             lastplayed={lastplayed}
             header={header}
           />
-            </div>
+            
 
               <div className="searchAndradio"> 
                 <Form>

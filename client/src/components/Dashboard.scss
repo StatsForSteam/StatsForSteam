@@ -1,0 +1,9 @@
+@import "../index.scss";
+
+.Dashboard{
+    margin: 10px;
+    padding: 10px;
+    border: 3px solid $primary-color;
+    border-radius: 10px;
+    background-color: $secondary-color;
+}
