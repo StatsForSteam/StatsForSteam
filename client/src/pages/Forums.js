@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
+import Post from "../components/Post";
 
 function Forums() {
     const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
@@ -15,9 +16,11 @@ function Forums() {
             lastplayed={lastplayed}
             header={header}
           />
-
+    <Post/>
+    <Post/>
     </div>
   );
 }
 
 export default Forums;
+

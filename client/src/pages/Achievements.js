@@ -12,10 +12,20 @@ import Loading from "../components/Loading";
 import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/bs";
 import { IconContext } from "react-icons";
 import Dashboard from "../components/Dashboard";
+import ForumsButton from '../components/buttons/ForumsButton';
 
 function Achievements(){
-
+  //unwrap props for dashboard use
   const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
+  //repack props to pass to forums through button
+  const props = {
+    appid: appid,
+    name: name,
+    header: header,
+    playtime: playtime,
+    lastplayed: lastplayed
+  };
+
   const [achieved, setAchieved] = useState(),
         [notachieved, setnotAchieved] = useState(),
         [achievedLen , setAchievedLen] = useState(),
@@ -87,8 +97,8 @@ function Achievements(){
             lastplayed={lastplayed}
             header={header}
           />
-            
-
+            <ForumsButton props={props} />
+                
               <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
@@ -154,6 +164,7 @@ function Achievements(){
                 </Row>
               </Container>
             </div>
+            <ForumsButton props={props} />
         </div>
       )
   }
