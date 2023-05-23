@@ -6,6 +6,7 @@ import Authentication from './pages/Authentication';
 import Achievements from './pages/Achievements';
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute';
+import Forums from './pages/Forums';
 
 function App() {
   return(
@@ -19,6 +20,7 @@ function App() {
             </PrivateRoute>
             } />
             <Route exact path="/Achievements" element={<Achievements />} />
+            <Route exact path="/Forums" element={<Forums/>} />
             <Route exact path="/authentication" element={<Authentication />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/404" element={<NotFound />} />

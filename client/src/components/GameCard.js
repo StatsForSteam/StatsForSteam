@@ -4,6 +4,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./GameCard.scss";
 import { useState } from 'react';
 import '../index.scss';
+import ForumsButton from './buttons/ForumsButton';
+import {Row, Col} from 'react-bootstrap';
 
 function GameCard(props) {
   const [hasHeader, setHasHeader] = useState(true);
@@ -25,9 +27,10 @@ function GameCard(props) {
             <div style={{ color: 'var(--quaternary-color)' }}>Currently: {props.playtime} hours</div>
             <div style={{ color: 'var(--quaternary-color)' }}>Last Played: {props.lastplayed}</div>
           </div>
-          <div>
+          <Row xs={2} md={2} lg={2} className="g-2">
             <ViewAchievements props={props} />
-          </div>
+            <ForumsButton props={props} />
+          </Row>
         </div>
       </Card.Text>
     </Card.Body>

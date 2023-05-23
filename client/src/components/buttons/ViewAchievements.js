@@ -1,4 +1,4 @@
-import './ViewAchievements.scss';
+import './GameCardButton.scss';
 import { Link } from 'react-router-dom';
 import {ImStatsBars} from 'react-icons/im';
 
@@ -9,7 +9,7 @@ function ViewAchievements(props){
                 to={"/Achievements"}
                 state={props}
             >
-                <button className="viewAchievementsButton"><ImStatsBars/></button>
+                <button className="GameCardButton"><ImStatsBars/></button>
             </Link>
         </div>
     )
