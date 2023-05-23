@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col, Image} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
 import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/bs";
@@ -98,8 +98,8 @@ function Achievements(){
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
                     </ul>
                   </Col>
-                  <Col>
-                    <img alt="steam header" id="gameImg"src={header}></img> 
+                  <Col xs="auto">
+                    <Image fluid="true" id="gameImg" alt="steam header" src={header}></Image> 
                   </Col>
                 </Row>
               </Container>
@@ -164,8 +164,8 @@ function Achievements(){
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
                     </ul>
                   </Col>
-                  <Col>
-                    <img alt="steam header" id="gameImg"src={header}></img> 
+                  <Col xs="auto">
+                    <Image fluid="true" id="gameImg" alt="steam header" src={header}></Image> 
                   </Col>
                 </Row>
               </Container>
