@@ -95,6 +95,28 @@ def getAchievements():
         j+=1
     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
 
+def getDashboard():
+    data = request.get_json()
+    appid = data['appid']
+    hasAchievements = data['hasAchievements']
+    #URL2 is for player count
+    url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key=" + key + "&appid=" + str(appid)
+    if not hasAchievements:
+        # Return only the player count when hasAchievements is False
+        data_json2 = json.loads(urlopen(url2).read())
+        return json.dumps({"playerCount": data_json2['response']['player_count']})
+    #URL is for achievements
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
+    data_json = json.loads(urlopen(url).read())
+    data_json2 = json.loads(urlopen(url2).read())
+    j=0
+    k=0
+    for i in data_json['playerstats']['achievements']:
+        if(i['achieved'] == 1):
+            j+=1
+        k+=1
+    return json.dumps({"achievedlength": j, "notachievedlength": k,"achievementPercentage":  int((j/(j+k)*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
+
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"

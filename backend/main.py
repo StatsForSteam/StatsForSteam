@@ -32,6 +32,7 @@ app.add_url_rule('/getSessionSID', view_func=getData.getSessionSID)
 app.add_url_rule('/getUserProfilePicture', view_func=getData.getUserProfilePicture)
 app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
+app.add_url_rule('/getDashboard', view_func=getData.getAchievements, methods=["POST"])
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
