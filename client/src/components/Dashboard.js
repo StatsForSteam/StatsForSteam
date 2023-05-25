@@ -10,6 +10,7 @@ function Dashboard(props){
         <div className="Dashboard">
              <Container fluid>
                 <Row id="Row">
+                  {props.hasAchievements ? (
                   <Col>
                       <div className="Circle">
                         <CircularProgressbar value={props.percentage} background={true} text={`${props.percentage}%`} styles={buildStyles({
@@ -20,7 +21,10 @@ function Dashboard(props){
                                               })}/>
                       </div>
                       <h3>{props.achievedLen} / {props.achievedLen+props.notachievedLen} completed</h3>
-                  </Col>
+                  </Col> ) : (
+                    <Col>
+                    <h1>No achievements</h1>
+                    </Col> )}
                   <Col>
                     <h1>{props.name}</h1>
                     <ul>

@@ -3,7 +3,8 @@ import Dashboard from "../components/Dashboard";
 import Post from "../components/Post";
 
 function Forums() {
-    const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
+    const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
+    console.log(hasAchievements)
   return (
     <div>
      <Dashboard
@@ -15,6 +16,7 @@ function Forums() {
             playerCount={"fetchme"}
             lastplayed={lastplayed}
             header={header}
+            hasAchievements={hasAchievements}
           />
     <Post/>
     <Post/>

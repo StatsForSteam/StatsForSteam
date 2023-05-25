@@ -6,24 +6,23 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Container, Row, Col, Image} from 'react-bootstrap';
+import {Row} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
-import {BsFillClockFill,BsPeopleFill,BsFillCalendarWeekFill} from "react-icons/bs";
-import { IconContext } from "react-icons";
 import Dashboard from "../components/Dashboard";
 import ForumsButton from '../components/buttons/ForumsButton';
 
 function Achievements(){
   //unwrap props for dashboard use
-  const { state: { props: { appid, name, header, playtime, lastplayed } } } = useLocation();
+  const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
   //repack props to pass to forums through button
   const props = {
     appid: appid,
     name: name,
     header: header,
     playtime: playtime,
-    lastplayed: lastplayed
+    lastplayed: lastplayed,
+    hasAchievements: hasAchievements
   };
 
   const [achieved, setAchieved] = useState(),
@@ -34,7 +33,6 @@ function Achievements(){
         [searchTerm, setSearchTerm] = useState(""),
         [playerCount, setPlayerCount] = useState(0),
         [dataFetched, setDataFetched] = useState(false),
-        [hasAchievements, setHasAchievements] = useState(false),
         [showLocked, setShowLocked] = useState(true),
         [showUnlocked, setShowUnlocked] = useState(true);
 
@@ -44,14 +42,13 @@ function Achievements(){
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },
     }).then(response =>
-      response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount, hasAchievements }) => {
+      response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount}) => {
         setAchieved(achieved);
         setnotAchieved(notachieved);
         setAchievedLen(achievedlength);
         setnotAchievedLen(notachievedlength);
         setPercentage(achievementPercentage);
         setPlayerCount(playerCount);
-        setHasAchievements(hasAchievements);
         setDataFetched(true);
       }))
   }, [appid]);
@@ -82,11 +79,9 @@ function Achievements(){
       setShowUnlocked(!showUnlocked);}
     }
 
-  if (hasAchievements) {
+
       return(
         <div>
-
-        
           <Dashboard
             percentage={percentage}
             achievedLen={achievedLen}
@@ -96,6 +91,7 @@ function Achievements(){
             playerCount={playerCount}
             lastplayed={lastplayed}
             header={header}
+            hasAchievements={hasAchievements}
           />
             <ForumsButton props={props} />
                 
@@ -139,35 +135,11 @@ function Achievements(){
                 </Row>
                 </div>
         </div> 
-      ) }
-
-//dashboard for no achievements
-      return(
-        <div>
-           <div className="Dashboard">
-             <Container fluid>
-                <Row id="Row">
-                  <Col> 
-                     <h1>This game has no achievements</h1>
-                  </Col>
-                  <Col>
-                    <h1>{name}</h1>
-                    <ul>
-                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillClockFill size={40}/></IconContext.Provider> <span className="stats-spacing"> {playtime} <span className="stats-text"> hrs on record </span></span></h3> 
-                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsPeopleFill size={40}/></IconContext.Provider> <span className="stats-spacing">{playerCount} <span className="stats-text"> current players</span></span></h3>
-                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {lastplayed} <span className="stats-text"> last played</span></span></h3> 
-                    </ul>
-                  </Col>
-                  <Col xs="auto">
-                    <Image fluid="true" id="gameImg" alt="steam header" src={header}></Image> 
-                  </Col>
-                </Row>
-              </Container>
-            </div>
-            <ForumsButton props={props} />
-        </div>
-      )
+      ) 
   }
+
+
+   
 
 export default Achievements;
 
