@@ -36,25 +36,37 @@ function Achievements(){
         [showLocked, setShowLocked] = useState(true),
         [showUnlocked, setShowUnlocked] = useState(true);
 
-  
-  useEffect(() => {
-    if(hasAchievements){
-    fetch('/getAchievements', {
-      method: "POST",
-      body: JSON.stringify(appid),
-      headers: { "content-type": "application/json" },
-    }).then(response =>
-      response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount}) => {
-        setAchieved(achieved);
-        setnotAchieved(notachieved);
-        setAchievedLen(achievedlength);
-        setnotAchievedLen(notachievedlength);
-        setPercentage(achievementPercentage);
-        setPlayerCount(playerCount);
-        setDataFetched(true);
-      }))}
-      else{ setDataFetched(true);}
-  }, [appid]);
+        useEffect(() => {
+          if (hasAchievements) {
+            fetch('/getAchievements', {
+              method: "POST",
+              body: JSON.stringify({ appid, hasAchievements }),
+              headers: { "content-type": "application/json" },
+            }).then(response =>
+              response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount }) => {
+                setAchieved(achieved);
+                setnotAchieved(notachieved);
+                setAchievedLen(achievedlength);
+                setnotAchievedLen(notachievedlength);
+                setPercentage(achievementPercentage);
+                setPlayerCount(playerCount);
+                setDataFetched(true);
+              })
+            );
+          } else {
+            fetch('/getAchievements', {
+              method: "POST",
+              body: JSON.stringify({ appid, hasAchievements }),
+              headers: { "content-type": "application/json" },
+            }).then(response =>
+              response.json().then(({ playerCount }) => {
+                setPlayerCount(playerCount);
+                setDataFetched(true);
+              })
+            );
+          }
+        }, [appid, hasAchievements]);
+        
   
 
   if (!dataFetched) {

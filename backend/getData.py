@@ -62,19 +62,24 @@ def getLockedIcons(appid):
 
     
 def getAchievements():
-    appid = request.get_json()
+    data = request.get_json()
+    appid = data['appid']
+    hasAchievements = data['hasAchievements']
+    #URL2 is for player count
+    url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key=" + key + "&appid=" + str(appid)
+
+    if not hasAchievements:
+        # Return only the player count when hasAchievements is False
+        data_json2 = json.loads(urlopen(url2).read())
+        return json.dumps({"playerCount": data_json2['response']['player_count']})
+
     #URL is for achievements
     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
-    #URL2 is for player count 
-    url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key="+key+"&appid=+"+str(appid)
     #URL3 is for achievement percentages
     url3 = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?access_token="+key+"&gameid=+"+str(appid)
-    response = urlopen(url)
-    response2 = urlopen(url2)
-    response3 = urlopen(url3)
-    data_json = json.loads(response.read())
-    data_json2 = json.loads(response2.read())
-    data_json3 = json.loads(response3.read())
+    data_json = json.loads(urlopen(url).read())
+    data_json2 = json.loads(urlopen(url2).read())
+    data_json3 = json.loads(urlopen(url3).read())
     achieved = []
     notachieved = []
     icons = getUnlockedIcons(str(appid))
@@ -88,7 +93,7 @@ def getAchievements():
                 else:
                     notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1),False])
         j+=1
-    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
+    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
 
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
