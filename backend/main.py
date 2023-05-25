@@ -34,4 +34,4 @@ app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 
 if __name__ == "__main__":
-    app.run(debug = True, host='0.0.0.0', use_reloader=True)
+    app.run(debug=True)
