@@ -62,42 +62,34 @@ def getLockedIcons(appid):
 
     
 def getAchievements():
-    try:
-        appid = request.get_json()
-        #URL is for achievements
-        url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
-        #URL2 is for player count 
-        url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key="+key+"&appid=+"+str(appid)
-        #URL3 is for achievement percentages
-        url3 = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?access_token="+key+"&gameid=+"+str(appid)
-        response = urlopen(url)
-        response2 = urlopen(url2)
-        response3 = urlopen(url3)
-        data_json = json.loads(response.read())
-        data_json2 = json.loads(response2.read())
-        data_json3 = json.loads(response3.read())
-    except:
-        response2 = urlopen(url2)
-        data_json2 = json.loads(response2.read())
-        return json.dumps({"hasAchievements":False,"playerCount": data_json2['response']['player_count']}) 
-    try:
-        achieved = []
-        notachieved = []
-        icons = getUnlockedIcons(str(appid))
-        greyIcons = getLockedIcons(str(appid))
-        j=0
-        for i in data_json['playerstats']['achievements']:
-            for k in data_json3['achievementpercentages']['achievements']:
-                if(i['apiname'] == k['name']):
-                    if(i['achieved'] == 1):
-                        achieved.append([i['name'],i['description'],icons[j],round(k['percent'],1),True])
-                    else:
-                        notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1),False])
-            j+=1
-        return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
-    except:
-        return json.dumps({"hasAchievements":False})
-  
+    appid = request.get_json()
+    #URL is for achievements
+    url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
+    #URL2 is for player count 
+    url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key="+key+"&appid=+"+str(appid)
+    #URL3 is for achievement percentages
+    url3 = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?access_token="+key+"&gameid=+"+str(appid)
+    response = urlopen(url)
+    response2 = urlopen(url2)
+    response3 = urlopen(url3)
+    data_json = json.loads(response.read())
+    data_json2 = json.loads(response2.read())
+    data_json3 = json.loads(response3.read())
+    achieved = []
+    notachieved = []
+    icons = getUnlockedIcons(str(appid))
+    greyIcons = getLockedIcons(str(appid))
+    j=0
+    for i in data_json['playerstats']['achievements']:
+        for k in data_json3['achievementpercentages']['achievements']:
+            if(i['apiname'] == k['name']):
+                if(i['achieved'] == 1):
+                    achieved.append([i['name'],i['description'],icons[j],round(k['percent'],1),True])
+                else:
+                    notachieved.append([i['name'],i['description'],greyIcons[j],round(k['percent'],1),False])
+        j+=1
+    return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count'], "hasAchievements":True}, ensure_ascii=False)
+
 #Gets all the info for each gamecard [title,appid,headerurl]
 def getUserGames():
     appID = "temp"
@@ -107,7 +99,6 @@ def getUserGames():
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
     for i in data_json['response']['games']:
-            print(hasAchievements(i), i['name'])
             #if the game has not been pla)yed
             if(i['playtime_forever'] == 0):
                 notPlayedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])),0,0,hasAchievements(i)])

@@ -36,7 +36,9 @@ function Achievements(){
         [showLocked, setShowLocked] = useState(true),
         [showUnlocked, setShowUnlocked] = useState(true);
 
+  
   useEffect(() => {
+    if(hasAchievements){
     fetch('/getAchievements', {
       method: "POST",
       body: JSON.stringify(appid),
@@ -50,7 +52,8 @@ function Achievements(){
         setPercentage(achievementPercentage);
         setPlayerCount(playerCount);
         setDataFetched(true);
-      }))
+      }))}
+      else{ setDataFetched(true);}
   }, [appid]);
   
 
