@@ -3,18 +3,21 @@ import Dashboard from "../components/Dashboard";
 import Post from "../components/Post";
 import { useState, useEffect } from "react";
 import Loading from "../components/Loading";
+import CreateDiscussionButton from "../components/buttons/CreateDiscussionButton";
+import CreatePost from "../components/CreatePost";
+import Form from "react-bootstrap/Form";
 
 function Forums() {
     const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
-
     const [achievedLen , setAchievedLen] = useState(),
           [notachievedLen , setnotAchievedLen] = useState(),
           [percentage, setPercentage] = useState(0),
           [playerCount, setPlayerCount] = useState(0),
           [dataFetched, setDataFetched] = useState(false);
         
-
-
+         const [searchTerm, setSearchTerm] = useState("");
+         const [showPosts, setShowPosts] = useState(true);
+          const [showCreateMenu, setShowCreateMenu] = useState(false);
         useEffect(() => {
           if (hasAchievements) {
             fetch('/getDashboard', {
@@ -50,10 +53,14 @@ function Forums() {
           );
         }
 
-
+ 
+function hidePosts() {
+  setShowPosts(!showPosts);
+  setShowCreateMenu(!showCreateMenu);
+}
 
   return (
-    <div>
+    <>
      <Dashboard
             percentage={percentage}
             achievedLen={achievedLen}
@@ -65,9 +72,22 @@ function Forums() {
             header={header}
             hasAchievements={hasAchievements}
           />
+          <div className="searchAndradio"> 
+                <Form>
+                  <Form.Group>
+                      <Form.Control size="lg" type="input" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
+                  </Form.Group>                
+                </Form>
+
+                <CreateDiscussionButton handlePress={hidePosts} />
+            </div>
+   {showPosts && ( <div className = "card-container">
     <Post/>
     <Post/>
-    </div>
+    </div> )}
+
+    {showCreateMenu && ( <CreatePost hidePosts={hidePosts}/>)}
+    </>
   );
 }
 

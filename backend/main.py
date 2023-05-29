@@ -1,4 +1,4 @@
-import OpenIDAuth, json, getData
+import OpenIDAuth, json, getData, forums
 from database import mysql
 from flask import Flask, session, g, redirect
 from flask_session import Session
@@ -33,6 +33,7 @@ app.add_url_rule('/getUserProfilePicture', view_func=getData.getUserProfilePictu
 app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/getDashboard', view_func=getData.getAchievements, methods=["POST"])
+app.add_url_rule('/createPost', view_func=forums.createPost, methods=["POST"])
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
