@@ -9,18 +9,48 @@ def createPost():
     data = request.get_json()
     title = data['title']
     content = data['content']
+    appid = data['appid']
+    
     cursor = mysql.connection.cursor()
-    insert_statement = "INSERT INTO test (title, content) VALUES (%s, %s)"
-    data = (title, content)
-    cursor.execute(insert_statement, data)
+
+    # Insert data into test1 table
+    insert_statement_test1 = "INSERT INTO test1 (title, content) VALUES (%s, %s)"
+    data_test1 = (title, content)
+    cursor.execute(insert_statement_test1, data_test1)
     mysql.connection.commit()
+
+    # Get the generated postid from test1 table
+    print(cursor.lastrowid)
+    postid = cursor.lastrowid
+
+    # Insert data into test1p2 table
+    insert_statement_test1p2 = "INSERT INTO test1p2 (postid, appid) VALUES (%s, %s)"
+    data_test1p2 = (postid, appid)
+    cursor.execute(insert_statement_test1p2, data_test1p2)
+    mysql.connection.commit()
+
     cursor.close()
     return '', 204
 
 
+
+
 def getPosts():
+    data = request.get_json()
+    appid = data['appid']
+
+    
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM test")
+    
+    select_statement = """
+    SELECT test1.title, test1.content
+    FROM test1
+    JOIN test1p2 ON test1.postid = test1p2.postid
+    WHERE test1p2.appid = %s
+    """
+    data_select = (appid,)
+    cursor.execute(select_statement, data_select)
+    
     rows = cursor.fetchall()
     cursor.close()
 
@@ -28,10 +58,10 @@ def getPosts():
     posts = []
     for row in rows:
         post = {
-            'postid': row[0],
-            'title': row[1],
-            'content': row[2]
+            'title': row[0],
+            'content': row[1]
         }
         posts.append(post)
 
     return jsonify(posts)
+

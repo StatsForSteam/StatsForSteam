@@ -49,7 +49,13 @@ function Forums() {
         }, []);
 
         useEffect(() => {
-          fetch('/getPosts')
+          fetch('/getPosts', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ appid })
+          })
             .then(response => response.json())
             .then(data => {
               // Handle the fetched data here
@@ -106,7 +112,7 @@ function hidePosts() {
       ))}
     </div> )}
 
-    {showCreateMenu && ( <CreatePost hidePosts={hidePosts}/>)}
+    {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
     </>
   );
 }

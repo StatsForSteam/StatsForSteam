@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../index.scss';
 
-function CreatePost({ hidePosts }) {
+function CreatePost(props) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
+  const { hidePosts, appid } = props;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,7 +16,8 @@ function CreatePost({ hidePosts }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title,
-          content
+          content,
+          appid
         })
       });
 
