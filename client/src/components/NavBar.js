@@ -10,20 +10,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 function NavBar(){
-  const [Username, setUsername] = useState();
-  const [ProfilePicture, setProfilePicture] = useState();
   const location = useLocation()
 
-
-  useEffect(() => {
-    if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")) {
-      fetch('/getUserData')
-        .then(response => response.json()).then(data => {
-          setUsername(data.username);
-          setProfilePicture(data.profile_picture);
-        })}
-  }, [location]);
-    
     if ((location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
       return null;
     }
@@ -53,10 +41,10 @@ function NavBar(){
         </Nav>
 
         <Navbar.Text style={{ color: 'var(--tertiary-color)', fontWeight: 500 }}>
-          {Username}
+          {localStorage.getItem('username')}
         </Navbar.Text>
         <Navbar.Text>
-          <img alt="user steam logo" className="pfp" src={ProfilePicture} />
+          <img alt="user steam logo" className="pfp" src={localStorage.getItem('profilePicture')} />
         </Navbar.Text>
       </Navbar.Collapse>
     </Navbar>

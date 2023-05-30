@@ -6,10 +6,19 @@ function Authentication() {
     const [successfulLogin, setSuccessfulLogin] = useState(null);
 
     useEffect(() => {
-        fetch('/userAuthentication').then(response => 
-            response.json().then(data => {
-                setSuccessfulLogin(data)
-        }))
+        fetch('/userAuthentication')
+    .then(response => response.json())
+    .then(data => {
+        setSuccessfulLogin(data);
+        
+        fetch('/getUserData')
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('profilePicture', data.profile_picture);
+            });
+    });
+
       }, []);
 
     return (
