@@ -39,11 +39,10 @@ def getPosts():
     data = request.get_json()
     appid = data['appid']
 
-    
     cursor = mysql.connection.cursor()
     
     select_statement = """
-    SELECT test1.title, test1.content
+    SELECT test1.postid, test1.title, test1.content
     FROM test1
     JOIN test1p2 ON test1.postid = test1p2.postid
     WHERE test1p2.appid = %s
@@ -58,10 +57,12 @@ def getPosts():
     posts = []
     for row in rows:
         post = {
-            'title': row[0],
-            'content': row[1]
+            'postid': row[0],
+            'title': row[1],
+            'content': row[2]
         }
         posts.append(post)
 
     return jsonify(posts)
+
 
