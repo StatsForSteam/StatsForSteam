@@ -18,6 +18,7 @@ function Forums() {
          const [searchTerm, setSearchTerm] = useState("");
          const [showPosts, setShowPosts] = useState(true);
           const [showCreateMenu, setShowCreateMenu] = useState(false);
+          const [posts, setPosts] = useState([]);
         useEffect(() => {
           if (hasAchievements) {
             fetch('/getDashboard', {
@@ -45,6 +46,20 @@ function Forums() {
               })
             );
           }
+        }, []);
+
+        useEffect(() => {
+          fetch('/getPosts')
+            .then(response => response.json())
+            .then(data => {
+              // Handle the fetched data here
+              console.log(data);
+              setPosts(data);
+            })
+            .catch(error => {
+              // Handle any errors that occur during the fetch
+              console.error(error);
+            });
         }, []);
 
         if (!dataFetched) {
@@ -82,8 +97,13 @@ function hidePosts() {
                 <CreateDiscussionButton handlePress={hidePosts} />
             </div>
    {showPosts && ( <div className = "card-container">
-    <Post/>
-    <Post/>
+   {posts.map(post => (
+        <Post
+          key={post.postid}
+          title={post.title}
+          content={post.content}
+        />
+      ))}
     </div> )}
 
     {showCreateMenu && ( <CreatePost hidePosts={hidePosts}/>)}

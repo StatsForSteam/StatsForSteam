@@ -4,9 +4,9 @@ function Post(props) {
     return (
         <div>
             <Card>
-                <Card.Header>Title</Card.Header>
+                <Card.Header>{props.title}</Card.Header>
                 <Card.Body>
-                   Post content 
+                   {props.content}
                 </Card.Body>
             </Card>
         </div>

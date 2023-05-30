@@ -34,6 +34,7 @@ app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/getDashboard', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/createPost', view_func=forums.createPost, methods=["POST"])
+app.add_url_rule('/getPosts', view_func=forums.getPosts)
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
