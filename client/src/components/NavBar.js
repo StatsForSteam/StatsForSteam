@@ -15,17 +15,14 @@ function NavBar(){
   const location = useLocation()
 
 
-    useEffect(() => {
-      if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
-        Promise.all([
-          fetch('/getUserName'),
-          fetch('/getUserProfilePicture')
-        ]).then(([userResponse, userPfpResponse]) => {
-          userResponse.json().then(data => setUsername(data.username));
-          userPfpResponse.json().then(data => setProfilePicture(data.pfp));
-        })
-      }
-    }, [location]);
+  useEffect(() => {
+    if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")) {
+      fetch('/getUserData')
+        .then(response => response.json()).then(data => {
+          setUsername(data.username);
+          setProfilePicture(data.profile_picture);
+        })}
+  }, [location]);
     
     if ((location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
       return null;
