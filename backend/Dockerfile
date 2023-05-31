@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -r requirements.txt
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "wsgi:app", "-w 2", "-b 0.0.0.0:5000", "-t 30"]
