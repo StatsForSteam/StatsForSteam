@@ -15,27 +15,10 @@ def steamid():
 
 key = SteamAPIJson["STEAMAPIKEY"]
 
-def getUserData():
-    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
-    response = urlopen(url)
-    data_json = json.loads(response.read())
-    
-    username = data_json['response']['players'][0]['personaname']
-    profile_picture = data_json['response']['players'][0]['avatarfull']
-    
-    user_data = {
-        "username": username,
-        "profile_picture": profile_picture
-    }
-    
-    return json.dumps(user_data)
-
 
 def getSessionSID():
     data = {"sessionSID" : session.sid}
     return json.dumps(data)
-
-
 
 
 #RETURNS UNLOCKED/GREYED OUT ACHIEVMENT ICON URL

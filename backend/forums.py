@@ -3,7 +3,56 @@ from urllib.request import urlopen
 from flask import request, session, g
 from flask_mysqldb import MySQL
 from flask import jsonify
+
 mysql = MySQL()
+
+with open('SteamAPI.json') as SteamAPIFile:
+    SteamAPIJson = json.load(SteamAPIFile)
+key = SteamAPIJson["STEAMAPIKEY"]
+
+def steamid():
+    from main import app
+    with app.app_context():
+        return(session['id'])
+    
+def getUserData():
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    username = data_json['response']['players'][0]['personaname']
+    pfp = data_json['response']['players'][0]['avatarfull'] 
+    return username, pfp   
+
+def manageUsers():
+    username, pfp = getUserData()
+    steamID = steamid()  
+    cursor = mysql.connection.cursor()
+
+    # Check if steamID already exists in the database
+    query = "SELECT name, pfp FROM users WHERE steamid = %s"
+    cursor.execute(query, (steamID,))
+    result = cursor.fetchone()
+
+    if result:
+        # SteamID already exists, compare name and pfp
+        db_name, db_pfp = result
+
+        if db_name != username or db_pfp != pfp:
+            # Name or pfp differs, update the database
+            update_query = "UPDATE users SET name = %s, pfp = %s WHERE steamid = %s"
+            cursor.execute(update_query, (username, pfp, steamID))
+            mysql.connection.commit()
+            print("Updated user data in the database")
+
+    else:
+        # SteamID doesn't exist, insert new record
+        insert_query = "INSERT INTO users (steamid, name, pfp) VALUES (%s, %s, %s)"
+        cursor.execute(insert_query, (steamID, username, pfp))
+        mysql.connection.commit()
+
+    cursor.close()
+    return json.dumps({'username': username, 'pfp': pfp})
+
 
 def createPost():
     data = request.get_json()

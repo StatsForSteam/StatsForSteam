@@ -68,6 +68,9 @@ function Forums() {
             });
         }, []);
 
+    
+        
+
         if (!dataFetched) {
           return (
             <Loading/>

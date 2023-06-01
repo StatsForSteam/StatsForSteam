@@ -28,12 +28,13 @@ app.add_url_rule('/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/logout', view_func=OpenIDAuth.logout)
 app.add_url_rule('/authorize', view_func=OpenIDAuth.authorize)
 app.add_url_rule('/getSessionSID', view_func=getData.getSessionSID)
-app.add_url_rule('/getUserData', view_func=getData.getUserData)
 app.add_url_rule('/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/getDashboard', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/createPost', view_func=forums.createPost, methods=["POST"])
 app.add_url_rule('/getPosts', view_func=forums.getPosts, methods=["POST"])
+app.add_url_rule('/manageUsers', view_func=forums.manageUsers)
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
+
