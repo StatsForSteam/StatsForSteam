@@ -16,5 +16,3 @@ def getSteamID(session):
     session = (str(session))
     cursor.execute("select steamid from sessionLogin where sessionid=%s limit 0, 1", (session,))
     return(cursor.fetchone())
-    
-
