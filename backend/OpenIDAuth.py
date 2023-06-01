@@ -2,6 +2,9 @@ from flask import redirect, request, session, url_for, g
 from json import dumps, loads
 from urllib.parse import urlencode
 import database
+from redis import Redis
+
+redis = Redis()
 
 def checkUserStatus():
     data = {
@@ -36,11 +39,15 @@ def login():
 
 def authorize():
     Received_Steam_Info_JSON = loads(dumps(request.args))
+    print(session.sid)
     SteamID = Received_Steam_Info_JSON['openid.claimed_id'].strip('https://steamcommunity.com/openid/id/')
-    database.addUser(Received_Steam_Info_JSON['session'], int(SteamID))
+    database.addUser(session.sid, int(SteamID))
     return redirect("http://localhost:3000/authentication")
 
 def userAuthentication():
+    value_bytes = redis.get('test_key')
+    value_string = value_bytes.decode('utf-8')
+    print(value_string)
     steamid = database.getSteamID(session.sid)[0]
 
     if (len(str(steamid)) == 17):

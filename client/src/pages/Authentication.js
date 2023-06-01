@@ -6,7 +6,7 @@ function Authentication() {
     const [successfulLogin, setSuccessfulLogin] = useState(null);
 
     useEffect(() => {
-        fetch('/userAuthentication').then(response => 
+        fetch(`${process.env.REACT_APP_API_URL}/userAuthentication`).then(response => 
             response.json().then(data => {
                 setSuccessfulLogin(data)
         }))

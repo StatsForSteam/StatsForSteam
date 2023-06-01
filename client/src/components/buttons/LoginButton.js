@@ -7,7 +7,7 @@ function LoginButton(props){
     return (
         props.sessionSID ? (
             <div className="loginButtonFlex">
-                <Link to={"http://172.18.0.3:5000/login?session=" + props.sessionSID}>
+                <Link to={`${process.env.REACT_APP_API_URL}/login?session=` + props.sessionSID}>
                     <button style={{backgroundColor: 'var(--tertiary-color)'}}type="button" className="btn btn-primary btn-lg">
                         <div className="loginInnerButtonFlex">
                             Login with Steam

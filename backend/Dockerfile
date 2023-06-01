@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -r requirements.txt
 
-CMD ["gunicorn", "wsgi:app", "-w 2", "-b 0.0.0.0:5000", "-t 30"]
+CMD ["gunicorn", "--forwarded-allow-ips='*'", "wsgi:app", "-w 2", "-b 0.0.0.0:5000", "-t 30"]

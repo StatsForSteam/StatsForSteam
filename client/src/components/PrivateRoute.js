@@ -10,7 +10,7 @@ class PrivateRoute extends Component{
     }
      
     componentWillMount() {
-        fetch('/checkUserStatus').then(response => 
+        fetch(`${process.env.REACT_APP_API_URL}/checkUserStatus`).then(response => 
             response.json().then(data => {
                 this.setState = {
                     loggedin : data['userLogged']

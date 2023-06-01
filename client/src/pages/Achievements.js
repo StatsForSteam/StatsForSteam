@@ -29,7 +29,7 @@ function Achievements(){
         [showUnlocked, setShowUnlocked] = useState(true);
 
   useEffect(() => {
-    fetch('/getAchievements', {
+    fetch(`${process.env.REACT_APP_API_URL}/getAchievements`, {
       method: "POST",
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },

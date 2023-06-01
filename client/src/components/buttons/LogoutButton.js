@@ -8,7 +8,7 @@ function LogoutButton(){
     const navigate = useNavigate();
 
     const handleClick = () => {
-        fetch('/logout').then(response => 
+        fetch(`${process.env.REACT_APP_API_URL}/logout`).then(response => 
             response.json().then(data => {
                 if (data){
                     navigate('/')

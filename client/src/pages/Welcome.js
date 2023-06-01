@@ -9,7 +9,7 @@ function Welcome() {
   const [sessionSID, setSessionSID] = useState(false);
 
   useEffect(() => {
-      fetch('/checkUserStatus').then(response => 
+      fetch(`${process.env.REACT_APP_API_URL}/checkUserStatus`).then(response => 
         response.json().then(data => {
           setUserLoggedIn(data['userLogged'])
 

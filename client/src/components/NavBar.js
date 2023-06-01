@@ -18,8 +18,8 @@ function NavBar(){
     useEffect(() => {
       if (!(location.pathname === "/" || location.pathname === "/404" || location.pathname === "/authentication")){
         Promise.all([
-          fetch('/getUserName'),
-          fetch('/getUserProfilePicture')
+          fetch(`${process.env.REACT_APP_API_URL}/getUserName`),
+          fetch(`${process.env.REACT_APP_API_URL}/getUserProfilePicture`)
         ]).then(([userResponse, userPfpResponse]) => {
           userResponse.json().then(data => setUsername(data.username));
           userPfpResponse.json().then(data => setProfilePicture(data.pfp));
