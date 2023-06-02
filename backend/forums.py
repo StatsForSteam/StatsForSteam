@@ -4,6 +4,15 @@ from flask import request, session, g
 from flask_mysqldb import MySQL
 from flask import jsonify
 
+
+# .strftime("%B %e, %Y").lstrip('0').replace('  ', ' ')
+from datetime import datetime
+
+def getDate():
+    current_date = datetime.now()
+    formatted_date = current_date.strftime("%B %e, %Y").replace('  ', ' ').strip()
+    return formatted_date
+
 mysql = MySQL()
 
 with open('SteamAPI.json') as SteamAPIFile:
@@ -60,12 +69,12 @@ def createPost():
     content = data['content']
     appid = data['appid']
     steamID = steamid()
-    
+    date = getDate()
     cursor = mysql.connection.cursor()
 
     # Insert data into posts table
-    insert_statement_posts = "INSERT INTO posts (title, content) VALUES (%s, %s)"
-    data_posts = (title, content)
+    insert_statement_posts = "INSERT INTO posts (title, content, date) VALUES (%s, %s, %s)"
+    data_posts = (title, content, date)
     cursor.execute(insert_statement_posts, data_posts)
     mysql.connection.commit()
 
@@ -92,7 +101,7 @@ def getPosts():
     cursor = mysql.connection.cursor()
     
     select_statement = """
-    SELECT posts.postid, posts.title, posts.content, users.name, users.pfp
+    SELECT posts.postid, posts.title, posts.content, users.name, users.pfp, posts.date
     FROM posts
     JOIN postrelation ON posts.postid = postrelation.postid
     JOIN users ON postrelation.steamid = users.steamid
@@ -112,7 +121,8 @@ def getPosts():
             'title': row[1],
             'content': row[2],
             'username': row[3],
-            'pfp': row[4]
+            'pfp': row[4],
+            'date': row[5]
         }
         posts.append(post)
 

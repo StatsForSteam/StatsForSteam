@@ -97,10 +97,12 @@ def getDashboard():
     data_json2 = json.loads(urlopen(url2).read())
     j=0
     k=0
+
     for i in data_json['playerstats']['achievements']:
         if(i['achieved'] == 1):
             j+=1
-        k+=1
+        else:
+            k+=1
     return json.dumps({"achievedlength": j, "notachievedlength": k,"achievementPercentage":  int((j/(j+k)*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
 
 #Gets all the info for each gamecard [title,appid,headerurl]

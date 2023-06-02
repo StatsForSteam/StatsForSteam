@@ -33,6 +33,7 @@ function Post(props) {
         </Card.Body>
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
         Reply <MdExpandMore size={30} /> 
+        {props.date}
         </Card.Footer>
       </Card>
     )

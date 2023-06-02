@@ -114,6 +114,7 @@ function hidePosts() {
           content={post.content}
           username={post.username}
           pfp={post.pfp}
+          date={post.date}
         />
       ))}
    </Row> </div> )}
