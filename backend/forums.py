@@ -59,27 +59,28 @@ def createPost():
     title = data['title']
     content = data['content']
     appid = data['appid']
+    steamID = steamid()
     
     cursor = mysql.connection.cursor()
 
-    # Insert data into test1 table
-    insert_statement_test1 = "INSERT INTO test1 (title, content) VALUES (%s, %s)"
-    data_test1 = (title, content)
-    cursor.execute(insert_statement_test1, data_test1)
+    # Insert data into posts table
+    insert_statement_posts = "INSERT INTO posts (title, content) VALUES (%s, %s)"
+    data_posts = (title, content)
+    cursor.execute(insert_statement_posts, data_posts)
     mysql.connection.commit()
 
-    # Get the generated postid from test1 table
-    print(cursor.lastrowid)
+    # Get the generated postid from posts table
     postid = cursor.lastrowid
 
-    # Insert data into test1p2 table
-    insert_statement_test1p2 = "INSERT INTO test1p2 (postid, appid) VALUES (%s, %s)"
-    data_test1p2 = (postid, appid)
-    cursor.execute(insert_statement_test1p2, data_test1p2)
+    # Insert data into postrelation table
+    insert_statement_postrelation = "INSERT INTO postrelation (postid, steamid, appid) VALUES (%s, %s, %s)"
+    data_postrelation = (postid, steamID, appid)
+    cursor.execute(insert_statement_postrelation, data_postrelation)
     mysql.connection.commit()
 
     cursor.close()
     return '', 204
+
 
 
 
@@ -91,10 +92,11 @@ def getPosts():
     cursor = mysql.connection.cursor()
     
     select_statement = """
-    SELECT test1.postid, test1.title, test1.content
-    FROM test1
-    JOIN test1p2 ON test1.postid = test1p2.postid
-    WHERE test1p2.appid = %s
+    SELECT posts.postid, posts.title, posts.content, users.name, users.pfp
+    FROM posts
+    JOIN postrelation ON posts.postid = postrelation.postid
+    JOIN users ON postrelation.steamid = users.steamid
+    WHERE postrelation.appid = %s
     """
     data_select = (appid,)
     cursor.execute(select_statement, data_select)
@@ -108,10 +110,14 @@ def getPosts():
         post = {
             'postid': row[0],
             'title': row[1],
-            'content': row[2]
+            'content': row[2],
+            'username': row[3],
+            'pfp': row[4]
         }
         posts.append(post)
 
     return jsonify(posts)
+
+
 
 

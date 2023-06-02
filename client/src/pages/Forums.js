@@ -111,6 +111,8 @@ function hidePosts() {
           key={post.postid}
           title={post.title}
           content={post.content}
+          username={post.username}
+          pfp={post.pfp}
         />
       ))}
     </div> )}
