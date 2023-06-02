@@ -1,11 +1,21 @@
 import {Card, Image} from 'react-bootstrap';
 import '../index.scss';
-import {ImArrowUp, ImArrowDown} from 'react-icons/im';
 import {MdExpandMore} from 'react-icons/md';
 import './Post.scss'
 import { useState } from 'react';
+import UpVote from './buttons/UpVote';
+import DownVote from './buttons/DownVote';
 
 function Post(props) {
+  const [votes, setVotes] = useState(0);
+  const [voteType, setVoteType] = useState('');
+
+  function handleVote(voteType) {
+    const updatedVotes = voteType === 'upvote' ? votes + 1 : votes - 1;
+    setVotes(updatedVotes);
+    setVoteType(voteType);
+  }
+   
     return (
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
         <Card.Header as="h5" style={{ color: 'var(--tertiary-color)' }}>
@@ -14,8 +24,9 @@ function Post(props) {
         <Card.Body style={{ color: 'var(--quaternary-color)' }}>
           <div className="d-flex">
             <div className="mr-3 d-flex flex-column align-items-center">
-              <ImArrowUp size={30} />
-              <ImArrowDown size={30} />
+            <UpVote handleVote={handleVote} voteType={voteType} />
+            <span id="votes">{votes}</span>
+            <DownVote handleVote={handleVote} voteType={voteType} />
             </div>
             <div id="content">{props.content}</div>
           </div>
@@ -28,3 +39,5 @@ function Post(props) {
 }
 
 export default Post;
+
+
