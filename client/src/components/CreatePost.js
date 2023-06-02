@@ -26,6 +26,7 @@ function CreatePost(props) {
       if (response.status === 204) {
        console.log("Post created successfully!");
         hidePosts();
+        window.location.reload();
       }
     } catch (error) {
       // Handle error

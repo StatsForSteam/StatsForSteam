@@ -6,7 +6,7 @@ import Loading from "../components/Loading";
 import CreateDiscussionButton from "../components/buttons/CreateDiscussionButton";
 import CreatePost from "../components/CreatePost";
 import Form from "react-bootstrap/Form";
-
+import Row from "react-bootstrap/Row";
 function Forums() {
     const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
     const [achievedLen , setAchievedLen] = useState(),
@@ -106,6 +106,7 @@ function hidePosts() {
                 <CreateDiscussionButton handlePress={hidePosts} />
             </div>
    {showPosts && ( <div className = "card-container">
+   <Row xs={1} md={1} lg={1} className="g-4">
    {posts.map(post => (
         <Post
           key={post.postid}
@@ -115,7 +116,7 @@ function hidePosts() {
           pfp={post.pfp}
         />
       ))}
-    </div> )}
+   </Row> </div> )}
 
     {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
     </>

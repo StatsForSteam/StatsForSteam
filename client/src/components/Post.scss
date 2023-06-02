@@ -1,0 +1,19 @@
+@import "../index.scss";
+
+#user-info{
+    float: right;
+    font-size: 0.8em;
+}
+
+#content{
+    margin-left: 10px;  
+}
+
+#pfp{  
+    width: 2.8rem;
+    margin-left: 10px;
+    border-radius: 50%;
+    border-color: $primary-color;
+    border-width: 0.1;
+    border-style: solid;
+}
