@@ -7,6 +7,8 @@ import CreateDiscussionButton from "../components/buttons/CreateDiscussionButton
 import CreatePost from "../components/CreatePost";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Reply from "../components/Reply";
+
 function Forums() {
     const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
     const [achievedLen , setAchievedLen] = useState(),
@@ -19,6 +21,7 @@ function Forums() {
          const [showPosts, setShowPosts] = useState(true);
           const [showCreateMenu, setShowCreateMenu] = useState(false);
           const [posts, setPosts] = useState([]);
+
         useEffect(() => {
           if (hasAchievements) {
             fetch('/getDashboard', {
@@ -110,19 +113,31 @@ function hidePosts() {
    {posts.map(post => (
         <Post
           key={post.postid}
+          postid={post.postid}
           title={post.title}
           content={post.content}
           username={post.username}
           pfp={post.pfp}
           date={post.date}
+          numReplies={post.replies.length}
+          replies={post.replies.map(reply => (
+            <Reply
+              key={reply.replyid}
+              replyid={reply.replyid}
+              content={reply.content}
+              username={reply.username}
+              pfp={reply.pfp}
+              date={reply.date}
+            />
+          ))}
         />
       ))}
-   </Row> </div> )}
+      </Row>
+</div> )}
 
     {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
     </>
   );
 }
-
 export default Forums;
 

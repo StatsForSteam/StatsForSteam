@@ -34,6 +34,8 @@ app.add_url_rule('/getDashboard', view_func=getData.getDashboard, methods=["POST
 app.add_url_rule('/createPost', view_func=forums.createPost, methods=["POST"])
 app.add_url_rule('/getPosts', view_func=forums.getPosts, methods=["POST"])
 app.add_url_rule('/manageUsers', view_func=forums.manageUsers)
+app.add_url_rule('/createReply', view_func=forums.createReply, methods=["POST"])
+app.add_url_rule('/getReplies', view_func=forums.getReplies, methods=["POST"])
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)

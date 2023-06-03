@@ -91,6 +91,69 @@ def createPost():
     return '', 204
 
 
+def createReply():
+    data = request.get_json()
+    content = data['content']
+    postid = data['postid']
+    steamID = steamid()
+    date = getDate()
+    
+    cursor = mysql.connection.cursor()
+
+    # Insert data into reply table
+    insert_statement_reply = "INSERT INTO reply (content, date) VALUES (%s, %s)"
+    data_reply = (content, date)
+    cursor.execute(insert_statement_reply, data_reply)
+    mysql.connection.commit()
+
+    # Get the generated replyid from reply table
+    replyid = cursor.lastrowid
+
+    # Insert data into replyrelation table
+    insert_statement_replyrelation = "INSERT INTO replyrelation (replyid, steamid, postid) VALUES (%s, %s, %s)"
+    data_replyrelation = (replyid, steamID, postid)
+    cursor.execute(insert_statement_replyrelation, data_replyrelation)
+    mysql.connection.commit()
+
+    cursor.close()
+
+    return '', 200
+
+def getReplies():
+    data = request.get_json()
+    postid = data['postid']
+
+    cursor = mysql.connection.cursor()
+    
+    select_statement = """
+    SELECT reply.replyid, reply.content, users.name, users.pfp, reply.date
+    FROM reply
+    JOIN replyrelation ON reply.replyid = replyrelation.replyid
+    JOIN users ON replyrelation.steamid = users.steamid
+    WHERE replyrelation.postid = %s
+    """
+    data_select = (postid,)
+    cursor.execute(select_statement, data_select)
+    
+    rows = cursor.fetchall()
+    cursor.close()
+
+    # Convert rows to a list of dictionaries for JSON serialization
+    replies = []
+    for row in rows:
+        reply = {
+            'replyid': row[0],
+            'content': row[1],
+            'username': row[2],
+            'pfp': row[3],
+            'date': row[4]
+        }
+        replies.append(reply)
+
+    return jsonify(replies)
+
+    
+   
 
 
 
@@ -99,34 +162,71 @@ def getPosts():
     appid = data['appid']
 
     cursor = mysql.connection.cursor()
-    
+
     select_statement = """
-    SELECT posts.postid, posts.title, posts.content, users.name, users.pfp, posts.date
-    FROM posts
-    JOIN postrelation ON posts.postid = postrelation.postid
-    JOIN users ON postrelation.steamid = users.steamid
-    WHERE postrelation.appid = %s
+    SELECT 
+        posts.postid, 
+        posts.title, 
+        posts.content, 
+        users.name, 
+        users.pfp, 
+        posts.date,
+        reply.replyid,
+        reply.content AS reply_content,
+        reply.date AS reply_date,
+        reply_users.name AS reply_username,
+        reply_users.pfp AS reply_user_pfp
+    FROM 
+        posts
+    JOIN 
+        postrelation ON posts.postid = postrelation.postid
+    JOIN 
+        users ON postrelation.steamid = users.steamid
+    LEFT JOIN 
+        replyrelation ON posts.postid = replyrelation.postid
+    LEFT JOIN 
+        reply ON replyrelation.replyid = reply.replyid
+    LEFT JOIN 
+        users AS reply_users ON replyrelation.steamid = reply_users.steamid
+    WHERE 
+        postrelation.appid = %s
     """
     data_select = (appid,)
     cursor.execute(select_statement, data_select)
-    
+
     rows = cursor.fetchall()
     cursor.close()
 
     # Convert rows to a list of dictionaries for JSON serialization
-    posts = []
+    posts = {}
     for row in rows:
-        post = {
-            'postid': row[0],
-            'title': row[1],
-            'content': row[2],
-            'username': row[3],
-            'pfp': row[4],
-            'date': row[5]
-        }
-        posts.append(post)
+        postid = row[0]
+        if postid not in posts:
+            post = {
+                'postid': postid,
+                'title': row[1],
+                'content': row[2],
+                'username': row[3],
+                'pfp': row[4],
+                'date': row[5],
+                'replies': []
+            }
+            posts[postid] = post
 
-    return jsonify(posts)
+        replyid = row[6]
+        if replyid is not None:
+            reply = {
+                'replyid': replyid,
+                'content': row[7],
+                'date': row[8],
+                'username': row[9],
+                'pfp': row[10]
+            }
+            posts[postid]['replies'].append(reply)
+
+    return jsonify(list(posts.values()))
+
+
 
 
 
