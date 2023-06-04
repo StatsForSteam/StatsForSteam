@@ -8,6 +8,7 @@ import CreatePost from "../components/CreatePost";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Reply from "../components/Reply";
+import "../index.scss";
 
 function Forums() {
     const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
@@ -61,12 +62,9 @@ function Forums() {
           })
             .then(response => response.json())
             .then(data => {
-              // Handle the fetched data here
-              console.log(data);
               setPosts(data);
             })
             .catch(error => {
-              // Handle any errors that occur during the fetch
               console.error(error);
             });
         }, []);
@@ -108,7 +106,7 @@ function hidePosts() {
 
                 <CreateDiscussionButton handlePress={hidePosts} />
             </div>
-   {showPosts && ( <div className = "card-container">
+   {showPosts && ( <div className="card-container">
    <Row xs={1} md={1} lg={1} className="g-4">
    {posts.map(post => (
         <Post

@@ -27,9 +27,9 @@ function Post(props) {
   function handleSeeReplies() {
     setShowReplies(!showReplies);
   }
-console.log(props.replies)
+
     return (
-     
+     <div>
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
         <Card.Header as="h5" style={{ color: 'var(--tertiary-color)' }}>
           {props.title} <span id="user-info">{props.username}<Image id="pfp"src={props.pfp} /></span> <span id="date">{props.date}</span>
@@ -45,14 +45,15 @@ console.log(props.replies)
           </div>
         </Card.Body>
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-        {props.numReplies}
-      <SeeRepliesButton postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
-      {showReplies && <div>{props.replies}</div>}
-        <CreateReplyButton handleCreateReply={handleCreateReply}/>
-        {showReplyForm && <CreateReply postid={props.postid}/>}
-        </Card.Footer> 
+      <SeeRepliesButton showReplies={showReplies} numReplies= {props.numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
+      <CreateReplyButton  handleCreateReply={handleCreateReply}/>
+      </Card.Footer> 
       </Card>
-      
+        <div>
+      {showReplies && <>{props.replies}</>}
+        {showReplyForm && <CreateReply postid={props.postid}/>}
+        </div>
+    </div>
 
     )
 }
