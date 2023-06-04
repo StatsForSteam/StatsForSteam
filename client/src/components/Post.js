@@ -9,7 +9,7 @@ import CreateReply from './CreateReply';
 import SeeRepliesButton from './buttons/SeeRepliesButton';
 
 function Post(props) {
-  const [votes, setVotes] = useState(0);
+  const [votes, setVotes] = useState(props.votes);
   const [voteType, setVoteType] = useState('');
   const [showReplyForm, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(false);

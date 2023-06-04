@@ -117,6 +117,7 @@ function hidePosts() {
           username={post.username}
           pfp={post.pfp}
           date={post.date}
+          votes={post.votes} 
           numReplies={post.replies.length}
           replies={post.replies.map(reply => (
             <Reply
@@ -126,6 +127,7 @@ function hidePosts() {
               username={reply.username}
               pfp={reply.pfp}
               date={reply.date}
+              votes={reply.votes}
             />
           ))}
         />
