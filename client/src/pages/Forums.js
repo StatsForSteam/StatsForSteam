@@ -19,7 +19,6 @@ function Forums() {
           [dataFetched, setDataFetched] = useState(false);
         
          const [searchTerm, setSearchTerm] = useState("");
-         const [showPosts, setShowPosts] = useState(true);
           const [showCreateMenu, setShowCreateMenu] = useState(false);
           const [posts, setPosts] = useState([]);
 
@@ -80,7 +79,6 @@ function Forums() {
 
  
 function hidePosts() {
-  setShowPosts(!showPosts);
   setShowCreateMenu(!showCreateMenu);
 }
 
@@ -104,9 +102,11 @@ function hidePosts() {
                   </Form.Group>                
                 </Form>
 
-                <CreateDiscussionButton handlePress={hidePosts} />
+                <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hidePosts} />
             </div>
-   {showPosts && ( <div className="card-container">
+            {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
+
+   <div className="card-container">
    <Row xs={1} md={1} lg={1} className="g-4">
    {posts.map(post => (
         <Post
@@ -131,9 +131,8 @@ function hidePosts() {
         />
       ))}
       </Row>
-</div> )}
+</div> 
 
-    {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
     </>
   );
 }

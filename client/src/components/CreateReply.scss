@@ -1,0 +1,30 @@
+@import "../index.scss";
+
+#reply-button{
+    transition: background-color .3s;
+    background-color: $primary-color;
+    color: $tertiary-color;
+    padding: 6px;
+    border-radius: 12px;
+  }
+  
+  #reply-button:hover {
+    transition: 0.3s ease-in-out;
+    background-color: $secondary-color;
+}
+
+.custom-form .form-control {
+    background-color: $secondary-color;
+    color: $quaternary-color; 
+    border: none;
+  }
+
+  .reply-form{
+    margin-top: 20px;
+  }
+   
+  .custom-form .form-control:focus {
+    box-shadow: 0 0 0 0.2px $quaternary-color;
+    background-color: $secondary-color;
+    color: $quaternary-color;
+  }

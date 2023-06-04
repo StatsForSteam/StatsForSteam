@@ -7,7 +7,7 @@ function SeeRepliesButton({ showReplies, numReplies, handleSeeReplies }) {
   return (
     <>
       
-        <Badge pill bg="dark" style={{ color: 'var(--tertiary-color)', fontSize: '1em' }}>
+        <Badge pill bg="dark" style={{ color: 'var(--tertiary-color)', fontSize: '1em',}}>
           {numReplies} replies
         </Badge>
       

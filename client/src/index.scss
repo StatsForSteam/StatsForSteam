@@ -2,8 +2,6 @@ $primary-color: #1C1C1C; //background
 $secondary-color: #262626; //gamecards
 $tertiary-color: #47B5FF; //titles 
 $quaternary-color: #DFF6FF; //other text
-$quinary-color: #0d304d;
-
 
 :root {
     --primary-color: #1C1C1C;
@@ -30,11 +28,4 @@ $quinary-color: #0d304d;
 //Cards
 .card-container {margin: 10px;}
 
-//form
-.form{
-  margin: 10px;
-  color: $tertiary-color;
-  background-color: $secondary-color;
-  border-radius: 8px;
-}
-    
+

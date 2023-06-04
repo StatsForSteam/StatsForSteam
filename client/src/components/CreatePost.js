@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form} from 'react-bootstrap';
 import '../index.scss';
+import './CreatePost.scss';
 
 function CreatePost(props) {
   const [title, setTitle] = useState('');
@@ -35,29 +36,31 @@ function CreatePost(props) {
   };
 
   return (
-    <Form className="form" onSubmit={handleSubmit}>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-        <Form.Label>Title</Form.Label>
+    <div id="createpost-container">
+    <Form autocomplete="off" className="createpost-form" onSubmit={handleSubmit}>
+      <Form.Group  className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label id="label">Title</Form.Label>
         <Form.Control
-          placeholder="Enter a title for your post"
+          placeholder="add a title"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Content</Form.Label>
+        <Form.Label id="label" >Content</Form.Label>
         <Form.Control
           as="textarea"
-          placeholder="Enter post content"
-          rows={3}
+          placeholder="add content"
+          rows={2}
           value={content}
           onChange={(event) => setContent(event.target.value)}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Post
-      </Button>
+      <button id="post-button" type="submit">
+        post
+        </button>
     </Form>
+    </div>
   );
 }
 

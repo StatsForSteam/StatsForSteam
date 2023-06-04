@@ -1,6 +1,6 @@
-import {Form, Button} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import { useState } from 'react';
-
+import './CreateReply.scss';
 function CreateReply(props){
     const [content, setContent] = useState('');
     const {postid} = props;
@@ -22,21 +22,22 @@ function CreateReply(props){
     }
 
     return(
-        <Form onSubmit={handleSubmit}>
+        <div className = "reply-form">
+        <Form onSubmit={handleSubmit} className="custom-form">
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Reply</Form.Label>
         <Form.Control
           as="textarea"
-          placeholder="Enter reply here"
-          rows={3}
+          placeholder="Add a reply..."
+          rows={2}
           value={content}
           onChange={(event) => setContent(event.target.value)}
         />
       </Form.Group>
-        <Button variant="primary" type="submit">
-        Post
-        </Button>
+        <button id="reply-button" type="submit">
+        reply
+        </button>
         </Form>
+        </div>
     )
 }
 

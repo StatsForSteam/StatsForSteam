@@ -1,0 +1,37 @@
+@import "../index.scss";
+
+#createpost-container{
+    margin: 10px;
+    margin-bottom: 50px;
+    padding: 10px;
+}
+
+#label{
+    color: $tertiary-color;
+    font-weight: 500;
+}
+
+.createpost-form .form-control{
+    background-color: $secondary-color;
+    color: $quaternary-color;
+    border: none;
+}
+
+.createpost-form .form-control:focus{
+    box-shadow: 0 0 0 0.2px $quaternary-color;
+    background-color: $secondary-color;
+    color: $quaternary-color;
+}
+
+#post-button{
+    transition: background-color .3s;
+    background-color: $primary-color;
+    color: $tertiary-color;
+    padding: 6px;
+    border-radius: 12px;
+  }
+
+#post-button:hover {
+    transition: 0.3s ease-in-out;
+    background-color: $secondary-color;
+}
