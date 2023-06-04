@@ -118,6 +118,7 @@ function hidePosts() {
           pfp={post.pfp}
           date={post.date}
           votes={post.votes} 
+          ExistingVoteType={post.existing_vote_type}
           numReplies={post.replies.length}
           replies={post.replies.map(reply => (
             <Reply
@@ -128,6 +129,7 @@ function hidePosts() {
               pfp={reply.pfp}
               date={reply.date}
               votes={reply.votes}
+              ExistingVoteType={reply.existing_vote_type}
             />
           ))}
         />

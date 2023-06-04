@@ -1,11 +1,11 @@
 import { ImArrowDown } from 'react-icons/im';
 
-function DownVote({ handleVote, voteType }) {
+function DownVote({ handleVote, ExistingVoteType }) {
   return (
     <ImArrowDown
       onClick={() => handleVote('downvote')}
       size={30}
-      style={{ color: voteType === 'downvote' ? 'red' : null }}
+      style={{ color: ExistingVoteType === 'downvote' ? 'red' : null }}
     />
   );
 }

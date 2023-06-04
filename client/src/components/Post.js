@@ -10,15 +10,40 @@ import SeeRepliesButton from './buttons/SeeRepliesButton';
 
 function Post(props) {
   const [votes, setVotes] = useState(props.votes);
-  const [voteType, setVoteType] = useState('');
+  const [ExistingVoteType, setExistingVoteType] = useState(props.ExistingVoteType);
   const [showReplyForm, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
+
   function handleVote(voteType) {
-    const updatedVotes = voteType === 'upvote' ? votes + 1 : votes - 1;
-    setVotes(updatedVotes);
-    setVoteType(voteType);
+    if (voteType === 'upvote') {
+      setVotes(votes + 1);
+      setExistingVoteType('upvote');
+    }
+    if (voteType === 'downvote') {
+      setVotes(votes - 1);
+      setExistingVoteType('downvote');
+    }
+
+      
+
+    const data = {
+      voteon : 'post',
+      vote_type: voteType,
+      postid: props.postid,
+    };
+  
+    fetch('/createVote', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
   }
+  
+    
+  
 
   function handleCreateReply() {
     setShowReply(!showReplyForm);
@@ -26,7 +51,6 @@ function Post(props) {
 
   function handleSeeReplies() {
     setShowReplies(!showReplies);
-    console.log(showReplies);
   }
 
     return (
@@ -38,9 +62,9 @@ function Post(props) {
         <Card.Body style={{ color: 'var(--quaternary-color)' }}>
           <div className="d-flex">
             <div className="mr-3 d-flex flex-column align-items-center">
-            <UpVote handleVote={handleVote} voteType={voteType} />
+            <UpVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
             <span id="votes">{votes}</span>
-            <DownVote handleVote={handleVote} voteType={voteType} />
+            <DownVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
             </div>
             <div id="content">{props.content}</div>
           </div>

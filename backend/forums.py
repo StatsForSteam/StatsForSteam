@@ -119,118 +119,10 @@ def createReply():
 
     return '', 200
 
-def getReplies():
-    data = request.get_json()
-    postid = data['postid']
-
-    cursor = mysql.connection.cursor()
-    
-    select_statement = """
-    SELECT reply.replyid, reply.content, users.name, users.pfp, reply.date
-    FROM reply
-    JOIN replyrelation ON reply.replyid = replyrelation.replyid
-    JOIN users ON replyrelation.steamid = users.steamid
-    WHERE replyrelation.postid = %s
-    """
-    data_select = (postid,)
-    cursor.execute(select_statement, data_select)
-    
-    rows = cursor.fetchall()
-    cursor.close()
-
-    # Convert rows to a list of dictionaries for JSON serialization
-    replies = []
-    for row in rows:
-        reply = {
-            'replyid': row[0],
-            'content': row[1],
-            'username': row[2],
-            'pfp': row[3],
-            'date': row[4]
-        }
-        replies.append(reply)
-
-    return jsonify(replies)
-
-    
-   
-
-
-
-def getPosts2():
-    data = request.get_json()
-    appid = data['appid']
-
-    cursor = mysql.connection.cursor()
-
-    select_statement = """
-    SELECT 
-        posts.postid, 
-        posts.title, 
-        posts.content, 
-        users.name, 
-        users.pfp, 
-        posts.date,
-        reply.replyid,
-        reply.content AS reply_content,
-        reply.date AS reply_date,
-        reply_users.name AS reply_username,
-        reply_users.pfp AS reply_user_pfp
-    FROM 
-        posts
-    JOIN 
-        postrelation ON posts.postid = postrelation.postid
-    JOIN 
-        users ON postrelation.steamid = users.steamid
-    LEFT JOIN 
-        replyrelation ON posts.postid = replyrelation.postid
-    LEFT JOIN 
-        reply ON replyrelation.replyid = reply.replyid
-    LEFT JOIN 
-        users AS reply_users ON replyrelation.steamid = reply_users.steamid
-    WHERE 
-        postrelation.appid = %s
-    """
-    data_select = (appid,)
-    cursor.execute(select_statement, data_select)
-
-    rows = cursor.fetchall()
-    cursor.close()
-
-    # Convert rows to a list of dictionaries for JSON serialization
-    posts = {}
-    for row in rows:
-        postid = row[0]
-        if postid not in posts:
-            post = {
-                'postid': postid,
-                'title': row[1],
-                'content': row[2],
-                'username': row[3],
-                'pfp': row[4],
-                'date': row[5],
-                'replies': []
-            }
-            posts[postid] = post
-
-        replyid = row[6]
-        if replyid is not None:
-            reply = {
-                'replyid': replyid,
-                'content': row[7],
-                'date': row[8],
-                'username': row[9],
-                'pfp': row[10]
-            }
-            posts[postid]['replies'].append(reply)
-
-    return jsonify(list(posts.values()))
-
-
-
 def getPosts():
     data = request.get_json()
     appid = data['appid']
+    steamID = steamid()
 
     cursor = mysql.connection.cursor()
 
@@ -248,7 +140,9 @@ def getPosts():
         reply_users.name AS reply_username,
         reply_users.pfp AS reply_user_pfp,
         posts.votes AS post_votes,
-        reply.votes AS reply_votes
+        reply.votes AS reply_votes,
+        IFNULL(postvotes.vote_type, 'none') AS post_vote_type,
+        IFNULL(replyvotes.vote_type, 'none') AS reply_vote_type
     FROM 
         posts
     JOIN 
@@ -261,10 +155,16 @@ def getPosts():
         reply ON replyrelation.replyid = reply.replyid
     LEFT JOIN 
         users AS reply_users ON replyrelation.steamid = reply_users.steamid
+    LEFT JOIN 
+        postvotes ON posts.postid = postvotes.postid
+            AND postvotes.steamid = %s
+    LEFT JOIN 
+        replyvotes ON reply.replyid = replyvotes.replyid
+            AND replyvotes.steamid = %s
     WHERE 
         postrelation.appid = %s
     """
-    data_select = (appid,)
+    data_select = (steamID, steamID, appid)
     cursor.execute(select_statement, data_select)
 
     rows = cursor.fetchall()
@@ -282,7 +182,8 @@ def getPosts():
                 'username': row[3],
                 'pfp': row[4],
                 'date': row[5],
-                'votes': row[11], 
+                'votes': row[11],
+                'existing_vote_type': row[13],  # Vote type for the post
                 'replies': []
             }
             posts[postid] = post
@@ -295,10 +196,45 @@ def getPosts():
                 'date': row[8],
                 'username': row[9],
                 'pfp': row[10],
-                'votes': row[12] 
+                'votes': row[12],
+                'existing_vote_type': row[14],  # Vote type for the reply
             }
             posts[postid]['replies'].append(reply)
 
     return jsonify(list(posts.values()))
 
 
+def createVote():
+    data = request.get_json()
+    vote_type = data['vote_type']
+    voteon = data['voteon']
+    steamID = steamid()
+    print(vote_type , voteon, steamID)
+    cursor = mysql.connection.cursor()
+
+    if voteon == 'post':
+        # Voting on a post
+        postid = data['postid']
+
+        insert_statement = "INSERT INTO postvotes (vote_type, postid, steamid) VALUES (%s, %s, %s)"
+        update_statement = "UPDATE posts SET votes = votes + %s WHERE postid = %s"
+        data_insert = (vote_type, postid, steamID)
+        data_update = (1 if vote_type == 'upvote' else -1, postid)
+        print("Voting on a post")
+
+    else:
+        # Voting on a reply
+        replyid = data['replyid']
+
+        insert_statement = "INSERT INTO replyvotes (vote_type, replyid, steamid) VALUES (%s, %s, %s)"
+        update_statement = "UPDATE reply SET votes = votes + %s WHERE replyid = %s"
+        data_insert = (vote_type, replyid, steamID)
+        data_update = (1 if vote_type == 'upvote' else -1, replyid)
+        print("Voting on a reply")
+
+    cursor.execute(insert_statement, data_insert)
+    cursor.execute(update_statement, data_update)
+    mysql.connection.commit()
+    cursor.close()
+
+    return '', 200
