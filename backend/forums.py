@@ -209,7 +209,6 @@ def createVote():
     vote_type = data['vote_type']
     voteon = data['voteon']
     steamID = steamid()
-    print(vote_type , voteon, steamID)
     cursor = mysql.connection.cursor()
 
     if voteon == 'post':
@@ -220,7 +219,6 @@ def createVote():
         update_statement = "UPDATE posts SET votes = votes + %s WHERE postid = %s"
         data_insert = (vote_type, postid, steamID)
         data_update = (1 if vote_type == 'upvote' else -1, postid)
-        print("Voting on a post")
 
     else:
         # Voting on a reply
@@ -230,7 +228,6 @@ def createVote():
         update_statement = "UPDATE reply SET votes = votes + %s WHERE replyid = %s"
         data_insert = (vote_type, replyid, steamID)
         data_update = (1 if vote_type == 'upvote' else -1, replyid)
-        print("Voting on a reply")
 
     cursor.execute(insert_statement, data_insert)
     cursor.execute(update_statement, data_update)
@@ -238,3 +235,101 @@ def createVote():
     cursor.close()
 
     return '', 200
+
+def updateVote():
+    data = request.get_json()
+    voteon = data['voteon']
+    steamID = steamid()
+
+    cursor = mysql.connection.cursor()
+
+    update_reply_statement = ""  # Initialize the variable here
+
+    if voteon == 'post':
+        postid = data['postid']
+        update_statement = """
+            UPDATE postvotes
+            SET vote_type = CASE WHEN vote_type = 'upvote' THEN 'downvote' ELSE 'upvote' END
+            WHERE postid = %s AND steamid = %s
+        """
+        update_data = (postid, steamID)
+        
+        # Update the votes column in the posts table
+        vote_diff = 2 if data['vote_type'] == 'upvote' else -2
+        update_posts_statement = "UPDATE posts SET votes = votes + %s WHERE postid = %s"
+        update_posts_data = (vote_diff, postid)
+    else:
+        replyid = data['replyid']
+        update_statement = """
+            UPDATE replyvotes
+            SET vote_type = CASE WHEN vote_type = 'upvote' THEN 'downvote' ELSE 'upvote' END
+            WHERE replyid = %s AND steamid = %s
+        """
+        update_data = (replyid, steamID)
+        
+        # Update the votes column in the reply table
+        vote_diff = 2 if data['vote_type'] == 'upvote' else -2
+        update_reply_statement = "UPDATE reply SET votes = votes + %s WHERE replyid = %s"
+        update_reply_data = (vote_diff, replyid)
+
+    cursor.execute(update_statement, update_data)
+    cursor.execute(update_posts_statement, update_posts_data)  # Execute the posts update query
+    
+    if update_reply_statement:
+        cursor.execute(update_reply_statement, update_reply_data)  # Execute the reply update query
+    
+    mysql.connection.commit()
+    cursor.close()
+
+    return '', 200
+
+
+
+def deleteVote():
+    data = request.get_json()
+    voteon = data['voteon']
+    vote_type = data['vote_type']
+    steamID = steamid()
+
+    cursor = mysql.connection.cursor()
+
+    if voteon == 'post':
+        postid = data['postid']
+
+        delete_statement = "DELETE FROM postvotes WHERE postid = %s AND steamid = %s"
+        data_delete = (postid, steamID)
+
+        if vote_type == 'upvote':
+            # If the vote_type is upvote, decrement the vote count by 1
+            update_statement = "UPDATE posts SET votes = votes - 1 WHERE postid = %s"
+            data_update = (postid,)
+        elif vote_type == 'downvote':
+            # If the vote_type is downvote, increment the vote count by 1
+            update_statement = "UPDATE posts SET votes = votes + 1 WHERE postid = %s"
+            data_update = (postid,)
+    else:
+        replyid = data['replyid']
+
+        delete_statement = "DELETE FROM replyvotes WHERE replyid = %s AND steamid = %s"
+        data_delete = (replyid, steamID)
+
+        if vote_type == 'upvote':
+            # If the vote_type is upvote, decrement the vote count by 1
+            update_statement = "UPDATE reply SET votes = votes - 1 WHERE replyid = %s"
+            data_update = (replyid,)
+        elif vote_type == 'downvote':
+            # If the vote_type is downvote, increment the vote count by 1
+            update_statement = "UPDATE reply SET votes = votes + 1 WHERE replyid = %s"
+            data_update = (replyid,)
+
+    cursor.execute(delete_statement, data_delete)
+    cursor.execute(update_statement, data_update)
+    mysql.connection.commit()
+    cursor.close()
+
+    return '', 200
+
+
+
+
+

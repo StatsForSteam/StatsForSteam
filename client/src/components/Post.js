@@ -16,30 +16,81 @@ function Post(props) {
 
 
   function handleVote(voteType) {
-    if (voteType === 'upvote') {
-      setVotes(votes + 1);
-      setExistingVoteType('upvote');
-    }
-    if (voteType === 'downvote') {
-      setVotes(votes - 1);
-      setExistingVoteType('downvote');
-    }
+    if(ExistingVoteType === 'none'){
 
+        if (voteType === 'upvote') {
+          setVotes(votes + 1);
+          setExistingVoteType('upvote');
+        }
+        if (voteType === 'downvote') {
+          setVotes(votes - 1);
+          setExistingVoteType('downvote');
+        }
+
+        const data = {
+          voteon : 'post',
+          vote_type: voteType,
+          postid: props.postid,
+        };
       
+        fetch('/createVote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+      }
 
-    const data = {
-      voteon : 'post',
-      vote_type: voteType,
-      postid: props.postid,
-    };
-  
-    fetch('/createVote', {
+
+    else if(!(ExistingVoteType === voteType)){
+      if (voteType === 'upvote') {
+        setVotes(votes + 2);
+        setExistingVoteType('upvote');
+      }
+      if (voteType === 'downvote') {
+        setVotes(votes - 2);
+        setExistingVoteType('downvote');
+      }
+
+      const data = {
+        voteon : 'post',
+        vote_type: voteType,
+        postid: props.postid,
+    }
+      
+    fetch('/updateVote', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
+  
+   }
+
+      else if(ExistingVoteType === voteType){
+        if (voteType === 'upvote') {
+          setVotes(votes - 1);
+          setExistingVoteType('none');
+        }
+        if (voteType === 'downvote') {
+          setVotes(votes + 1);
+          setExistingVoteType('none');
+        }
+
+        const data = {
+          voteon : 'post',
+          vote_type: voteType,
+          postid: props.postid,
+      }
+
+      fetch('/deleteVote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        
+    }
+
   }
   
     

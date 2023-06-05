@@ -36,6 +36,8 @@ app.add_url_rule('/getPosts', view_func=forums.getPosts, methods=["POST"])
 app.add_url_rule('/manageUsers', view_func=forums.manageUsers)
 app.add_url_rule('/createReply', view_func=forums.createReply, methods=["POST"])
 app.add_url_rule('/createVote', view_func=forums.createVote, methods=["POST"])
+app.add_url_rule('/updateVote', view_func=forums.updateVote, methods=["POST"])
+app.add_url_rule('/deleteVote', view_func=forums.deleteVote, methods=["POST"])
 
 if __name__ == "__main__":
     app.run(debug = True, use_reloader=True)
