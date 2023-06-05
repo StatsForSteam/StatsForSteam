@@ -236,6 +236,8 @@ def createVote():
 
     return '', 200
 
+
+
 def updateVote():
     data = request.get_json()
     voteon = data['voteon']
@@ -243,7 +245,7 @@ def updateVote():
 
     cursor = mysql.connection.cursor()
 
-    update_reply_statement = ""  # Initialize the variable here
+    update_reply_statement = None  # Initialize the variable to None
 
     if voteon == 'post':
         postid = data['postid']
@@ -273,15 +275,18 @@ def updateVote():
         update_reply_data = (vote_diff, replyid)
 
     cursor.execute(update_statement, update_data)
-    cursor.execute(update_posts_statement, update_posts_data)  # Execute the posts update query
     
-    if update_reply_statement:
+    if voteon == 'post':
+        cursor.execute(update_posts_statement, update_posts_data)  # Execute the posts update query
+    
+    if voteon == 'reply' and update_reply_statement:
         cursor.execute(update_reply_statement, update_reply_data)  # Execute the reply update query
     
     mysql.connection.commit()
     cursor.close()
 
     return '', 200
+
 
 
 
