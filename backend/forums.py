@@ -63,6 +63,8 @@ def manageUsers():
     return json.dumps({'username': username, 'pfp': pfp})
 
 
+
+
 def createPost():
     data = request.get_json()
     title = data['title']
@@ -87,8 +89,31 @@ def createPost():
     cursor.execute(insert_statement_postrelation, data_postrelation)
     mysql.connection.commit()
 
+    # Fetch the new post and the information needed to return to the frontend
+    select_statement_posts = """
+    SELECT
+    posts.postid,
+    posts.title,
+    posts.content,
+    posts.date,
+    users.name,
+    users.pfp
+    FROM
+    posts
+    JOIN postrelation ON posts.postid = postrelation.postid
+    JOIN users ON users.steamid = postrelation.steamid
+    WHERE
+    posts.postid = %s;
+    """
+
+    cursor.execute(select_statement_posts, (postid,))
+    newest_record = cursor.fetchone()
+    newest_record_json = json.dumps(newest_record)
+    print(newest_record_json)
     cursor.close()
-    return '', 200
+    return newest_record_json, 200
+
+
 
 
 def createReply():

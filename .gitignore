@@ -1,6 +1,9 @@
 # Node modules
 /client/node_modules/
 
+#Others file
+/other
+
 # Environments
 /backend/venv/
 

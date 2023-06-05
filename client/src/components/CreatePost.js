@@ -12,21 +12,21 @@ function CreatePost(props) {
     event.preventDefault();
     setIsSubmitted(true);
     if (title && content) {
-       fetch('/createPost', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title,
-            content,
-            appid: props.appid
-          })
-        });
-        console.log('Post created successfully!');
-        props.hidePosts();
-        window.location.reload();
+      const response = await fetch('/createPost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title,
+          content,
+          appid: props.appid
+        })
+      });
+      const data = await response.json();
+      props.hidePosts();
+      props.onNewPost(data);
     }
   };
-
+  
   return (
     <div id="createpost-container">
       <Form autoComplete="off" className="createpost-form" onSubmit={handleSubmit}>

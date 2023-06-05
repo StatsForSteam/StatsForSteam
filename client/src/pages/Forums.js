@@ -16,11 +16,12 @@ function Forums() {
           [notachievedLen , setnotAchievedLen] = useState(),
           [percentage, setPercentage] = useState(0),
           [playerCount, setPlayerCount] = useState(0),
-          [dataFetched, setDataFetched] = useState(false);
-        
-         const [searchTerm, setSearchTerm] = useState("");
-          const [showCreateMenu, setShowCreateMenu] = useState(false);
-          const [posts, setPosts] = useState([]);
+          [dashBoardFetched, setDashBoardFetched] = useState(false),
+          [postsFetched, setPostsFetched] = useState(false),
+          [newPostComponent, setNewPostComponent] = useState(false),
+          [searchTerm, setSearchTerm] = useState(""),
+          [showCreateMenu, setShowCreateMenu] = useState(false),
+          [posts, setPosts] = useState([]);
 
         useEffect(() => {
           if (hasAchievements) {
@@ -34,7 +35,7 @@ function Forums() {
                 setnotAchievedLen(notachievedlength);
                 setPercentage(achievementPercentage);
                 setPlayerCount(playerCount);
-                setDataFetched(true);
+                setDashBoardFetched(true);
               })
             );
           } else {
@@ -45,7 +46,7 @@ function Forums() {
             }).then(response =>
               response.json().then(({ playerCount }) => {
                 setPlayerCount(playerCount);
-                setDataFetched(true);
+                setDashBoardFetched(true);
               })
             );
           }
@@ -62,16 +63,14 @@ function Forums() {
             .then(response => response.json())
             .then(data => {
               setPosts(data);
+              setPostsFetched(true);
             })
-            .catch(error => {
-              console.error(error);
-            });
         }, []);
 
     
         
 
-        if (!dataFetched) {
+        if (!postsFetched || !dashBoardFetched) {
           return (
             <Loading/>
           );
@@ -81,6 +80,27 @@ function Forums() {
 function hidePosts() {
   setShowCreateMenu(!showCreateMenu);
 }
+
+function handleNewPost(newPost) {
+  const [postid, title, content, date, username, pfp] = newPost;
+  const newPostComponent = (
+    <Post
+      key={postid}
+      postid={postid}
+      title={title}
+      content={content}
+      username={username}
+      pfp={pfp}
+      date={date}
+      votes={0} 
+      ExistingVoteType={'none'} 
+      numReplies={0} 
+      replies={[]} 
+    />
+  );
+  setNewPostComponent(newPostComponent);
+}
+
 
   return (
     <>
@@ -104,10 +124,11 @@ function hidePosts() {
 
                 <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hidePosts} />
             </div>
-            {showCreateMenu && ( <CreatePost hidePosts={hidePosts} appid={appid}/>)}
+            {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hidePosts={hidePosts} appid={appid}/>)}
 
    <div className="card-container">
    <Row xs={1} md={1} lg={1} className="g-4">
+   {newPostComponent}
    {posts.map(post => (
         <Post
           key={post.postid}
