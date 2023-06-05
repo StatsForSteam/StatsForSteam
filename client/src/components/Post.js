@@ -14,10 +14,13 @@ function Post(props) {
   const [showReplyForm, setShowReply] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-
   function handleVote(voteType) {
+    const data = {
+      voteon : 'post',
+      vote_type: voteType,
+      postid: props.postid,}
+                            
     if(ExistingVoteType === 'none'){
-
         if (voteType === 'upvote') {
           setVotes(votes + 1);
           setExistingVoteType('upvote');
@@ -26,13 +29,6 @@ function Post(props) {
           setVotes(votes - 1);
           setExistingVoteType('downvote');
         }
-
-        const data = {
-          voteon : 'post',
-          vote_type: voteType,
-          postid: props.postid,
-        };
-      
         fetch('/createVote', {
           method: 'POST',
           headers: {
@@ -41,7 +37,6 @@ function Post(props) {
           body: JSON.stringify(data)
         })
       }
-
 
     else if(!(ExistingVoteType === voteType)){
       if (voteType === 'upvote') {
@@ -52,48 +47,32 @@ function Post(props) {
         setVotes(votes - 2);
         setExistingVoteType('downvote');
       }
-
-      const data = {
-        voteon : 'post',
-        vote_type: voteType,
-        postid: props.postid,
+ 
+      fetch('/updateVote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
     }
-      
-    fetch('/updateVote', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    })
-  
-   }
 
-      else if(ExistingVoteType === voteType){
-        if (voteType === 'upvote') {
-          setVotes(votes - 1);
-          setExistingVoteType('none');
-        }
-        if (voteType === 'downvote') {
-          setVotes(votes + 1);
-          setExistingVoteType('none');
-        }
-
-        const data = {
-          voteon : 'post',
-          vote_type: voteType,
-          postid: props.postid,
+    else if(ExistingVoteType === voteType){
+      if (voteType === 'upvote') {
+        setVotes(votes - 1);
+        setExistingVoteType('none');
+      }
+      if (voteType === 'downvote') {
+        setVotes(votes + 1);
+        setExistingVoteType('none');
       }
 
       fetch('/deleteVote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
-      })
-        
+      }) 
     }
-
   }
   
-    
   
 
   function handleCreateReply() {

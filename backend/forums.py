@@ -88,7 +88,7 @@ def createPost():
     mysql.connection.commit()
 
     cursor.close()
-    return '', 204
+    return '', 200
 
 
 def createReply():
