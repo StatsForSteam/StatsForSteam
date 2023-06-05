@@ -3,6 +3,7 @@ import LoginButton from "../components/buttons/LoginButton";
 import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import { validate as isValidUUID } from 'uuid';
+import Cookies from 'js-cookie';
 
 function Welcome() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -11,11 +12,16 @@ function Welcome() {
   useEffect(() => {
       fetch(`${process.env.REACT_APP_API_URL}/checkUserStatus`).then(response => 
         response.json().then(data => {
-          setUserLoggedIn(data['userLogged'])
+          //const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000); // Current time + 10 minutes
+          //Cookies.set('cookie_name', 'sdfsdfsdf', { expires: expirationTime});
+          const cookieValue = Cookies.get('cookie_name');
+          console.log(cookieValue);
+          console.log(data)
+          // setUserLoggedIn(data['userLogged'])
 
-          if (isValidUUID(data['SessionID'])){ //Not necessary but is more safe
-            setSessionSID(data['SessionID'])          
-          }
+          // if (isValidUUID(data['SessionID'])){ //Not necessary but is more safe
+          //   setSessionSID(data['SessionID'])          
+          // }
       }))
   }, []);
 

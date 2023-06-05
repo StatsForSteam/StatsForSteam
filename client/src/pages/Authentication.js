@@ -2,8 +2,15 @@ import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import "./Authentication.scss";
 import Loading from "../components/Loading";
+import Cookies from 'js-cookie';
+
 function Authentication() {
     const [successfulLogin, setSuccessfulLogin] = useState(null);
+    Cookies.set("tester", "lets get it");
+
+    const GetCookie = () => {
+        alert(Cookies.get('SteamID'));
+      };
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URL}/userAuthentication`).then(response => 
@@ -27,7 +34,7 @@ function Authentication() {
             )
             } else {
             return (
-                <Loading/>
+                <button onClick={GetCookie}>Get Cookie</button>
             )
             }
         })()}
