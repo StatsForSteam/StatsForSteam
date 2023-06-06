@@ -18,12 +18,9 @@ function CreateReply(props) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content, postid })
         });
-
-        console.log(response);
-        if (response.status === 200) {
-          console.log('Reply created successfully!');
-          window.location.reload();
-        }
+          const data = await response.json();
+          props.handleCreateReply(data);
+         
       } catch (error) {
         console.error(error);
       }

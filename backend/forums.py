@@ -139,9 +139,29 @@ def createReply():
     cursor.execute(insert_statement_replyrelation, data_replyrelation)
     mysql.connection.commit()
 
+    # Fetch the new reply and the information needed to return to the frontend
+    select_statement_reply = """
+    SELECT
+    reply.replyid,
+    reply.content,
+    reply.date,
+    users.name,
+    users.pfp
+    FROM
+    reply
+    JOIN replyrelation ON reply.replyid = replyrelation.replyid
+    JOIN users ON users.steamid = replyrelation.steamid
+    WHERE
+    reply.replyid = %s;
+    """
+
+    cursor.execute(select_statement_reply, (replyid,))
+    newest_record = cursor.fetchone()
+    newest_record_json = json.dumps(newest_record)
     cursor.close()
 
-    return '', 200
+    return newest_record_json, 200
+
 
 def getPosts():
     data = request.get_json()

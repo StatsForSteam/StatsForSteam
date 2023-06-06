@@ -7,11 +7,14 @@ import DownVote from './buttons/DownVote';
 import CreateReplyButton from './buttons/CreateReplyButton';
 import CreateReply from './CreateReply';
 import SeeRepliesButton from './buttons/SeeRepliesButton';
+import Reply from './Reply';
 
 function Post(props) {
   const [votes, setVotes] = useState(props.votes);
   const [ExistingVoteType, setExistingVoteType] = useState(props.ExistingVoteType);
-  const [showReplyForm, setShowReply] = useState(false);
+  const [replies, setReplies] = useState(props.replies);
+  const [numReplies, setNumReplies] = useState(props.numReplies);
+  const [showReplyForm, setShowReplyForm] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
   function handleVote(voteType) {
@@ -73,11 +76,28 @@ function Post(props) {
     }
   }
   
-  
-
-  function handleCreateReply() {
-    setShowReply(!showReplyForm);
+  function handleShowReplyForm(){
+    setShowReplyForm(!showReplyForm);
   }
+
+  function handleCreateReply(data) {
+    setShowReplyForm(!showReplyForm);
+    const newReply = (
+      <Reply
+        key={data[0]}
+        replyid={data[0]}
+        content={data[1]}
+        date={data[2]}
+        username={data[3]}
+        pfp={data[4]}
+        votes={0}
+        ExistingVoteType={'none'}
+      />
+    );
+    setReplies(prevState => [newReply, ...prevState]);
+    setNumReplies(numReplies + 1);
+  }
+
 
   function handleSeeReplies() {
     setShowReplies(!showReplies);
@@ -100,13 +120,13 @@ function Post(props) {
           </div>
         </Card.Body>
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-      <SeeRepliesButton showReplies={showReplies} numReplies= {props.numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
-     <CreateReplyButton  handleCreateReply={handleCreateReply}/> 
+      <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
+     <CreateReplyButton handleShowReplyForm={handleShowReplyForm}/> 
       </Card.Footer> 
       </Card>
         <div>
-        {showReplyForm && <CreateReply postid={props.postid}/>}
-      {showReplies && <>{props.replies}</>}
+        {showReplyForm && <CreateReply handleCreateReply={handleCreateReply} postid={props.postid}/>}
+      {showReplies && <>{replies}</>}
         </div>
     </div>
 

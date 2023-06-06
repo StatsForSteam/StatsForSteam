@@ -1,5 +1,4 @@
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
-import { Badge } from 'react-bootstrap';
 import './PostButton.scss';
 import '../../index.scss';
 
