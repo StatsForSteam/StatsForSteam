@@ -22,7 +22,7 @@ function CreatePost(props) {
         })
       });
       const data = await response.json();
-      props.hidePosts();
+      props.hideCreateForm();
       props.onNewPost(data);
     }
   };

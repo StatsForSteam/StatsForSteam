@@ -18,7 +18,7 @@ function Forums() {
           [playerCount, setPlayerCount] = useState(0),
           [dashBoardFetched, setDashBoardFetched] = useState(false),
           [postsFetched, setPostsFetched] = useState(false),
-          [newPostComponent, setNewPostComponent] = useState(false),
+          [newPostComponent, setNewPostComponent] = useState([]),
           [searchTerm, setSearchTerm] = useState(""),
           [showCreateMenu, setShowCreateMenu] = useState(false),
           [posts, setPosts] = useState([]);
@@ -77,7 +77,7 @@ function Forums() {
         }
 
  
-function hidePosts() {
+function hideCreateForm() {
   setShowCreateMenu(!showCreateMenu);
 }
 
@@ -98,10 +98,8 @@ function handleNewPost(newPost) {
       replies={[]} 
     />
   );
-  setNewPostComponent(newPostComponent);
+  setNewPostComponent(prevState => [...prevState, newPostComponent]);
 }
-
-
   return (
     <>
      <Dashboard
@@ -122,9 +120,9 @@ function handleNewPost(newPost) {
                   </Form.Group>                
                 </Form>
 
-                <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hidePosts} />
+                <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hideCreateForm} />
             </div>
-            {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hidePosts={hidePosts} appid={appid}/>)}
+            {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hideCreateForm={hideCreateForm} appid={appid}/>)}
 
    <div className="card-container">
    <Row xs={1} md={1} lg={1} className="g-4">

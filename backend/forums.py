@@ -109,7 +109,6 @@ def createPost():
     cursor.execute(select_statement_posts, (postid,))
     newest_record = cursor.fetchone()
     newest_record_json = json.dumps(newest_record)
-    print(newest_record_json)
     cursor.close()
     return newest_record_json, 200
 
