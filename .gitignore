@@ -13,6 +13,9 @@
 #Database Credentials
 /backend/DatabaseCredentials.json
 
+#Secret Key
+/backend/filekey.key
+
 #Flask Session
 /backend/flask_session/
 
