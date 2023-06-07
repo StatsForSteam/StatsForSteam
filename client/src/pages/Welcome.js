@@ -9,22 +9,6 @@ function Welcome() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [sessionSID, setSessionSID] = useState(false);
 
-  useEffect(() => {
-      fetch(`${process.env.REACT_APP_API_URL}/checkUserStatus`).then(response => 
-        response.json().then(data => {
-          //const expirationTime = new Date(new Date().getTime() + 10 * 60 * 1000); // Current time + 10 minutes
-          //Cookies.set('cookie_name', 'sdfsdfsdf', { expires: expirationTime});
-          const cookieValue = Cookies.get('cookie_name');
-          console.log(cookieValue);
-          console.log(data)
-          // setUserLoggedIn(data['userLogged'])
-
-          // if (isValidUUID(data['SessionID'])){ //Not necessary but is more safe
-          //   setSessionSID(data['SessionID'])          
-          // }
-      }))
-  }, []);
-
   return(
     <div>
     {(() => {
