@@ -49,19 +49,9 @@ def authorize():
         Received_Steam_Info_JSON = loads(dumps(request.args))
         SteamID = Received_Steam_Info_JSON['openid.claimed_id'].strip('https://steamcommunity.com/openid/id/')
         SteamJWT = jwt.encode({'user_id' : SteamID}, "43234", algorithm='HS256')
-        authToken = uuid.uuid4()
-        database.createJWT(SteamJWT, authToken)
-        response = make_response(redirect(f"http://localhost:3000/authentication?authtoken={authToken}"))
-        response.set_cookie('jwtToken', SteamJWT, httponly=False)
+        response = make_response(redirect(f"http://localhost:3000/profile"))
+        response.set_cookie('JWT', SteamJWT, httponly=False, max_age=120)
         return response
 
     else:
         return "Invalid user"
-
-def userAuthentication():
-    # Set the JWT token as a cookie
-    authToken = request.args.get('authToken')
-    JWT = database.getSteamJWT(authToken)
-    response = make_response(jsonify({'message': 'Login successful'}))
-    response.set_cookie('JWT', value=str(JWT), httponly=True)
-    return response

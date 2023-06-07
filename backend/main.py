@@ -26,7 +26,6 @@ mysql.init_app(app)
 
 # API Routes
 app.add_url_rule('/api/checkUserStatus', view_func=OpenIDAuth.checkUserStatus)
-app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/api/authorize', view_func=OpenIDAuth.authorize)
 app.add_url_rule('/api/getUserName', view_func=getData.getUserName)
