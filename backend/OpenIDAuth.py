@@ -1,10 +1,15 @@
-import requests, uuid, jwt, database
-from flask import redirect, request, session, make_response
+import requests, uuid, jwt, database, json
+from flask import redirect, request, session, make_response, jsonify
 from json import dumps, loads, load
 from urllib.parse import urlencode
 
 with open('JWTKey.json') as JWTKeyFile:
     JWTKeyJson = load(JWTKeyFile)
+
+def checkUserStatus():
+    jwt_token = request.cookies.get('JWT')
+    print(f"{jwt_token}\n\n\n")
+    return jsonify(jwt_token)
 
 def login():
     nonce = uuid.uuid4()
@@ -43,16 +48,20 @@ def authorize():
     if response.text.startswith('ns:http://specs.openid.net/auth/2.0\nis_valid:true'):
         Received_Steam_Info_JSON = loads(dumps(request.args))
         SteamID = Received_Steam_Info_JSON['openid.claimed_id'].strip('https://steamcommunity.com/openid/id/')
-        SteamJWT = jwt.encode({'user_id' : SteamID}, JWTKeyJson['SECRETKEY'], algorithm='HS256')
+        SteamJWT = jwt.encode({'user_id' : SteamID}, "43234", algorithm='HS256')
         authToken = uuid.uuid4()
         database.createJWT(SteamJWT, authToken)
         response = make_response(redirect(f"http://localhost:3000/authentication?authtoken={authToken}"))
+        response.set_cookie('jwtToken', SteamJWT, httponly=False)
         return response
 
     else:
         return "Invalid user"
 
 def userAuthentication():
-    print(request.args.get('authToken'))
-    JWT = database.createJWT(authToken)
-    return dumps(False)
+    # Set the JWT token as a cookie
+    authToken = request.args.get('authToken')
+    JWT = database.getSteamJWT(authToken)
+    response = make_response(jsonify({'message': 'Login successful'}))
+    response.set_cookie('JWT', value=str(JWT), httponly=True)
+    return response

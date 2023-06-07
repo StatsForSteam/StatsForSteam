@@ -10,9 +10,10 @@ function Authentication() {
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/userAuthentication?authToken=${searchParams.get("authtoken")}`).then(response => 
+        fetch(`${process.env.REACT_APP_API_URL}/userAuthentication?authToken=${searchParams.get("authtoken")}`,{credentials: 'include',}).then(response => 
             response.json().then(data => {
-                console.log(data) //TEMP
+                Cookies.set('JWT', data.JWT);
+                setSuccessfulLogin(true)
         }))
     }, []);
 

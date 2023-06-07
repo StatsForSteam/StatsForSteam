@@ -3,11 +3,21 @@ import LoginButton from "../components/buttons/LoginButton";
 import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
 import { validate as isValidUUID } from 'uuid';
-import Cookies from 'js-cookie';
 
 function Welcome() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [sessionSID, setSessionSID] = useState(false);
+
+  useEffect(() => {
+      fetch('/checkUserStatus').then(response => 
+        response.json().then(data => {
+          setUserLoggedIn(data['userLogged'])
+
+          if (isValidUUID(data['SessionID'])){ //Not necessary but is more safe
+            setSessionSID(data['SessionID'])          
+          }
+      }))
+  }, []);
 
   return(
     <div>

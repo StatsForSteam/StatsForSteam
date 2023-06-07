@@ -1,6 +1,6 @@
 import OpenIDAuth, json, getData, jwt, datetime
 from database import mysql
-from flask import Flask, session
+from flask import Flask, session, request
 from flask_session import Session
 from flask_cors import CORS, cross_origin
 
@@ -11,7 +11,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_PERMANENT"] = True
 Session(app)
-CORS(app)
+CORS(app, supports_credentials=True, origins=['http://localhost:3000'])
 
 # Database Connection
 with open('DatabaseCredentials.json') as DatabaseCredentials:
@@ -25,6 +25,7 @@ app.config['MYSQL_DB'] = DatabaseCredentialsJson['DB']
 mysql.init_app(app)
 
 # API Routes
+app.add_url_rule('/api/checkUserStatus', view_func=OpenIDAuth.checkUserStatus)
 app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/api/authorize', view_func=OpenIDAuth.authorize)

@@ -1,6 +1,7 @@
-import json
+import json, jwt
 from urllib.request import urlopen
 from flask import request, session, g
+from json import load
 import datetime
 
 
@@ -8,10 +9,14 @@ import datetime
 with open('SteamAPI.json') as SteamAPIFile:
     SteamAPIJson = json.load(SteamAPIFile)
 
+
 def steamid():
-    from main import app
-    with app.app_context():
-        return(session['id'])
+    with open('JWTKey.json') as JWTKeyFile:
+        JWTKeyJson = load(JWTKeyFile)
+    print(f"{request.cookies.get('JWT')}\n\n\n\n")
+    jwt_token = request.cookies.get('JWT')
+    decoded_data = jwt.decode(str.encode(jwt_token), "43234", algorithms=["HS256"])
+    return (decoded_data)
 
 key = SteamAPIJson["STEAMAPIKEY"]
 
