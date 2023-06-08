@@ -1,4 +1,4 @@
-import {Card, Image} from 'react-bootstrap';
+import {Card, Image, Toast} from 'react-bootstrap';
 import '../index.scss';
 import './Post.scss'
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import DownVote from './buttons/DownVote';
 import CreateReplyButton from './buttons/CreateReplyButton';
 import CreateReply from './CreateReply';
 import SeeRepliesButton from './buttons/SeeRepliesButton';
+import DeleteButton from './buttons/DeleteButton';
 import Reply from './Reply';
 
 function Post(props) {
@@ -16,6 +17,8 @@ function Post(props) {
   const [numReplies, setNumReplies] = useState(props.numReplies);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   function handleVote(voteType) {
     const data = {
@@ -79,6 +82,7 @@ function Post(props) {
   function handleShowReplyForm(){
     setShowReplyForm(!showReplyForm);
   }
+  const handleDelete = () => {setDeleted(true);};
 
   function handleCreateReply(data) {
     setShowReplyForm(!showReplyForm);
@@ -102,8 +106,31 @@ function Post(props) {
   function handleSeeReplies() {
     setShowReplies(!showReplies);
   }
+const handleToast = () => {setShowToast(true);
+console.log(showToast)}
 
     return (
+      deleted ? (showToast &&
+        <div className="toast-container">
+        <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          minWidth: "200px",
+          zIndex: 9999,
+        }}
+        autohide
+        delay={3000}
+      >
+        <Toast.Header style={{ backgroundColor: 'var(--primary-color)', color:'var(--tertiary-color)', borderBottom: '2px solid var(--tertiary-color)'}} closeButton={false}>
+          <strong className="me-auto">post deleted</strong>
+        </Toast.Header>
+        <Toast.Body style={{ backgroundColor: 'var(--primary-color)'}}>Your post has been deleted.</Toast.Body>
+      </Toast> </div>) : (
+
      <div>
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
         <Card.Header as="h5" style={{ color: 'var(--tertiary-color)' }}>
@@ -122,13 +149,16 @@ function Post(props) {
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
       <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
      <CreateReplyButton handleShowReplyForm={handleShowReplyForm}/> 
+     {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} handleToast={handleToast}/>}
       </Card.Footer> 
       </Card>
         <div>
         {showReplyForm && <CreateReply handleCreateReply={handleCreateReply} postid={props.postid}/>}
       {showReplies && <>{replies}</>}
         </div>
-    </div>
+
+      
+    </div> )
 
     )
 }

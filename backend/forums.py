@@ -109,10 +109,63 @@ def createPost():
     cursor.execute(select_statement_posts, (postid,))
     newest_record = cursor.fetchone()
     newest_record_json = json.dumps(newest_record)
+
     cursor.close()
     return newest_record_json, 200
 
 
+
+def deletePost():
+    data = request.get_json()
+    post_id = data.get('postid')
+    cursor = mysql.connection.cursor()
+
+    # Delete the votes associated with the post
+    delete_post_votes_query = "DELETE FROM postvotes WHERE postid = %s"
+    cursor.execute(delete_post_votes_query, (post_id,))
+    mysql.connection.commit()
+
+    # Delete the votes associated with the replies to the post
+    delete_reply_votes_query = """
+    DELETE FROM replyvotes
+    WHERE replyid IN (
+      SELECT replyid
+      FROM replyrelation
+      WHERE postid = %s
+    )
+    """
+    cursor.execute(delete_reply_votes_query, (post_id,))
+    mysql.connection.commit()
+
+    # Delete the reply relations for the post
+    delete_reply_relation_query = "DELETE FROM replyrelation WHERE postid = %s"
+    cursor.execute(delete_reply_relation_query, (post_id,))
+    mysql.connection.commit()
+
+    # Delete the post relations for the post
+    delete_post_relation_query = "DELETE FROM postrelation WHERE postid = %s"
+    cursor.execute(delete_post_relation_query, (post_id,))
+    mysql.connection.commit()
+
+    # Delete the replies associated with the post
+    delete_replies_query = """
+    DELETE FROM reply
+    WHERE replyid IN (
+      SELECT replyid
+      FROM replyrelation
+      WHERE postid = %s
+    )
+    """
+    cursor.execute(delete_replies_query, (post_id,))
+    mysql.connection.commit()
+
+    # Delete the post itself
+    delete_post_query = "DELETE FROM posts WHERE postid = %s"
+    cursor.execute(delete_post_query, (post_id,))
+    mysql.connection.commit()
+
+    cursor.close()
+    return '', 200
 
 
 def createReply():
@@ -162,7 +215,6 @@ def createReply():
 
     return newest_record_json, 200
 
-
 def getPosts():
     data = request.get_json()
     appid = data['appid']
@@ -186,7 +238,17 @@ def getPosts():
         posts.votes AS post_votes,
         reply.votes AS reply_votes,
         IFNULL(postvotes.vote_type, 'none') AS post_vote_type,
-        IFNULL(replyvotes.vote_type, 'none') AS reply_vote_type
+        IFNULL(replyvotes.vote_type, 'none') AS reply_vote_type,
+        postrelation.steamid AS post_creator,
+        replyrelation.steamid AS reply_creator,
+        CASE
+            WHEN postrelation.steamid = %s THEN TRUE
+            ELSE FALSE
+        END AS is_post_creator,
+        CASE
+            WHEN replyrelation.steamid = %s THEN TRUE
+            ELSE FALSE
+        END AS is_reply_creator
     FROM 
         posts
     JOIN 
@@ -208,7 +270,7 @@ def getPosts():
     WHERE 
         postrelation.appid = %s
     """
-    data_select = (steamID, steamID, appid)
+    data_select = (steamID, steamID, steamID, steamID, appid)
     cursor.execute(select_statement, data_select)
 
     rows = cursor.fetchall()
@@ -228,6 +290,7 @@ def getPosts():
                 'date': row[5],
                 'votes': row[11],
                 'existing_vote_type': row[13],  # Vote type for the post
+                'is_creator': bool(row[17]),  # Boolean variable indicating if the steamID calling getPosts is the creator of each post
                 'replies': []
             }
             posts[postid] = post
@@ -242,10 +305,12 @@ def getPosts():
                 'pfp': row[10],
                 'votes': row[12],
                 'existing_vote_type': row[14],  # Vote type for the reply
+                'is_creator': bool(row[18]),  # Boolean variable indicating if steamID is calling getPosts is the creator of each reply
             }
             posts[postid]['replies'].append(reply)
-
     return jsonify(list(posts.values()))
+
+
 
 
 def createVote():

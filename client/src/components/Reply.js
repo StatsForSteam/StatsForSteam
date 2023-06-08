@@ -1,8 +1,9 @@
-import {Card, Image,Container, Row, Col } from 'react-bootstrap';
+import {Card, Image, Row, Col } from 'react-bootstrap';
 import './Reply.scss'
 import UpVote from './buttons/UpVote';
 import DownVote from './buttons/DownVote';
 import { useState } from 'react';
+import DeleteButton from './buttons/DeleteButton';
 
 function Reply(props){
     const [votes, setVotes] = useState(props.votes);
@@ -85,6 +86,11 @@ function Reply(props){
                                 <div id="content">{props.content}</div>
                             </div>
                         </Card.Body>
+                        {props.isCreator && 
+                        <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
+                        <DeleteButton keyword="reply" replyid={props.replyid} />
+                        </Card.Footer>
+                        }
                     </Card>
                 </Col>
             </Row>

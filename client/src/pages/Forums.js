@@ -95,6 +95,7 @@ function handleNewPost(newPost) {
       votes={0} 
       ExistingVoteType={'none'} 
       numReplies={0} 
+      isCreator={true}
       replies={[]} 
     />
   );
@@ -139,6 +140,7 @@ function handleNewPost(newPost) {
           votes={post.votes} 
           ExistingVoteType={post.existing_vote_type}
           numReplies={post.replies.length}
+          isCreator={post.is_creator}
           replies={post.replies.map(reply => (
             <Reply
               key={reply.replyid}
@@ -149,6 +151,7 @@ function handleNewPost(newPost) {
               date={reply.date}
               votes={reply.votes}
               ExistingVoteType={reply.existing_vote_type}
+              isCreator={reply.is_creator}
             />
           ))}
         />

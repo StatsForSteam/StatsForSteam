@@ -27,3 +27,12 @@
     opacity: 0.5;
     margin-left: 15px;
 }
+
+.toast-container {
+    background-color: transparent; /* Set the background color of the Toast to transparent */
+  }
+  
+  .toast-container .toast-body {
+    background-color: var(--primary-color); /* Set the desired background color for the Toast body */
+    color: var(--tertiary-color); /* Set the desired text color for the Toast body */
+  }
