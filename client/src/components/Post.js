@@ -1,7 +1,7 @@
 import {Card, Image, Toast} from 'react-bootstrap';
 import '../index.scss';
 import './Post.scss'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UpVote from './buttons/UpVote';
 import DownVote from './buttons/DownVote';
 import CreateReplyButton from './buttons/CreateReplyButton';
@@ -79,11 +79,6 @@ function Post(props) {
     }
   }
   
-  function handleShowReplyForm(){
-    setShowReplyForm(!showReplyForm);
-  }
-  const handleDelete = () => {setDeleted(true);};
-
   function handleCreateReply(data) {
     setShowReplyForm(!showReplyForm);
     const newReply = (
@@ -95,6 +90,7 @@ function Post(props) {
         username={data[3]}
         pfp={data[4]}
         votes={0}
+        isCreator={true}
         ExistingVoteType={'none'}
       />
     );
@@ -103,14 +99,15 @@ function Post(props) {
   }
 
 
-  function handleSeeReplies() {
-    setShowReplies(!showReplies);
-  }
-const handleToast = () => {setShowToast(true);
-console.log(showToast)}
+
+  const handleSeeReplies = () => {setShowReplies(!showReplies);};
+  const handleShowReplyForm = () => {setShowReplyForm(!showReplyForm);};
+  const handleDelete = () => { setDeleted(true); setShowToast(true); }
+  
 
     return (
-      deleted ? (showToast &&
+      //When post deleted display toast
+      deleted ? (
         <div className="toast-container">
         <Toast
         show={showToast}
@@ -149,15 +146,13 @@ console.log(showToast)}
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
       <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
      <CreateReplyButton handleShowReplyForm={handleShowReplyForm}/> 
-     {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} handleToast={handleToast}/>}
+     {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
       </Card.Footer> 
       </Card>
         <div>
         {showReplyForm && <CreateReply handleCreateReply={handleCreateReply} postid={props.postid}/>}
       {showReplies && <>{replies}</>}
-        </div>
-
-      
+        </div> 
     </div> )
 
     )

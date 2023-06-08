@@ -215,6 +215,34 @@ def createReply():
 
     return newest_record_json, 200
 
+def deleteReply():
+    data = request.get_json()
+    replyid = data['replyid']
+    
+    cursor = mysql.connection.cursor()
+
+    # Delete the reply relation from replyrelation table
+    delete_statement_replyrelation = "DELETE FROM replyrelation WHERE replyid = %s"
+    cursor.execute(delete_statement_replyrelation, (replyid,))
+    mysql.connection.commit()
+
+    # Delete the reply votes from replyvotes table
+    delete_statement_replyvotes = "DELETE FROM replyvotes WHERE replyid = %s"
+    cursor.execute(delete_statement_replyvotes, (replyid,))
+    mysql.connection.commit()
+
+    # Delete the reply from reply table
+    delete_statement_reply = "DELETE FROM reply WHERE replyid = %s"
+    cursor.execute(delete_statement_reply, (replyid,))
+    mysql.connection.commit()
+
+    cursor.close()
+
+    return "Reply deleted successfully", 200
+
+
+
+
 def getPosts():
     data = request.get_json()
     appid = data['appid']

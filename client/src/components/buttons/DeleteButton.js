@@ -7,24 +7,29 @@ import './DeleteButton.scss'
 function DeleteButton(props) {
   const [showModal, setShowModal] = useState(false);
 
-
   function deletePost() {
-    fetch("/deletePost", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ postid: props.postid }),
-    })
-      .then(() => {
-     
-        setShowModal(false);
-        props.handleDelete();
-        props.handleToast();
-        // Display success message or perform any necessary actions
+    if(props.keyword === "post"){
+      fetch("/deletePost", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postid: props.postid }),
       })
-      .catch((error) => {
-        console.error("Error deleting post:", error);
-        // Display error message or handle the error
-      });
+        .then(() => {
+          setShowModal(false);
+          props.handleDelete();
+        })
+    }
+    else{
+      fetch("/deleteReply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ replyid: props.replyid }),
+      })
+        .then(() => {
+          setShowModal(false);
+          props.handleDelete();
+        })
+    }
   }
 
   const handleCloseModal = () => setShowModal(false);
@@ -33,7 +38,6 @@ function DeleteButton(props) {
   return (
     <>
       <MdDelete onClick={handleShowModal} size={40} style={{ marginLeft: "5px" }} className="PostButton" />
-
       <Modal style={{ color: 'var(--tertiary-color)'}} show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header style={{ backgroundColor: 'var(--primary-color)', borderBottom: '2px solid var(--tertiary-color)'}} closeVariant='white' closeButton>
           <Modal.Title>Delete {props.keyword}</Modal.Title>
@@ -50,7 +54,6 @@ function DeleteButton(props) {
           </button>
         </Modal.Footer>
       </Modal>
-
     </>
   );
 }

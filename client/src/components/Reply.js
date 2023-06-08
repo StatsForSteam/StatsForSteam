@@ -1,4 +1,4 @@
-import {Card, Image, Row, Col } from 'react-bootstrap';
+import {Card, Image, Row, Col, Toast } from 'react-bootstrap';
 import './Reply.scss'
 import UpVote from './buttons/UpVote';
 import DownVote from './buttons/DownVote';
@@ -8,6 +8,8 @@ import DeleteButton from './buttons/DeleteButton';
 function Reply(props){
     const [votes, setVotes] = useState(props.votes);
     const [ExistingVoteType, setExistingVoteType] = useState(props.ExistingVoteType);
+    const [deleted, setDeleted] = useState(false);
+    const [showToast, setShowToast] = useState(false);
 
     function handleVote(voteType) {
         const data = {
@@ -66,9 +68,30 @@ function Reply(props){
     } 
 }
 
-
+const handleDelete = () => {setDeleted(true); setShowToast(true);}
 
     return(
+        deleted ?( <div className="toast-container">
+        <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          minWidth: "200px",
+          zIndex: 9999,
+        }}
+        autohide
+        delay={3000}
+      >
+        <Toast.Header style={{ backgroundColor: 'var(--primary-color)', color:'var(--tertiary-color)', borderBottom: '2px solid var(--tertiary-color)'}} closeButton={false}>
+          <strong className="me-auto">reply deleted</strong>
+        </Toast.Header>
+        <Toast.Body style={{ backgroundColor: 'var(--primary-color)'}}>Your reply has been deleted.</Toast.Body>
+      </Toast> </div>) 
+      
+      :
         <div id="reply-container">
             <Row className="justify-content-center">
                 <Col xs={12} md={10} lg={10}>
@@ -88,7 +111,7 @@ function Reply(props){
                         </Card.Body>
                         {props.isCreator && 
                         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-                        <DeleteButton keyword="reply" replyid={props.replyid} />
+                        <DeleteButton keyword="reply" replyid={props.replyid} handleDelete={handleDelete}/>
                         </Card.Footer>
                         }
                     </Card>
