@@ -81,28 +81,27 @@ function Post(props) {
   
   function handleCreateReply(data) {
     setShowReplyForm(!showReplyForm);
-    const newReply = (
-      <Reply
-        key={data[0]}
-        replyid={data[0]}
-        content={data[1]}
-        date={data[2]}
-        username={data[3]}
-        pfp={data[4]}
-        votes={0}
-        isCreator={true}
-        ExistingVoteType={'none'}
-      />
-    );
-    setReplies(prevState => [newReply, ...prevState]);
-    setNumReplies(numReplies + 1);
+    const newReply = {
+      replyid: data[0],
+      content: data[1],
+      date: data[2],
+      username: data[3],
+      pfp: data[4],
+      votes: 0,
+      is_creator: true,
+      ExistingVoteType: 'none',
+    };
+    setReplies((prevReplies) => [newReply, ...prevReplies]);
+    setNumReplies((prevNumReplies) => prevNumReplies + 1);
   }
 
 
 
   const handleSeeReplies = () => {setShowReplies(!showReplies);};
   const handleShowReplyForm = () => {setShowReplyForm(!showReplyForm);};
-  const handleDelete = () => { setDeleted(true); setShowToast(true); }
+  const handleDelete = () => { setDeleted(true); setShowToast(true);} 
+  const handleDeleteReply = () => {setNumReplies(numReplies -1)}
+
   
 
     return (
@@ -144,14 +143,27 @@ function Post(props) {
           </div>
         </Card.Body>
         <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-      <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies}/>
+      <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies} />
      <CreateReplyButton handleShowReplyForm={handleShowReplyForm}/> 
      {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
       </Card.Footer> 
       </Card>
         <div>
         {showReplyForm && <CreateReply handleCreateReply={handleCreateReply} postid={props.postid}/>}
-      {showReplies && <>{replies}</>}
+        {showReplies && replies.map((reply) => (
+  <Reply
+    key={reply.replyid}
+    replyid={reply.replyid}
+    content={reply.content}
+    username={reply.username}
+    pfp={reply.pfp}
+    date={reply.date}
+    votes={reply.votes}
+    ExistingVoteType={reply.existing_vote_type}
+    isCreator={reply.is_creator}
+    handleDeleteReply={handleDeleteReply}
+  />
+))}
         </div> 
     </div> )
 

@@ -2,7 +2,7 @@ import {Card, Image, Row, Col, Toast } from 'react-bootstrap';
 import './Reply.scss'
 import UpVote from './buttons/UpVote';
 import DownVote from './buttons/DownVote';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteButton from './buttons/DeleteButton';
 
 function Reply(props){
@@ -68,7 +68,7 @@ function Reply(props){
     } 
 }
 
-const handleDelete = () => {setDeleted(true); setShowToast(true);}
+const handleDelete = () => {setDeleted(true); setShowToast(true); props.handleDeleteReply();}
 
     return(
         deleted ?( <div className="toast-container">

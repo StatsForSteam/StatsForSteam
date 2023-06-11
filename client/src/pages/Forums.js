@@ -125,40 +125,27 @@ function handleNewPost(newPost) {
             </div>
             {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hideCreateForm={hideCreateForm} appid={appid}/>)}
 
-   <div className="card-container">
-   <Row xs={1} md={1} lg={1} className="g-4">
-   {newPostComponent}
-   {posts.map(post => (
-        <Post
-          key={post.postid}
-          postid={post.postid}
-          title={post.title}
-          content={post.content}
-          username={post.username}
-          pfp={post.pfp}
-          date={post.date}
-          votes={post.votes} 
-          ExistingVoteType={post.existing_vote_type}
-          numReplies={post.replies.length}
-          isCreator={post.is_creator}
-          replies={post.replies.map(reply => (
-            <Reply
-              key={reply.replyid}
-              replyid={reply.replyid}
-              content={reply.content}
-              username={reply.username}
-              pfp={reply.pfp}
-              date={reply.date}
-              votes={reply.votes}
-              ExistingVoteType={reply.existing_vote_type}
-              isCreator={reply.is_creator}
-            />
-          ))}
-        />
-      ))}
-      </Row>
-</div> 
-
+          <div className="card-container">
+            <Row xs={1} md={1} lg={1} className="g-4">
+              {newPostComponent}
+              {posts.map((post) => (
+                <Post
+                  key={post.postid}
+                  postid={post.postid}
+                  title={post.title}
+                  content={post.content}
+                  username={post.username}
+                  pfp={post.pfp}
+                  date={post.date}
+                  votes={post.votes}
+                  ExistingVoteType={post.existing_vote_type}
+                  numReplies={post.replies.length}
+                  isCreator={post.is_creator}
+                  replies={post.replies}
+                />
+                ))}
+            </Row>
+          </div> 
     </>
   );
 }
