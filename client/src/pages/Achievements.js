@@ -101,7 +101,7 @@ function Achievements(){
             location={"Achievements"}
             hasAchievements={hasAchievements}
           />
-                
+        {hasAchievements && (
               <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
@@ -125,7 +125,7 @@ function Achievements(){
                     disabled={!showLocked}
                   />
                 </div>
-              </div> 
+              </div> ) }
 
                 <div className="card-container">
                 <Row xs={1} md={2} lg={4} className="g-4">

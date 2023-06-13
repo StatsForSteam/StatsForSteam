@@ -152,6 +152,7 @@ const filteredPosts = posts.filter((post) =>
               ))}
             </Row>
           </div> 
+          {posts.length === 0 && <h1 className="text-center" style={{marginTop: '8%'}}>No posts under this game, press the + to be the first!</h1>}
     </>
   );
 }

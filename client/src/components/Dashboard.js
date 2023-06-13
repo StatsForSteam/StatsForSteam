@@ -25,7 +25,7 @@ function Dashboard(props){
                       <h3>{props.achievedLen} / {props.achievedLen+props.notachievedLen} completed</h3>
                   </Col> ) : (
                     <Col>
-                    <h1>No achievements</h1>
+                    <h1>This game has no achievements</h1>
                     </Col> )}
                   <Col>
                     <h1>{props.name}</h1>
@@ -44,10 +44,15 @@ function Dashboard(props){
                           <ForumsButton props={props} fromDashboard={true}/>
                         </>
                       ) : (
-                        <>
-                        <h3 id="text-color" className="mr-2">View your achievements:</h3>
-                        <ViewAchievements props={props} fromDashboard={true} />
-                        </>
+                        (props.hasAchievements && (
+                          <>
+                            <h3 id="text-color" className="mr-2">
+                              View your achievements:
+                            </h3>
+                            <ViewAchievements props={props} fromDashboard={true} />
+                          </>
+                        )) ||
+                        null
                       )}
                     </div>                      
                   </Col>
