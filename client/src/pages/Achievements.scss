@@ -1,12 +1,6 @@
 @import "../index.scss";
 
-.Dashboard{
-    margin: 10px;
-    padding: 10px;
-    border: 3px solid $primary-color;
-    border-radius: 10px;
-    background-color: $secondary-color;
-}
+
 #Row{
    margin-top: 1%;
 }
@@ -26,10 +20,9 @@ h2,h3{
 }
 
 #gameImg{
-    border-color: $secondary-color;
-    border-radius: 10px;
-    border-width: 3px;
-    border-style: solid;
+    // border-width: 5px;
+    // border-color: $primary-color;
+    // border-style: solid;
 }
 
 .stats-text{

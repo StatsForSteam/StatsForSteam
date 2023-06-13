@@ -14,3 +14,19 @@
     transition: 0.3s ease-in-out;
     background-color: #202024;
   }
+
+
+  .DashboardButton {
+    transition: background-color .3s;
+    background-color: $primary-color;
+    color: $tertiary-color;
+    border: none;
+    padding: 8px;
+    font-size: 2em;
+    border-radius: 6px;
+  }
+  
+  .DashboardButton:hover {
+    transition: 0.3s ease-in-out;
+    background-color: #202024;
+  }

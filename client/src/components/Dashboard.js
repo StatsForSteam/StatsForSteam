@@ -4,7 +4,9 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { IconContext } from 'react-icons';
 import { BsFillClockFill, BsPeopleFill, BsFillCalendarWeekFill } from 'react-icons/bs';
 import Image from 'react-bootstrap/Image';
-
+import ForumsButton from './buttons/ForumsButton';
+import ViewAchievements from './buttons/ViewAchievements';
+import './Dashboard.scss'
 function Dashboard(props){
     return(
         <div className="Dashboard">
@@ -35,6 +37,19 @@ function Dashboard(props){
                   </Col>
                   <Col xs="auto">
                     <Image fluid="true" id="gameImg" alt="steam header" src={props.header}></Image> 
+                    <div className="d-flex align-items-center" id="button-text">
+                      {props.location === "Achievements" ? (
+                        <>
+                          <h3 id="text-color" className="mr-2">Checkout this games discussion:</h3>
+                          <ForumsButton props={props} fromDashboard={true}/>
+                        </>
+                      ) : (
+                        <>
+                        <h3 id="text-color" className="mr-2">View your achievements:</h3>
+                        <ViewAchievements props={props} fromDashboard={true} />
+                        </>
+                      )}
+                    </div>                      
                   </Col>
                 </Row>
               </Container>

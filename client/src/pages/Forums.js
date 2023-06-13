@@ -7,7 +7,6 @@ import CreateDiscussionButton from "../components/buttons/CreateDiscussionButton
 import CreatePost from "../components/CreatePost";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Reply from "../components/Reply";
 import "../index.scss";
 
 function Forums() {
@@ -101,6 +100,11 @@ function handleNewPost(newPost) {
   );
   setNewPostComponent(prevState => [...prevState, newPostComponent]);
 }
+
+const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
      <Dashboard
@@ -112,23 +116,25 @@ function handleNewPost(newPost) {
             playerCount={playerCount}
             lastplayed={lastplayed}
             header={header}
+            appid={appid}
             hasAchievements={hasAchievements}
           />
+          <div className="d-flex align-items-center" style={{justifyContent: 'Center'}}>
           <div className="searchAndradio"> 
                 <Form>
                   <Form.Group>
                       <Form.Control size="lg" type="input" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
                   </Form.Group>                
                 </Form>
-
-                <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hideCreateForm} />
+            </div>
+            <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hideCreateForm} />
             </div>
             {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hideCreateForm={hideCreateForm} appid={appid}/>)}
 
           <div className="card-container">
             <Row xs={1} md={1} lg={1} className="g-4">
               {newPostComponent}
-              {posts.map((post) => (
+              {filteredPosts.map((post) => (
                 <Post
                   key={post.postid}
                   postid={post.postid}
@@ -143,11 +149,10 @@ function handleNewPost(newPost) {
                   isCreator={post.is_creator}
                   replies={post.replies}
                 />
-                ))}
+              ))}
             </Row>
           </div> 
     </>
   );
 }
 export default Forums;
-

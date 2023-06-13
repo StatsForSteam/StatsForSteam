@@ -1,15 +1,16 @@
 import './GameCardButton.scss';
 import { Link } from 'react-router-dom';
-import {ImStatsBars} from 'react-icons/im';
+import {FaMedal} from 'react-icons/fa';
 
 function ViewAchievements(props){
+    const buttonClassName = props.fromDashboard ? 'DashboardButton' : 'GameCardButton';
     return (
         <div>
             <Link 
                 to={"/Achievements"}
                 state={props}
             >
-                <button className="GameCardButton"><ImStatsBars/></button>
+                <button className={buttonClassName}><FaMedal/></button>
             </Link>
         </div>
     )
