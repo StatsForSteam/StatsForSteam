@@ -11,7 +11,7 @@ function GameCard(props) {
   const [hasHeader, setHasHeader] = useState(true);
   const handleHeaderError = () => setHasHeader(false);
   const headerImage = hasHeader ? props.header : null;
-
+  const lastplayed = props.lastplayed ? props.lastplayed : false;
   return (
     headerImage ? (
       <div className="GameCard">
@@ -24,8 +24,9 @@ function GameCard(props) {
       <Card.Text>
        <div id="under-header">
           <div>
-            <div style={{ color: 'var(--quaternary-color)' }}>Currently: {props.playtime} hours</div>
-            <div style={{ color: 'var(--quaternary-color)' }}>Last Played: {props.lastplayed}</div>
+            <div style={{ color: 'var(--quaternary-color)' }}>Currently: {props.playtime} hrs</div>
+            {lastplayed && <div style={{ color: 'var(--quaternary-color)' }}>Last Played: {props.lastplayed}</div>}
+            {!lastplayed && <div style={{ color: 'var(--quaternary-color)' }}>Never Played</div>}
           </div>
           <Row xs={2} md={2} lg={2} className="g-2">
             <ViewAchievements props={props} />

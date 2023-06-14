@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, FormControl } from 'react-bootstrap';
 import '../index.scss';
 import './CreatePost.scss';
 
@@ -11,6 +11,11 @@ function CreatePost(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitted(true);
+
+    if (title.length > 45 || content.length > 255) {
+      return; // Exit early if title or content exceeds the limits
+    }
+
     if (title && content) {
       const response = await fetch('/createPost', {
         method: 'POST',
@@ -37,11 +42,12 @@ function CreatePost(props) {
             placeholder="Add a title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            isInvalid={isSubmitted && !title}
+            isInvalid={isSubmitted && (!title || title.length > 45)}
           />
-          <Form.Control.Feedback type="invalid">
-            Please enter a title.
-          </Form.Control.Feedback>
+          <FormControl.Feedback type="invalid">
+            {isSubmitted && !title && "Please enter a title."}
+            {isSubmitted && title && title.length > 45 && "Title should not exceed 45 characters."}
+          </FormControl.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Label id="label">Content</Form.Label>
@@ -51,11 +57,12 @@ function CreatePost(props) {
             rows={2}
             value={content}
             onChange={(event) => setContent(event.target.value)}
-            isInvalid={isSubmitted && !content}
+            isInvalid={isSubmitted && (!content || content.length > 255)}
           />
-          <Form.Control.Feedback type="invalid">
-            Please enter content.
-          </Form.Control.Feedback>
+          <FormControl.Feedback type="invalid">
+            {isSubmitted && !content && "Please enter content."}
+            {isSubmitted && content && content.length > 255 && "Content should not exceed 255 characters."}
+          </FormControl.Feedback>
         </Form.Group>
         <Button type="submit" id="post-button">
           Post
@@ -66,6 +73,8 @@ function CreatePost(props) {
 }
 
 export default CreatePost;
+
+
 
 
 

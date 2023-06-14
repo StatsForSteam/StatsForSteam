@@ -11,6 +11,10 @@ function CreateReply(props) {
     event.preventDefault();
     setIsSubmitted(true);
 
+    if (content.length > 255) {
+      return; // Exit early if content exceeds the limit
+    }
+
     if (content) {
       try {
         const response = await fetch('/createReply', {
@@ -18,9 +22,8 @@ function CreateReply(props) {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content, postid })
         });
-          const data = await response.json();
-          props.handleCreateReply(data);
-         
+        const data = await response.json();
+        props.handleCreateReply(data);
       } catch (error) {
         console.error(error);
       }
@@ -37,10 +40,11 @@ function CreateReply(props) {
             rows={2}
             value={content}
             onChange={(event) => setContent(event.target.value)}
-            isInvalid={isSubmitted && !content}
+            isInvalid={isSubmitted && (!content || content.length > 255)}
           />
           <Form.Control.Feedback type="invalid">
-            Please enter content.
+            {isSubmitted && !content && "Please enter content."}
+            {isSubmitted && content && content.length > 255 && "Content should not exceed 255 characters."}
           </Form.Control.Feedback>
         </Form.Group>
         <button id="reply-button" type="submit">
@@ -52,4 +56,5 @@ function CreateReply(props) {
 }
 
 export default CreateReply;
+
 
