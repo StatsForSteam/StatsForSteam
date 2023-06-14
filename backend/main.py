@@ -9,7 +9,7 @@ app.debug = True
 
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_PERMANENT"] = True
+app.config["SESSION_PERMANENT"] = False
 Session(app)
 CORS(app, supports_credentials=True, origins=['http://localhost:3000'])
 
@@ -25,9 +25,9 @@ app.config['MYSQL_DB'] = DatabaseCredentialsJson['DB']
 mysql.init_app(app)
 
 # API Routes
-app.add_url_rule('/api/checkUserStatus', view_func=OpenIDAuth.checkUserStatus)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/api/authorize', view_func=OpenIDAuth.authorize)
+app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/getUserName', view_func=getData.getUserName)
 app.add_url_rule('/api/getSessionSID', view_func=getData.getSessionSID)
 app.add_url_rule('/api/getUserProfilePicture', view_func=getData.getUserProfilePicture)
@@ -35,4 +35,4 @@ app.add_url_rule('/api/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/api/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 
 if __name__ == "__main__":
-    app.run(use_reloader=True)
+    app.run()

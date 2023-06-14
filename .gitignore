@@ -4,6 +4,8 @@
 # Environments
 /backend/venv/
 
+vs-flask.pem
+
 #API Key
 /backend/SteamAPI.json
 

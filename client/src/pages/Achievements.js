@@ -29,7 +29,7 @@ function Achievements(){
         [showUnlocked, setShowUnlocked] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/getAchievements`, {
+    fetch("https://ec2-3-86-60-149.compute-1.amazonaws.com/api/login", {
       method: "POST",
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },

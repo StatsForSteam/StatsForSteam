@@ -6,7 +6,7 @@ import { BsSteam } from 'react-icons/bs';
 function LoginButton(props){
     return (
         <div className="loginButtonFlex">
-            <Link to={`${process.env.REACT_APP_API_URL}/login`}>
+            <Link to={"https://ec2-3-86-60-149.compute-1.amazonaws.com/api/login"}>
                 <button style={{backgroundColor: 'var(--tertiary-color)'}}type="button" className="btn btn-primary btn-lg">
                     <div className="loginInnerButtonFlex">
                         Login with Steam
