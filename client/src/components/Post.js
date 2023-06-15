@@ -1,4 +1,4 @@
-import {Card, Image, Toast} from 'react-bootstrap';
+import {Card, Image, Toast, Row, Col, Container} from 'react-bootstrap';
 import '../index.scss';
 import './Post.scss'
 import { useEffect, useState } from 'react';
@@ -129,26 +129,43 @@ function Post(props) {
 
      <div>
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
-        <Card.Header as="h5" style={{ color: 'var(--tertiary-color)' }}>
-          {props.title} <span id="user-info">{props.username}<Image id="pfp"src={props.pfp} /></span> <span id="date">{props.date}</span>
-        </Card.Header>
-        <Card.Body style={{ color: 'var(--quaternary-color)' }}>
-          <div className="d-flex">
-            <div className="mr-3 d-flex flex-column align-items-center">
-            <UpVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
-            <span id="votes">{votes}</span>
-            <DownVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
+        <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)',color: 'var(--tertiary-color)' }}>
+          <div className="d-flex align-items-center justify-content-between">
+            <div>
+            <h5>{props.title}</h5>
             </div>
-            <div id="content">{props.content}</div>
+            <div className="d-flex align-items-center">
+              <span id="username">{props.username}</span>
+              <Image id="pfp" src={props.pfp} />
+            </div>
           </div>
-        </Card.Body>
-        <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-      <SeeRepliesButton showReplies={showReplies} numReplies= {numReplies} postid = {props.postid} handleSeeReplies={handleSeeReplies} />
-     <CreateReplyButton handleShowReplyForm={handleShowReplyForm}/> 
-     {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
-      </Card.Footer> 
-      </Card>
-        <div>
+        </Card.Header>
+
+      <Card.Body style={{ color: 'var(--quaternary-color)' }}>
+        <div className="d-flex">
+          <div className="mr-3 d-flex flex-column align-items-center">
+          <UpVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
+            {votes}
+          <DownVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
+          </div>
+          <div id="content">{props.content}</div>
+        </div>
+      </Card.Body>
+
+      <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <SeeRepliesButton showReplies={showReplies} numReplies={numReplies} postid={props.postid} handleSeeReplies={handleSeeReplies} />
+            <CreateReplyButton handleShowReplyForm={handleShowReplyForm} />
+          </div>
+          <div>
+            <span id="date">{props.date}</span>
+            {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
+          </div>
+        </div>
+      </Card.Footer>
+    </Card>
+    <div>
         {showReplyForm && <CreateReply handleCreateReply={handleCreateReply} postid={props.postid}/>}
         {showReplies && replies.map((reply) => (
   <Reply

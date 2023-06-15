@@ -1,8 +1,12 @@
 @import "../index.scss";
-#date{
-    opacity: 0.5;
-}
+
 #reply-container{
     margin: 10px;
-
 }
+
+#votes{
+    color: $quaternary-color;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+

@@ -1,33 +1,19 @@
 @import "../index.scss";
 
-#user-info{
-    float: right;
-    font-size: 0.8em;
-}
 
-#content{
-    margin-left: 10px;  
+#pfp {
+  width: 2.8rem;
+  margin-left: 10px;
+  border-radius: 50%;
+  border: 0.1rem solid var(--primary-color);
 }
-
-#pfp{  
-    width: 2.8rem;
-    margin-left: 10px;
-    border-radius: 50%;
-    border-color: $primary-color;
-    border-width: 0.1;
-    border-style: solid;
-}
-
-#votes{
-  margin-top: 5px;
-  margin-bottom: 5px;
+#username{
+  font-weight: 495;
 }
 
 #date{
-    opacity: 0.5;
-    margin-left: 15px;
+  opacity: 0.5;
 }
-
 .toast-container {
     background-color: transparent; /* Set the background color of the Toast to transparent */
   }
@@ -35,3 +21,10 @@
   .toast-container .toast-body {
     color: var(--tertiary-color);
   }
+
+  #content{
+    margin-left: 10px;  
+}
+
+
+

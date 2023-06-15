@@ -94,27 +94,37 @@ const handleDelete = () => {setDeleted(true); setShowToast(true); props.handleDe
       :
         <div id="reply-container">
             <Row className="justify-content-center">
-                <Col xs={12} md={10} lg={10}>
-                    <Card style={{ backgroundColor: 'var(--secondary-color)'}}>
-                        <Card.Header as="h5" style={{ color: 'var(--tertiary-color)' }}>
-                        <span id="date">{props.date}</span> <span id="user-info">{props.username}<Image id="pfp"src={props.pfp} /></span>
-                        </Card.Header>
-                        <Card.Body style={{ color: 'var(--quaternary-color)' }}>
-                            <div className="d-flex">
-                                    <div className="mr-3 d-flex flex-column align-items-center">
-                                        <UpVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
-                                        <span id="votes">{votes}</span>
-                                        <DownVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
-                                    </div>
-                                <div id="content">{props.content}</div>
-                            </div>
-                        </Card.Body>
-                        {props.isCreator && 
-                        <Card.Footer style={{ color: 'var(--tertiary-color)' }}>
-                        <DeleteButton keyword="reply" replyid={props.replyid} handleDelete={handleDelete}/>
-                        </Card.Footer>
-                        }
-                    </Card>
+                <Col xs={10} md={10} lg={10}>
+                  <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
+                    <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)',color: 'var(--tertiary-color)' }}>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="d-flex align-items-center">
+                          <span id="username">{props.username}</span>
+                          <Image id="pfp" src={props.pfp} />
+                        </div>
+                      </div>
+                    </Card.Header>
+
+                    <Card.Body style={{ color: 'var(--quaternary-color)' }}>
+                      <div className="d-flex">
+                        {props.content}
+                      </div>
+                    </Card.Body>
+
+                    <Card.Footer style={{ color: 'var(--tertiary-color)', borderTop: 'none'}} >
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          <UpVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
+                          <span id="votes">{votes}</span>
+                          <DownVote handleVote={handleVote} ExistingVoteType={ExistingVoteType} />
+                        </div>
+                        <div className="d-flex align-items-center">
+                          <span id="date">{props.date}</span>
+                          {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
+                        </div>
+                      </div>
+                    </Card.Footer>
+                  </Card>
                 </Col>
             </Row>
         </div>
