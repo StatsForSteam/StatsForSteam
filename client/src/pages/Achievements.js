@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import 'react-circular-progressbar/dist/styles.css';
 import Form from 'react-bootstrap/Form';
-import {Row} from 'react-bootstrap';
+import {Row,Col, Container} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
 import Dashboard from "../components/Dashboard";
@@ -102,30 +102,40 @@ function Achievements(){
             hasAchievements={hasAchievements}
           />
         {hasAchievements && (
-              <div className="searchAndradio"> 
-                <Form>
-                  <Form.Group>
-                      <Form.Control size="lg" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
-                  </Form.Group>                
-                </Form>
-
-                  <div className="radioButtons">
-                  <Form.Check
-                    label="Unlocked"
-                    id="unlocked"
-                    value="unlocked"
-                    onChange={onFilterChange}
-                    disabled={!showUnlocked}
-                  />
-                  <Form.Check
-                    label="Locked"
-                    id="locked"
-                    value="locked"
-                    onChange={onFilterChange}
-                    disabled={!showLocked}
-                  />
-                </div>
-              </div> ) }
+              <div id="search-container">
+              <Container>
+                <Row className="justify-content-md-center" md={2}>
+                  <Col lg={5}>
+                    <Form>
+                      <Form.Group>
+                        <Form.Control size="lg" style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--quaternary-color)'}} type="input" placeholder="Search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)}/>
+                      </Form.Group>                
+                    </Form>
+                  </Col>
+                  <Col lg="auto" md="auto">
+                    <div className="radioButtons">
+                      <Form.Check
+                        className="radio-button"
+                        label="Unlocked"
+                        id="unlocked"
+                        value="unlocked"
+                        onChange={onFilterChange}
+                        disabled={!showUnlocked}
+                      />
+                      <Form.Check
+                        className="radio-button"
+                        label="Locked"
+                        id="locked"
+                        value="locked"
+                        onChange={onFilterChange}
+                        disabled={!showLocked}
+                      />
+                    </div>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+            ) }
 
                 <div className="card-container">
                 <Row xs={1} md={2} lg={4} className="g-4">

@@ -35,16 +35,8 @@ def login():
     return redirect('https://steamcommunity.com/openid/login?' + OpenID_Parameters_URL)
 
 def authorize():
-    Received_Steam_Info_JSON = loads(dumps(request.args))
-    SteamID = Received_Steam_Info_JSON['openid.claimed_id'].strip('https://steamcommunity.com/openid/id/')
-    database.addUser(Received_Steam_Info_JSON['session'], int(SteamID))
     return redirect("http://localhost:3000/authentication")
 
 def userAuthentication():
-    steamid = database.getSteamID(session.sid)[0]
+    return dumps(True)
 
-    if (len(str(steamid)) == 17):
-        session['id'] = str(steamid)
-        return dumps(True)
-
-    return dumps(False)

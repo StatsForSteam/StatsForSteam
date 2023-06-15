@@ -22,6 +22,7 @@ key = SteamAPIJson["STEAMAPIKEY"]
 def steamid():
     from main import app
     with app.app_context():
+        return "76561198833526844"
         return(session['id'])
     
 def getUserData():

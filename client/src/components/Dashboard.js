@@ -7,13 +7,14 @@ import Image from 'react-bootstrap/Image';
 import ForumsButton from './buttons/ForumsButton';
 import ViewAchievements from './buttons/ViewAchievements';
 import './Dashboard.scss'
+
 function Dashboard(props){
     return(
         <div className="Dashboard">
              <Container fluid>
-                <Row id="Row">
+                <Row>
                   {props.hasAchievements ? (
-                  <Col>
+                  <Col >
                       <div className="Circle">
                         <CircularProgressbar value={props.percentage} background={true} text={`${props.percentage}%`} styles={buildStyles({
                                               textColor: 'var(--quaternary-color)',

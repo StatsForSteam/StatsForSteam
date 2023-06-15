@@ -16,19 +16,14 @@ $secondary-hover-color: #202024; //cancel button hover
 
 
 //RADIO BUTTONS AND SEARCH BAR
-  .searchAndradio{
-    display:flex;
-    justify-content: center;
-    padding: 10px;
-}
-.radioButtons{
+.radio-button{
     color: $quaternary-color;
-    margin-left: 10px;
     opacity: 0.7;
 }
 
-
-//Cards
+#search-container{ padding: 20px;}
+ 
 .card-container {margin: 10px;}
 
+  
 
