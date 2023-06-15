@@ -29,7 +29,7 @@ function Achievements(){
         [showUnlocked, setShowUnlocked] = useState(true);
 
   useEffect(() => {
-    fetch("https://ec2-3-86-60-149.compute-1.amazonaws.com/api/login", {
+    fetch("https://api.statsforsteam.com/api/getAchievements", {
       method: "POST",
       body: JSON.stringify(appid),
       headers: { "content-type": "application/json" },

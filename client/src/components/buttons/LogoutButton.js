@@ -8,7 +8,7 @@ function LogoutButton(){
     const navigate = useNavigate();
 
     const handleClick = () => {
-        fetch("https://ec2-3-86-60-149.compute-1.amazonaws.com/api/login").then(response => 
+        fetch("https://api.statsforsteam.com/api/login").then(response => 
             response.json().then(data => {
                 if (data){
                     navigate('/')

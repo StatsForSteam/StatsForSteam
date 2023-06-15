@@ -18,7 +18,7 @@ function Profile() {
   const [disabled2, setDisabled2] = useState(false);
 
   useEffect(() => {
-    fetch("https://ec2-3-86-60-149.compute-1.amazonaws.com/api/getUserGames", {credentials: 'include'}).then(response => 
+    fetch("https://api.statsforsteam.com/api/getUserGames", {credentials: 'include'}).then(response => 
         response.json().then(data => {
           const recentGames = data.recentGames;
           const playedGames = data.playedGames;

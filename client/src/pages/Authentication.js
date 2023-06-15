@@ -9,7 +9,7 @@ function Authentication() {
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        fetch(`https://ec2-3-86-60-149.compute-1.amazonaws.com/api/userAuthentication?authToken=${searchParams.get("authtoken")}`,{credentials: 'include',})
+        fetch(`https://api.statsforsteam.com/api/userAuthentication?authToken=${searchParams.get("authtoken")}`,{credentials: 'include',})
         .then(response => response.json())
         .then(data => {
             localStorage.setItem('username', data.username);
