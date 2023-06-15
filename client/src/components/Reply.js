@@ -120,7 +120,7 @@ const handleDelete = () => {setDeleted(true); setShowToast(true); props.handleDe
                         </div>
                         <div className="d-flex align-items-center">
                           <span id="date">{props.date}</span>
-                          {props.isCreator && <DeleteButton keyword="post" postid={props.postid} handleDelete={handleDelete} />}
+                          {props.isCreator && <DeleteButton keyword="reply" replyid={props.replyid} handleDelete={handleDelete}/>}
                         </div>
                       </div>
                     </Card.Footer>
