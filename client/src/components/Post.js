@@ -35,7 +35,7 @@ function Post(props) {
           setVotes(votes - 1);
           setExistingVoteType('downvote');
         }
-        fetch('/createVote', {
+        fetch('http://127.0.0.1:8000/api/createVote', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -54,7 +54,7 @@ function Post(props) {
         setExistingVoteType('downvote');
       }
  
-      fetch('/updateVote', {
+      fetch('http://127.0.0.1:8000/api/updateVote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -71,7 +71,7 @@ function Post(props) {
         setExistingVoteType('none');
       }
 
-      fetch('/deleteVote', {
+      fetch('http://127.0.0.1:8000/api/deleteVote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

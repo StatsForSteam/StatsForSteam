@@ -24,7 +24,7 @@ function Forums() {
 
         useEffect(() => {
           if (hasAchievements) {
-            fetch('/getDashboard', {
+            fetch('http://127.0.0.1:8000/api/getDashboard', {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
@@ -38,7 +38,7 @@ function Forums() {
               })
             );
           } else {
-            fetch('/getDashboard', {
+            fetch('http://127.0.0.1:8000/api/getDashboard', {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
@@ -52,7 +52,7 @@ function Forums() {
         }, []);
 
         useEffect(() => {
-          fetch('/getPosts', {
+          fetch('http://127.0.0.1:8000/api/getPosts', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

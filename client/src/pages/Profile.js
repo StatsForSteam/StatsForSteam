@@ -18,7 +18,7 @@ function Profile() {
   const [disabled2, setDisabled2] = useState(false);
 
   useEffect(() => {
-    fetch('/getUserGames').then(response => 
+    fetch("http://127.0.0.1:8000/api/getUserGames", {credentials: 'include'}).then(response => 
         response.json().then(data => {
           const recentGames = data.recentGames;
           const playedGames = data.playedGames;

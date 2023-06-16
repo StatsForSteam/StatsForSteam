@@ -10,7 +10,6 @@ import {Row,Col, Container} from 'react-bootstrap';
 import "../index.scss";
 import Loading from "../components/Loading";
 import Dashboard from "../components/Dashboard";
-import ForumsButton from '../components/buttons/ForumsButton';
 
 function Achievements(){
   //unwrap props for dashboard use
@@ -29,7 +28,7 @@ function Achievements(){
 
         useEffect(() => {
           if (hasAchievements) {
-            fetch('/getAchievements', {
+            fetch('http://127.0.0.1:8000/api/getAchievements', {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
@@ -45,7 +44,7 @@ function Achievements(){
               })
             );
           } else {
-            fetch('/getAchievements', {
+            fetch('http://127.0.0.1:8000/api/getAchievements', {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },

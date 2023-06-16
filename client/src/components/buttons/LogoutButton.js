@@ -8,7 +8,7 @@ function LogoutButton(){
     const navigate = useNavigate();
 
     const handleClick = () => {
-        fetch('/logout').then(response => 
+        fetch("http://127.0.0.1:8000/api/login").then(response => 
             response.json().then(data => {
                 if (data){
                     navigate('/')

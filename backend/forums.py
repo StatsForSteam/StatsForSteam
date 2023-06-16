@@ -20,10 +20,9 @@ with open('SteamAPI.json') as SteamAPIFile:
 key = SteamAPIJson["STEAMAPIKEY"]
 
 def steamid():
-    from main import app
-    with app.app_context():
-        return "76561198833526844"
-        return(session['id'])
+    if 'SteamID' in session:
+        return str(session['SteamID'])
+    return ('Error')
     
 def getUserData():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
@@ -62,9 +61,6 @@ def manageUsers():
 
     cursor.close()
     return json.dumps({'username': username, 'pfp': pfp})
-
-
-
 
 def createPost():
     data = request.get_json()

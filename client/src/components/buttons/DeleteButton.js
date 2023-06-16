@@ -9,7 +9,7 @@ function DeleteButton(props) {
 
   function deletePost() {
     if(props.keyword === "post"){
-      fetch("/deletePost", {
+      fetch("http://127.0.0.1:8000/api/deletePost", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ postid: props.postid }),
@@ -20,7 +20,7 @@ function DeleteButton(props) {
         })
     }
     else{
-      fetch("/deleteReply", {
+      fetch("http://127.0.0.1:8000/api/deleteReply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ replyid: props.replyid }),

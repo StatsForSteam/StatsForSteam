@@ -17,7 +17,7 @@ function CreateReply(props) {
 
     if (content) {
       try {
-        const response = await fetch('/createReply', {
+        const response = await fetch('http://127.0.0.1:8000/api/createReply', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content, postid })

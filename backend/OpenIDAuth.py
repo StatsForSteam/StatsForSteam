@@ -1,42 +1,60 @@
-from flask import redirect, request, session, url_for, g
-from json import dumps, loads
+import requests, uuid, database, json, getData, forums
+from flask import redirect, request, session, make_response, jsonify
+from json import dumps, loads, load
 from urllib.parse import urlencode
-import database
-
-def checkUserStatus():
-    data = {
-        "userLogged" : False,
-        "SessionID" : session.sid
-    }
-    if 'id' in session:
-        data["userLogged"] = True
-        return dumps(data)
-    
-    return dumps(data)
 
 def logout():
-    if 'id' in session:
-        session.pop('id', None)
-        return dumps(True)
-    
-    return dumps(False)
+    session.pop('SteamID')
+    return redirect("https://www.statsforsteam.com")
 
 def login():
+    nonce = uuid.uuid4()
+    session['nonce'] = nonce
+
     OpenID_Parameters = {
         'openid.ns': "http://specs.openid.net/auth/2.0",
         'openid.identity': "http://specs.openid.net/auth/2.0/identifier_select",
         'openid.claimed_id': "http://specs.openid.net/auth/2.0/identifier_select",
         'openid.mode': 'checkid_setup',
-        'openid.realm': 'http://127.0.0.1:5000'
+        'openid.realm': 'http://127.0.0.1:8000'
     }
 
-    OpenID_Parameters['openid.return_to'] = (f"http://127.0.0.1:5000/authorize?session={request.args.get('session')}")
+    OpenID_Parameters['openid.return_to'] = (f"http://127.0.0.1:8000/api/authorize?nonce={nonce}")
     OpenID_Parameters_URL = urlencode(OpenID_Parameters)
     return redirect('https://steamcommunity.com/openid/login?' + OpenID_Parameters_URL)
 
 def authorize():
-    return redirect("http://localhost:3000/authentication")
+    received_nonce = request.args.get('nonce')
+    stored_nonce = session.get('nonce')
+
+    if received_nonce != str(stored_nonce):
+        return "Invalid user"
+
+    openid_params = {
+        'openid.ns': request.args.get('openid.ns'),
+        'openid.mode': "check_authentication"
+    }   
+
+    for param in request.args:
+        if param.startswith('openid.') and param != 'openid.mode':
+            openid_params[param] = request.args.get(param)
+
+    response = requests.post('https://steamcommunity.com/openid/login', data=openid_params)
+
+    if response.text.startswith('ns:http://specs.openid.net/auth/2.0\nis_valid:true'):
+        Received_Steam_Info_JSON = loads(dumps(request.args))
+        SteamID = Received_Steam_Info_JSON['openid.claimed_id'].strip('https://steamcommunity.com/openid/id/')
+        authToken = uuid.uuid4()
+        database.createSteamID(SteamID, authToken)
+        response = make_response(redirect(f"http://localhost:3000/authentication?authtoken={authToken}"))
+        return response
+
+    else:
+        return "Invalid user"
 
 def userAuthentication():
-    return dumps(True)
-
+    authToken = request.args.get('authToken')
+    SteamID = database.getSteamID(authToken)
+    response = make_response(jsonify({'message': 'Login successful'}))
+    session['SteamID'] = SteamID
+    return getData.manageUsers()

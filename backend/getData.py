@@ -1,26 +1,61 @@
-import json
+import json, jwt
 from urllib.request import urlopen
-from flask import request, session, g
+from flask import request, session, g, jsonify
+from json import load
 import datetime
 
+from flask_mysqldb import MySQL
+
+mysql = MySQL()
 
 #Loading the API Key
 with open('SteamAPI.json') as SteamAPIFile:
     SteamAPIJson = json.load(SteamAPIFile)
 
 def steamid():
-    from main import app
-    with app.app_context():
-        return "76561198833526844"
-        return(session['id'])
+    if 'SteamID' in session:
+        return str(session['SteamID'])
+    return ('Error')
 
 key = SteamAPIJson["STEAMAPIKEY"]
 
+def getUserData():
+    url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
+    response = urlopen(url)
+    data_json = json.loads(response.read())
+    username = data_json['response']['players'][0]['personaname']
+    pfp = data_json['response']['players'][0]['avatarfull'] 
+    return username, pfp   
 
-def getSessionSID():
-    data = {"sessionSID" : session.sid}
-    return json.dumps(data)
+def manageUsers():
+    username, pfp = getUserData()
+    steamID = steamid()  
+    cursor = mysql.connection.cursor()
 
+    # Check if steamID already exists in the database
+    query = "SELECT name, pfp FROM users WHERE steamid = %s"
+    cursor.execute(query, (steamID,))
+    result = cursor.fetchone()
+
+    if result:
+        # SteamID already exists, compare name and pfp
+        db_name, db_pfp = result
+
+        if db_name != username or db_pfp != pfp:
+            # Name or pfp differs, update the database
+            update_query = "UPDATE users SET name = %s, pfp = %s WHERE steamid = %s"
+            cursor.execute(update_query, (username, pfp, steamID))
+            mysql.connection.commit()
+            print("Updated user data in the database")
+
+    else:
+        # SteamID doesn't exist, insert new record
+        insert_query = "INSERT INTO users (steamid, name, pfp) VALUES (%s, %s, %s)"
+        cursor.execute(insert_query, (steamID, username, pfp))
+        mysql.connection.commit()
+
+    cursor.close()
+    return json.dumps({'steamid' : steamID, 'username': username, 'pfp': pfp})
 
 #RETURNS UNLOCKED/GREYED OUT ACHIEVMENT ICON URL
 def getUnlockedIcons(appid):

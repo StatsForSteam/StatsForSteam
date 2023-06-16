@@ -6,18 +6,6 @@ import { validate as isValidUUID } from 'uuid';
 
 function Welcome() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [sessionSID, setSessionSID] = useState(false);
-
-  useEffect(() => {
-      fetch('/checkUserStatus').then(response => 
-        response.json().then(data => {
-          setUserLoggedIn(data['userLogged'])
-
-          if (isValidUUID(data['SessionID'])){ //Not necessary but is more safe
-            setSessionSID(data['SessionID'])          
-          }
-      }))
-  }, []);
 
   return(
     <div>
@@ -32,14 +20,14 @@ function Welcome() {
             <div id="background">
               <div id="backgroundOverlay">
                   <nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand mx-auto">This website is currently in beta. 
+                    <a class="navbar-brand mx-auto">This website is currently in Alpha. 
                     Check out the progress on our <a href="https://github.com/StatsForSteam/StatsForSteam" 
                     target="blank" >GitHub!</a></a>
                   </nav>
                     <div id="container">
                         <h1 className="welcomeHeader"> Stats For Steam </h1>
                         <h2 className="welcomeDescription"> The best place to find steam achievements</h2>
-                        <LoginButton sessionSID={sessionSID}/>  
+                        <LoginButton/>  
                      </div>
                   </div>
               </div>
