@@ -1,28 +1,24 @@
 import json
 from urllib.request import urlopen
-from flask import request, session, g
+from flask import request, session, jsonify
 from flask_mysqldb import MySQL
-from flask import jsonify
-
-
-# .strftime("%B %e, %Y").lstrip('0').replace('  ', ' ')
 from datetime import datetime
-
-def getDate():
-    current_date = datetime.now()
-    formatted_date = current_date.strftime("%B %e, %Y").replace('  ', ' ').strip()
-    return formatted_date
-
-mysql = MySQL()
 
 with open('SteamAPI.json') as SteamAPIFile:
     SteamAPIJson = json.load(SteamAPIFile)
+
 key = SteamAPIJson["STEAMAPIKEY"]
+mysql = MySQL()
 
 def steamid():
     if 'SteamID' in session:
         return str(session['SteamID'])
     return ('Error')
+
+def getDate():
+    current_date = datetime.now()
+    formatted_date = current_date.strftime("%B %e, %Y").replace('  ', ' ').strip()
+    return formatted_date
     
 def getUserData():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
@@ -60,7 +56,7 @@ def manageUsers():
         mysql.connection.commit()
 
     cursor.close()
-    return json.dumps({'username': username, 'pfp': pfp})
+    return json.dumps({'steamid' : steamID, 'username': username, 'pfp': pfp})
 
 def createPost():
     data = request.get_json()
@@ -109,8 +105,6 @@ def createPost():
 
     cursor.close()
     return newest_record_json, 200
-
-
 
 def deletePost():
     data = request.get_json()
@@ -163,7 +157,6 @@ def deletePost():
 
     cursor.close()
     return '', 200
-
 
 def createReply():
     data = request.get_json()
@@ -236,9 +229,6 @@ def deleteReply():
     cursor.close()
 
     return "Reply deleted successfully", 200
-
-
-
 
 def getPosts():
     data = request.get_json()
@@ -335,9 +325,6 @@ def getPosts():
             posts[postid]['replies'].append(reply)
     return jsonify(list(posts.values()))
 
-
-
-
 def createVote():
     data = request.get_json()
     vote_type = data['vote_type']
@@ -369,8 +356,6 @@ def createVote():
     cursor.close()
 
     return '', 200
-
-
 
 def updateVote():
     data = request.get_json()
@@ -421,9 +406,6 @@ def updateVote():
 
     return '', 200
 
-
-
-
 def deleteVote():
     data = request.get_json()
     voteon = data['voteon']
@@ -467,8 +449,3 @@ def deleteVote():
     cursor.close()
 
     return '', 200
-
-
-
-
-

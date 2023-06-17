@@ -25,13 +25,14 @@ function Achievements(){
         [dataFetched, setDataFetched] = useState(false),
         [showLocked, setShowLocked] = useState(true),
         [showUnlocked, setShowUnlocked] = useState(true);
-
+        
         useEffect(() => {
           if (hasAchievements) {
             fetch('http://127.0.0.1:8000/api/getAchievements', {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
+              credentials: 'include',
             }).then(response =>
               response.json().then(({ achieved, notachieved, achievedlength, notachievedlength, achievementPercentage, playerCount }) => {
                 setAchieved(achieved);
@@ -48,6 +49,7 @@ function Achievements(){
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
+              credentials: 'include',
             }).then(response =>
               response.json().then(({ playerCount }) => {
                 setPlayerCount(playerCount);

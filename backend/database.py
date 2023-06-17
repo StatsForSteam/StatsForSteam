@@ -1,6 +1,4 @@
-# File used to initilize the Database so we can access it in other files
 from flask_mysqldb import MySQL
-
 mysql = MySQL()
 
 def createSteamID(steamid, authToken):
@@ -13,10 +11,8 @@ def createSteamID(steamid, authToken):
 
 def getSteamID(authToken):
     cursor = mysql.connection.cursor()
-    authToken = (str(authToken))
-    cursor.execute("select steamid from SteamLogin where authToken=%s limit 0, 1", (authToken,))
+    cursor.execute("select steamid from SteamLogin where authToken=%s limit 0, 1", (str(authToken),))
     SteamID = cursor.fetchone()[0]
-    print(SteamID)
     cursor.execute("delete from SteamLogin where steamid = %s", [SteamID])
     mysql.connection.commit()
     cursor.close()

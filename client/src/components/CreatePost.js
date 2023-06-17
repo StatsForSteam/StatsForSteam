@@ -24,7 +24,8 @@ function CreatePost(props) {
           title,
           content,
           appid: props.appid
-        })
+        }),
+        credentials: 'include',
       });
       const data = await response.json();
       props.hideCreateForm();

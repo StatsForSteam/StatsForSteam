@@ -24,6 +24,7 @@ function DeleteButton(props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ replyid: props.replyid }),
+        credentials: 'include',
       })
         .then(() => {
           setShowModal(false);

@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR ./
 
-ENV FLASK_APP=main.py 
+ENV FLASK_APP=app.py 
 ENV FLASK_ENV=development
 
 COPY ./requirements.txt .
@@ -15,4 +15,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip3 install -r requirements.txt
 
-CMD ["gunicorn", "--forwarded-allow-ips='*'", "wsgi:app", "-w 2", "-b 0.0.0.0:5000", "-t 30"]
+CMD ["gunicorn", "app:app"]

@@ -1,21 +1,20 @@
 import OpenIDAuth, json, getData, forums
 from database import mysql
-from flask import Flask, session, request
+from flask import Flask
 from flask_session import Session
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
-app = Flask(__name__)
-app.debug = True
-
-app.config['SECRET_KEY'] = 'your_secret_key'
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_PERMANENT"] = False
-Session(app)
-CORS(app, supports_credentials=True, origins=['http://localhost:3000'])
-
-# Database Connection
+with open('FlaskSecretKey.json') as FlaskSecretKey:
+    FlaskSecretKeyJson = json.load(FlaskSecretKey)
 with open('DatabaseCredentials.json') as DatabaseCredentials:
     DatabaseCredentialsJson = json.load(DatabaseCredentials)
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = FlaskSecretKeyJson['SECRETKEY']
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_PERMANENT"] = True
+Session(app)
+CORS(app, supports_credentials=True)
 
 app.config['MYSQL_HOST'] = DatabaseCredentialsJson['HOST']
 app.config['MYSQL_PORT'] = DatabaseCredentialsJson['PORT']
@@ -42,4 +41,4 @@ app.add_url_rule('/api/deletePost', view_func=forums.deletePost, methods=["POST"
 app.add_url_rule('/api/deleteReply', view_func=forums.deleteReply, methods=["POST"])
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

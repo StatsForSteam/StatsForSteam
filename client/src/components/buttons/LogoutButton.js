@@ -1,6 +1,5 @@
 import './LogoutButton.scss';
 import { useNavigate } from 'react-router-dom';
-import { BsSteam } from 'react-icons/bs';
 import {RiLogoutBoxFill} from 'react-icons/ri';
 
 function LogoutButton(){
@@ -8,10 +7,12 @@ function LogoutButton(){
     const navigate = useNavigate();
 
     const handleClick = () => {
-        fetch("http://127.0.0.1:8000/api/login").then(response => 
+        fetch("http://127.0.0.1:8000/api/logout", {credentials: 'include'}).then(response => 
             response.json().then(data => {
                 if (data){
-                    navigate('/')
+                    localStorage.removeItem('profilePicture');
+                    localStorage.removeItem('username');
+                    navigate('/');
                 }
         }))
     }

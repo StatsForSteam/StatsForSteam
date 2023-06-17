@@ -1,9 +1,6 @@
-import json, jwt
+import json, datetime
 from urllib.request import urlopen
-from flask import request, session, g, jsonify
-from json import load
-import datetime
-
+from flask import request, session
 from flask_mysqldb import MySQL
 
 mysql = MySQL()
@@ -12,12 +9,12 @@ mysql = MySQL()
 with open('SteamAPI.json') as SteamAPIFile:
     SteamAPIJson = json.load(SteamAPIFile)
 
+key = SteamAPIJson["STEAMAPIKEY"]
+
 def steamid():
     if 'SteamID' in session:
         return str(session['SteamID'])
     return ('Error')
-
-key = SteamAPIJson["STEAMAPIKEY"]
 
 def getUserData():
     url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + key + "&steamids=" + steamid()
@@ -26,36 +23,6 @@ def getUserData():
     username = data_json['response']['players'][0]['personaname']
     pfp = data_json['response']['players'][0]['avatarfull'] 
     return username, pfp   
-
-def manageUsers():
-    username, pfp = getUserData()
-    steamID = steamid()  
-    cursor = mysql.connection.cursor()
-
-    # Check if steamID already exists in the database
-    query = "SELECT name, pfp FROM users WHERE steamid = %s"
-    cursor.execute(query, (steamID,))
-    result = cursor.fetchone()
-
-    if result:
-        # SteamID already exists, compare name and pfp
-        db_name, db_pfp = result
-
-        if db_name != username or db_pfp != pfp:
-            # Name or pfp differs, update the database
-            update_query = "UPDATE users SET name = %s, pfp = %s WHERE steamid = %s"
-            cursor.execute(update_query, (username, pfp, steamID))
-            mysql.connection.commit()
-            print("Updated user data in the database")
-
-    else:
-        # SteamID doesn't exist, insert new record
-        insert_query = "INSERT INTO users (steamid, name, pfp) VALUES (%s, %s, %s)"
-        cursor.execute(insert_query, (steamID, username, pfp))
-        mysql.connection.commit()
-
-    cursor.close()
-    return json.dumps({'steamid' : steamID, 'username': username, 'pfp': pfp})
 
 #RETURNS UNLOCKED/GREYED OUT ACHIEVMENT ICON URL
 def getUnlockedIcons(appid):
@@ -69,7 +36,6 @@ def getUnlockedIcons(appid):
         k += 1
     return icons
 
-
 #RETURNS LOCKED/GREYED OUT ACHIEVMENT ICON URL
 def getLockedIcons(appid):
     url = "https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key="+key+"&appid="+appid
@@ -81,7 +47,6 @@ def getLockedIcons(appid):
         greyIcons.append(data_json['game']['availableGameStats']['achievements'][k]['icongray'])
         k += 1
     return greyIcons
-
     
 def getAchievements():
     data = request.get_json()
@@ -172,50 +137,3 @@ def hasAchievements(json):
     if("has_community_visible_stats" in json):
         return True
     return False
-
-
-# import operator
-# def getAchievements():
-#     data = request.get_json()
-#     appid = data['appid']
-#     hasAchievements = data['hasAchievements']
-#     #URL2 is for player count
-#     url2 = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?key=" + key + "&appid=" + str(appid)
-
-#     if not hasAchievements:
-#         # Return only the player count when hasAchievements is False
-#         data_json2 = json.loads(urlopen(url2).read())
-#         return json.dumps({"playerCount": data_json2['response']['player_count']})
-
-#     #URL is for achievements
-#     url = "https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+str(appid)+"&key="+key+"&steamid=" + steamid()+"&l=en"
-#     #URL3 is for achievement percentages
-#     url3 = "https://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v2/?access_token="+key+"&gameid=+"+str(appid)
-#     data_json = json.loads(urlopen(url).read())
-#     data_json2 = json.loads(urlopen(url2).read())
-#     data_json3 = json.loads(urlopen(url3).read())
-#     data_json['playerstats']['achievements'] = sorted(data_json['playerstats']['achievements'], key=operator.itemgetter('apiname'))
-#     data_json3['achievementpercentages']['achievements'] = sorted(data_json3['achievementpercentages']['achievements'], key=operator.itemgetter('name'))
-#     print(len(data_json['playerstats']['achievements']))
-#     print(len(data_json3['achievementpercentages']['achievements']))
-#     if(len(data_json['playerstats']['achievements']) != len(data_json3['achievementpercentages']['achievements'])):
-#         print("This ones broken :(")
-#     achieved = []
-#     notachieved = []
-#     j=0
-#     icons = getUnlockedIcons(str(appid))
-#     greyIcons = getLockedIcons(str(appid))
-#     for i in data_json['playerstats']['achievements']:
-#         if(i['achieved'] == 1):
-#             achieved.append([i['name'],i['description'],icons[j],round(data_json3['achievementpercentages']['achievements'][j]['percent'],1),True])
-#         else:
-#             try:
-#                 notachieved.append([i['name'],i['description'],greyIcons[j],round(data_json3['achievementpercentages']['achievements'][j]['percent'],1),False])
-#             except:
-#                 print("Error with " + str(appid) + " " + str(j))
-#                 print(i['name'])
-
-#         j+=1
-
-#     return json.dumps({"achieved":achieved, "notachieved":notachieved, "total":j, "achievedlength": len(achieved), "notachievedlength": len(notachieved),"achievementPercentage":  int((len(achieved)/j*100)), "playerCount": data_json2['response']['player_count']}, ensure_ascii=False)
-

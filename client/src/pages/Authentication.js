@@ -17,7 +17,7 @@ function Authentication() {
             localStorage.setItem('profilePicture', data.pfp);
             }
         );   
-    });
+    }, []);
 
     return (
         <div>

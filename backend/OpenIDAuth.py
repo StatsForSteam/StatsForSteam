@@ -1,11 +1,7 @@
-import requests, uuid, database, json, getData, forums
-from flask import redirect, request, session, make_response, jsonify
-from json import dumps, loads, load
+import requests, uuid, database, forums
+from flask import redirect, request, session, make_response
+from json import dumps, loads
 from urllib.parse import urlencode
-
-def logout():
-    session.pop('SteamID')
-    return redirect("https://www.statsforsteam.com")
 
 def login():
     nonce = uuid.uuid4()
@@ -22,6 +18,10 @@ def login():
     OpenID_Parameters['openid.return_to'] = (f"http://127.0.0.1:8000/api/authorize?nonce={nonce}")
     OpenID_Parameters_URL = urlencode(OpenID_Parameters)
     return redirect('https://steamcommunity.com/openid/login?' + OpenID_Parameters_URL)
+
+def logout():
+    session.pop('SteamID')
+    return dumps(True)
 
 def authorize():
     received_nonce = request.args.get('nonce')
@@ -55,6 +55,5 @@ def authorize():
 def userAuthentication():
     authToken = request.args.get('authToken')
     SteamID = database.getSteamID(authToken)
-    response = make_response(jsonify({'message': 'Login successful'}))
     session['SteamID'] = SteamID
-    return getData.manageUsers()
+    return forums.manageUsers()

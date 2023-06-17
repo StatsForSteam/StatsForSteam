@@ -28,6 +28,7 @@ function Forums() {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
+              credentials: 'include',
             }).then(response =>
               response.json().then(({achievedlength, notachievedlength, achievementPercentage, playerCount }) => {
                 setAchievedLen(achievedlength);
@@ -42,6 +43,7 @@ function Forums() {
               method: "POST",
               body: JSON.stringify({ appid, hasAchievements }),
               headers: { "content-type": "application/json" },
+              credentials: 'include',
             }).then(response =>
               response.json().then(({ playerCount }) => {
                 setPlayerCount(playerCount);
@@ -57,7 +59,8 @@ function Forums() {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ appid })
+            body: JSON.stringify({ appid }),
+            credentials: 'include',
           })
             .then(response => response.json())
             .then(data => {
