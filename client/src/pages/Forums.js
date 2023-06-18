@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import "../index.scss";
 
 function Forums() {
-    const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
+    const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements, postCount } } } = useLocation();
     const [achievedLen , setAchievedLen] = useState(),
           [notachievedLen , setnotAchievedLen] = useState(),
           [percentage, setPercentage] = useState(0),
@@ -21,6 +21,7 @@ function Forums() {
           [searchTerm, setSearchTerm] = useState(""),
           [showCreateMenu, setShowCreateMenu] = useState(false),
           [posts, setPosts] = useState([]);
+          
 
         useEffect(() => {
           if (hasAchievements) {
@@ -121,6 +122,7 @@ const filteredPosts = posts.filter((post) =>
             header={header}
             appid={appid}
             hasAchievements={hasAchievements}
+            postCount={postCount}
           />
           <div className="d-flex align-items-center" style={{justifyContent: 'Center'}}>
           <div className="searchAndradio"> 

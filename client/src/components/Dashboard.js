@@ -2,7 +2,8 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import { IconContext } from 'react-icons';
-import { BsFillClockFill, BsPeopleFill, BsFillCalendarWeekFill } from 'react-icons/bs';
+import { BsFillClockFill, BsPeopleFill} from 'react-icons/bs';
+import {SiWechat} from 'react-icons/si';
 import Image from 'react-bootstrap/Image';
 import ForumsButton from './buttons/ForumsButton';
 import ViewAchievements from './buttons/ViewAchievements';
@@ -33,7 +34,7 @@ function Dashboard(props){
                     <ul>
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillClockFill size={40}/></IconContext.Provider> <span className="stats-spacing"> {props.playtime} <span className="stats-text"> hrs on record </span></span></h3> 
                       <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsPeopleFill size={40}/></IconContext.Provider> <span className="stats-spacing">{props.playerCount} <span className="stats-text"> current players</span></span></h3>
-                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><BsFillCalendarWeekFill size={40} /> </IconContext.Provider><span className="stats-spacing"> {props.lastplayed} <span className="stats-text"> last played</span></span></h3> 
+                      <h3><IconContext.Provider value={{color:'var(--tertiary-color)'}}><SiWechat size={40} /> </IconContext.Provider><span className="stats-spacing"> {props.postCount} <span className="stats-text"> posts</span></span></h3> 
                     </ul>
                   </Col>
                   <Col xs="auto">

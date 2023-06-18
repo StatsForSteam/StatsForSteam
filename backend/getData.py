@@ -112,11 +112,30 @@ def getUserGames():
     playedGames = []
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
+
+    cursor = mysql.connection.cursor()
+
+    app_ids = [i['appid'] for i in data_json['response']['games']]
+
+    # Query the database to get the counts of posts associated with the app IDs
+    query = "SELECT appid, COUNT(*) FROM postrelation WHERE appid IN ({}) GROUP BY appid".format(",".join(["%s"] * len(app_ids)))
+    cursor.execute(query, tuple(app_ids))
+    post_counts = {row[0]: row[1] for row in cursor.fetchall()}
+
     for i in data_json['response']['games']:
-        playedGames.append([i['name'], i['appid'], headerurl.replace(appID, str(i['appid'])), round(i['playtime_forever']/60,1), hasAchievements(i)])
-            
+        appid = i['appid']
+        header_url = headerurl.replace(appID, str(appid))
+        post_count = post_counts.get(appid, 0)
+        print(post_count)
+        playedGames.append([i['name'], appid, header_url, round(i['playtime_forever']/60, 1), hasAchievements(i), post_count])
+        
     playedGames.sort(key=lambda x: x[3], reverse=True)
+    
+    cursor.close()
+
     return json.dumps({"playedGames" : playedGames}, ensure_ascii=False)
+
+
 
 def get_date_from_unix_timestamp(seconds):
     result_date = datetime.datetime(1970, 1, 1) + datetime.timedelta(seconds=seconds)

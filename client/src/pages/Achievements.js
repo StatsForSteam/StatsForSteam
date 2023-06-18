@@ -13,7 +13,7 @@ import Dashboard from "../components/Dashboard";
 
 function Achievements(){
   //unwrap props for dashboard use
-  const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements } } } = useLocation();
+  const { state: { props: { appid, name, header, playtime, lastplayed,hasAchievements,postCount } } } = useLocation();
  
   const [achieved, setAchieved] = useState(),
         [notachieved, setnotAchieved] = useState(),
@@ -101,6 +101,7 @@ function Achievements(){
             appid={appid}
             location={"Achievements"}
             hasAchievements={hasAchievements}
+            postCount={postCount}
           />
         {hasAchievements && (
               <div id="search-container">

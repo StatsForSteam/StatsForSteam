@@ -25,6 +25,7 @@ function GameCard(props) {
        <div id="under-header">
           <div>
             <div style={{ color: 'var(--quaternary-color)' }}>Currently: {props.playtime} hrs</div>
+            <div style={{ color: 'var(--quaternary-color)' }}>{props.postCount} posts </div>
           </div>
           <Row xs={2} md={2} lg={2} className="g-2">
             <ViewAchievements props={props} />
