@@ -126,7 +126,6 @@ def getUserGames():
         appid = i['appid']
         header_url = headerurl.replace(appID, str(appid))
         post_count = post_counts.get(appid, 0)
-        print(post_count)
         playedGames.append([i['name'], appid, header_url, round(i['playtime_forever']/60, 1), hasAchievements(i), post_count])
         
     playedGames.sort(key=lambda x: x[3], reverse=True)
