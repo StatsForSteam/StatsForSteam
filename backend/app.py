@@ -1,4 +1,4 @@
-import OpenIDAuth, json, getData, forums
+import OpenIDAuth, json, getData, forums, pytz, datetime
 from database import mysql
 from flask import Flask
 from flask_session import Session
@@ -8,6 +8,12 @@ with open('FlaskSecretKey.json') as FlaskSecretKey:
     FlaskSecretKeyJson = json.load(FlaskSecretKey)
 with open('DatabaseCredentials.json') as DatabaseCredentials:
     DatabaseCredentialsJson = json.load(DatabaseCredentials)
+with open('SteamAPI.json') as SteamAPIFile:
+    SteamAPIJson = json.load(SteamAPIFile)
+
+pst = pytz.timezone('America/Los_Angeles')
+current_datetime_pst = datetime.datetime.now(pst)
+serverLaunchTime = current_datetime_pst.strftime("%d-%m-%Y, %H:%M:%S")
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = FlaskSecretKeyJson['SECRETKEY']
@@ -22,6 +28,12 @@ app.config['MYSQL_USER'] = DatabaseCredentialsJson['USER']
 app.config['MYSQL_PASSWORD'] = DatabaseCredentialsJson['PASSWORD']
 app.config['MYSQL_DB'] = DatabaseCredentialsJson['DB']
 mysql.init_app(app)
+
+@app.route('/')
+def versionCheck():
+	current_datetime_pst = datetime.datetime.now(pst)
+	connectionLaunchTime = current_datetime_pst.strftime("%d-%m-%Y, %H:%M:%S")
+	return(f'<h1>Stats For Steam Backend (v1.0.2)</h1>Server Connected: {connectionLaunchTime}<br>Server Initialized: &nbsp;{serverLaunchTime}<br>Server API Key: &nbsp;&nbsp;&nbsp;&nbsp;{SteamAPIJson["STEAMAPIKEY"]}')
 
 app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
