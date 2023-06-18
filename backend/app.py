@@ -43,4 +43,3 @@ app.add_url_rule('/api/deleteReply', view_func=forums.deleteReply, methods=["POS
 if __name__ == "__main__":
     app.run(debug=True)
 
-    

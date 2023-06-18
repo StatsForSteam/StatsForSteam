@@ -6,7 +6,7 @@ import Achievements from './pages/Achievements';
 import Authentication from './pages/Authentication';
 import Forums from './pages/Forums';
 import NotFound from './pages/NotFound'
-
+import Contact from './pages/Contact';
 function App() {
   return(
     <BrowserRouter>     
@@ -17,6 +17,7 @@ function App() {
             <Route exact path="/Achievements" element={<Achievements />} />
             <Route exact path="/Forums" element={<Forums/>} />
             <Route exact path="/authentication" element={<Authentication />} />
+            <Route exact path="/Contact" element={<Contact />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/404" element={<NotFound />} />
           </Routes>  

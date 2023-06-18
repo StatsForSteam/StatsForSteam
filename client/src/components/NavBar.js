@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import './NavBar.scss';
 import '../index.scss';
 import {AiFillHome} from 'react-icons/ai';
+import {MdContactSupport} from 'react-icons/md';
 import LogoutButton from './buttons/LogoutButton';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -38,6 +39,16 @@ function NavBar(){
               <AiFillHome size={40} />
             </Nav.Link>
           </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>Contact & FAQ</Tooltip>}
+          >
+            <Nav.Link style={{ color: 'var(--tertiary-color)' }} href="/Contact">
+              <MdContactSupport size={40} />
+            </Nav.Link>
+          </OverlayTrigger>
+
         </Nav>
 
         <Navbar.Text style={{ color: 'var(--tertiary-color)', fontWeight: 500 }}>
