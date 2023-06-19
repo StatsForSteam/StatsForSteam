@@ -4,6 +4,7 @@ import "./Profile.scss";
 import "../index.scss";
 import Loading from "../components/Loading";
 import { Form, Row, Col, Container } from "react-bootstrap";
+import PrivateProfile from "../components/PrivateProfile";
 
 function Profile() {
   const [dataFetched, setDataFetched] = useState(false);
@@ -12,12 +13,17 @@ function Profile() {
   const [showHasAchievements, setShowHasAchievements] = useState(false);
   const [showHasPosts, setShowHasPosts] = useState(false);
   const [showAllGames, setShowAllGames] = useState(true);
+  const [privateProfile, setPrivateProfile] = useState(false);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/getUserGames", {
       credentials: "include",
     }).then((response) =>
       response.json().then((data) => {
+        if (data.privateProfile === true) {
+          setPrivateProfile(true);
+          return;
+        }
         const allgames = data.playedGames;
         const cards = [];
 
@@ -51,7 +57,9 @@ function Profile() {
       setShowHasPosts(!showHasPosts);
     }
   };
-
+  if (privateProfile) {
+    return (<PrivateProfile/>)
+    }
   if (!dataFetched) {
     return <Loading />;
   }
