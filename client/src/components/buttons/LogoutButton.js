@@ -21,7 +21,7 @@ function LogoutButton(){
     return (
    
                 <button id="logout" onClick={handleClick}>
-                   <RiLogoutBoxFill style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--tertiary-color)'}} size={40}/>
+                   <RiLogoutBoxFill style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--clickable-color)'}} size={40}/>
                 </button>
         
     )

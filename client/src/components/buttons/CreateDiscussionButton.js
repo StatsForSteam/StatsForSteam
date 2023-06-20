@@ -8,14 +8,14 @@ function CreateDiscussionButton({ handlePress, showCreateMenu }) {
       {showCreateMenu ? (
         <IoMdRemoveCircle
         className="test"
-          style={{ color: 'var(--tertiary-color)' }}
+          style={{ color: 'var(--clickable-color)' }}
           size={80}
           onClick={handlePress}
         />
       ) : (
         <IoMdAddCircle
         className="test"
-          style={{ color: 'var(--tertiary-color)' }}
+          style={{ color: 'var(--clickable-color)' }}
           size={80}
           onClick={handlePress}
         />

@@ -6,7 +6,7 @@ function DownVote({ handleVote, ExistingVoteType }) {
     <ImArrowDown
       onClick={() => handleVote('downvote')}
       size={30}
-      style={{ color: ExistingVoteType === 'downvote' ? 'var(--tertiary-color)' : 'var(--quaternary-color)', opacity: ExistingVoteType === 'downvote' ? '0.8' : '0.4'}}
+      style={{ color: ExistingVoteType === 'downvote' ? 'var(--clickable-color)' : 'var(--quaternary-color)', opacity: ExistingVoteType === 'downvote' ? '0.8' : '0.4'}}
     />
   );
 }

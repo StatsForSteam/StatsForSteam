@@ -26,7 +26,7 @@
 #post-button{
     transition: background-color .3s;
     background-color: $primary-color;
-    color: $tertiary-color;
+    color: $clickable-color;
     padding: 6px;
     border-radius: 12px;
   }
