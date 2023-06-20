@@ -15,16 +15,6 @@ Stats For Steam is a web application built with React, Bootstrap, Flask, SCSS, a
 - Backend: Flask (Python)
 - Database: MySQL
 
-## Contributing
-
-We welcome contributions to enhance the functionality and features of Stats For Steam. To contribute, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature: `git checkout -b feature-name`.
-3. Make your modifications and commit them: `git commit -m "Add your message here"`.
-4. Push your branch to your forked repository: `git push origin feature-name`.
-5. Open a pull request, describing your changes and the benefits they provide.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
