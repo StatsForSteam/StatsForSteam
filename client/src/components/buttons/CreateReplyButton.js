@@ -5,7 +5,7 @@ function CreateReplyButton({ handleShowReplyForm }) {
     return (
         <BsFillReplyFill
         className="PostButton"
-        style={{ color: 'var(--tertiary-color)'}}
+        style={{ color: 'var(--clickable-color)'}}
         size={40}
         id="add"
         onClick={handleShowReplyForm}

@@ -1,16 +1,18 @@
 $primary-color: #1C1C1C; //background
 $secondary-color: #262626; //gamecards
-$tertiary-color: #47B5FF; //titles 
+$tertiary-color: #00A7E6; //titles 
 $quaternary-color: #DFF6FF; //other text
 $delete-color: #b80600; //delete button
 $delete-hover-color: #770400; //delete button hover
 $secondary-hover-color: #202024; //cancel button hover
+$clickable-color: #47B5FF; //clickable text
 
 :root {
     --primary-color: #1C1C1C;
     --secondary-color: #262626;
-    --tertiary-color: #47B5FF;
+    --tertiary-color: #00A7E6;
     --quaternary-color: #DFF6FF;
+    --clickable-color: #47B5FF;
   }
   
 

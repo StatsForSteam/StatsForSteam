@@ -5,7 +5,7 @@ function UpVote({ handleVote, ExistingVoteType  }) {
     <ImArrowUp
       onClick={() => handleVote('upvote')}
       size={30}
-      style={{ color: ExistingVoteType === 'upvote' ? 'var(--tertiary-color)' : 'var(--quaternary-color)',opacity: ExistingVoteType === 'upvote' ? '0.8' : '0.4' }}
+      style={{ color: ExistingVoteType === 'upvote' ? 'var(--clickable-color)' : 'var(--quaternary-color)',opacity: ExistingVoteType === 'upvote' ? '0.8' : '0.4' }}
     />
   );
 }
