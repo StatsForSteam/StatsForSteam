@@ -12,6 +12,7 @@ function LogoutButton(){
                 if (data){
                     localStorage.removeItem('profilePicture');
                     localStorage.removeItem('username');
+                    localStorage.removeItem('loggedIn');
                     navigate('/');
                 }
         }))

@@ -112,7 +112,6 @@ def getUserGames():
     playedGames = []
     headerurl = "https://steamcdn-a.akamaihd.net/steam/apps/"+appID+"/header.jpg"
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
-
     if data_json['response'] == {}:
         return json.dumps({"privateProfile": True})
     

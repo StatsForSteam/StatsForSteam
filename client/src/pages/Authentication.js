@@ -15,6 +15,7 @@ function Authentication() {
             setSuccessfulLogin(true);
             localStorage.setItem('username', data.username);
             localStorage.setItem('profilePicture', data.pfp);
+            localStorage.setItem('loggedIn', true)
             }
         );   
     }, []);

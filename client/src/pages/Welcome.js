@@ -2,18 +2,28 @@ import "./Welcome.scss";
 import LoginButton from "../components/buttons/LoginButton";
 import React, {useState, useEffect} from 'react';
 import { Navigate } from "react-router-dom";
-import { validate as isValidUUID } from 'uuid';
 
 function Welcome() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userLoggedIn, setUserLoggedIn] = useState(0);
+
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('loggedIn');
+    if (loggedInStatus === 'true'){
+      setUserLoggedIn(1);
+    } else {
+      setUserLoggedIn(2)
+    }
+  }, []);
 
   return(
     <div>
     {(() => {
-      if (userLoggedIn) {
+      if (userLoggedIn === 1) {
         return (
           <Navigate replace to="/profile" />
         )
+      } else if (userLoggedIn === 0){
+        <div></div>          
       } else {
         return (
           <div>

@@ -9,6 +9,7 @@ import {MdContactSupport} from 'react-icons/md';
 import LogoutButton from './buttons/LogoutButton';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { Link } from "react-router-dom";
 
 function NavBar(){
   const location = useLocation()
@@ -35,7 +36,7 @@ function NavBar(){
             placement="bottom"
             overlay={<Tooltip>Home</Tooltip>}
           >
-            <Nav.Link style={{ color: 'var(--tertiary-color)' }} href="/Profile">
+            <Nav.Link as={Link} style={{ color: 'var(--tertiary-color)' }} to="/Profile">
               <AiFillHome size={40} />
             </Nav.Link>
           </OverlayTrigger>
@@ -44,7 +45,7 @@ function NavBar(){
             placement="bottom"
             overlay={<Tooltip>Contact & FAQ</Tooltip>}
           >
-            <Nav.Link style={{ color: 'var(--tertiary-color)' }} href="/Contact">
+            <Nav.Link as={Link} style={{ color: 'var(--tertiary-color)' }} to="/Contact">
               <MdContactSupport size={40} />
             </Nav.Link>
           </OverlayTrigger>
