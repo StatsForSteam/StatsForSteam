@@ -36,7 +36,7 @@ function NavBar(){
             placement="bottom"
             overlay={<Tooltip>Home</Tooltip>}
           >
-            <Nav.Link as={Link} style={{ color: 'var(--tertiary-color)' }} to="/Profile">
+            <Nav.Link as={Link} style={{ color: 'var(--clickable-color)' }} to="/Profile">
               <AiFillHome size={40} />
             </Nav.Link>
           </OverlayTrigger>
@@ -45,7 +45,7 @@ function NavBar(){
             placement="bottom"
             overlay={<Tooltip>Contact & FAQ</Tooltip>}
           >
-            <Nav.Link as={Link} style={{ color: 'var(--tertiary-color)' }} to="/Contact">
+            <Nav.Link as={Link} style={{ color: 'var(--clickable-color)' }} to="/Contact">
               <MdContactSupport size={40} />
             </Nav.Link>
           </OverlayTrigger>
