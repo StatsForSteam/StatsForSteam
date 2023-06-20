@@ -42,7 +42,7 @@ function Dashboard(props){
                     <div className="d-flex align-items-center" id="button-text">
                       {props.location === "Achievements" ? (
                         <>
-                          <h3 id="text-color" className="mr-2">Checkout this games discussion:</h3>
+                          <h3 id="text-color" className="mr-2">Check out this game's discussion:</h3>
                           <ForumsButton props={props} fromDashboard={true}/>
                         </>
                       ) : (

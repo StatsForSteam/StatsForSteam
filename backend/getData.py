@@ -114,7 +114,6 @@ def getUserGames():
     data_json = json.loads(urlopen("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+key+"&steamid="+steamid()+"&include_played_free_games=true&include_appinfo=true&format=json").read())
 
     if data_json['response'] == {}:
-        print("private profile")
         return json.dumps({"privateProfile": True})
     
     cursor = mysql.connection.cursor()
