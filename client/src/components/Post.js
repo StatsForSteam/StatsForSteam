@@ -1,7 +1,7 @@
-import {Card, Image, Toast, Row, Col, Container} from 'react-bootstrap';
+import {Card, Image, Toast} from 'react-bootstrap';
 import '../index.scss';
 import './Post.scss'
-import { useEffect, useState } from 'react';
+import {useState, useEffect} from 'react';
 import UpVote from './buttons/UpVote';
 import DownVote from './buttons/DownVote';
 import CreateReplyButton from './buttons/CreateReplyButton';
@@ -19,7 +19,16 @@ function Post(props) {
   const [showReplies, setShowReplies] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [tag] = useState(() => {
+    return props.tags.find(tag => tag.id === props.tagid);
+  });
+  
 
+    
+
+
+
+    //tags.find(tag => tag.name === selectedTagName);
   function handleVote(voteType) {
     const data = {
       voteon : 'post',
@@ -105,8 +114,6 @@ function Post(props) {
   const handleDelete = () => { setDeleted(true); setShowToast(true);} 
   const handleDeleteReply = () => {setNumReplies(numReplies -1)}
 
-  
-
     return (
       //When post deleted display toast
       deleted ? (
@@ -132,6 +139,15 @@ function Post(props) {
 
      <div>
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
+        
+      {tag.name!= "None" ? <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)'}}>
+          <div className="d-flex align-items-center justify-content-between">
+            <div className={`badge-tag ${tag.color}`}>
+            {tag.name}
+            </div>
+          </div>
+        </Card.Header> : null}
+
         <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)',color: 'var(--tertiary-color)' }}>
           <div className="d-flex align-items-center justify-content-between">
             <div>

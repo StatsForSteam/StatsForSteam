@@ -22,6 +22,14 @@ function Forums() {
           [showCreateMenu, setShowCreateMenu] = useState(false),
           [posts, setPosts] = useState([]);
           
+          //Needed for creating posts, tag dropdowns, and posts themselves. If adding/modifying/removing tags update this object and the db accordingly.
+          //The scss files in Index.scss, CreatePost.scss, and Post.scss will also need to be updated with the new tag colors.
+          const tags = [
+            { id: 1, name: 'None', color: 'id1' },
+            { id: 2, name: 'Achievement Help',color: 'id2' },
+            { id: 3, name: 'Looking For Group', color: 'id3' },
+            { id: 4, name: 'General Discussion', color: 'id4' },
+          ];  
 
         useEffect(() => {
           if (hasAchievements) {
@@ -85,7 +93,7 @@ function hideCreateForm() {
 }
 
 function handleNewPost(newPost) {
-  const [postid, title, content, date, username, pfp] = newPost;
+  const [postid, title, content, date, username, pfp, tagid] = newPost;
   const newPostComponent = (
     <Post
       key={postid}
@@ -99,6 +107,8 @@ function handleNewPost(newPost) {
       ExistingVoteType={'none'} 
       numReplies={0} 
       isCreator={true}
+      tagid={tagid}
+      tags={tags}
       replies={[]} 
     />
   );
@@ -134,7 +144,7 @@ const filteredPosts = posts.filter((post) =>
             </div>
             <CreateDiscussionButton showCreateMenu={showCreateMenu} handlePress={hideCreateForm} />
             </div>
-            {showCreateMenu && ( <CreatePost onNewPost={handleNewPost} hideCreateForm={hideCreateForm} appid={appid}/>)}
+            {showCreateMenu && ( <CreatePost tags={tags} onNewPost={handleNewPost} hideCreateForm={hideCreateForm} appid={appid}/>)}
 
           <div className="card-container">
             <Row xs={1} md={1} lg={1} className="g-4">
@@ -152,12 +162,14 @@ const filteredPosts = posts.filter((post) =>
                   ExistingVoteType={post.existing_vote_type}
                   numReplies={post.replies.length}
                   isCreator={post.is_creator}
+                  tagid={post.tagid}
+                  tags={tags}
                   replies={post.replies}
                 />
               ))}
             </Row>
           </div> 
-          {posts.length === 0 && <h1 className="text-center" style={{marginTop: '8%'}}>No posts under this game, press the + to be the first!</h1>}
+          {posts.length === 0 && <h1 className="text-center" style={{marginTop: '3%'}}>No posts under this game, press the + to be the first!</h1>}
     </>
   );
 }

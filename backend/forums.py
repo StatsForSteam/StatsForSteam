@@ -63,13 +63,14 @@ def createPost():
     title = data['title']
     content = data['content']
     appid = data['appid']
+    tagid = data['tagid']
     steamID = steamid()
     date = getDate()
     cursor = mysql.connection.cursor()
 
     # Insert data into posts table
-    insert_statement_posts = "INSERT INTO posts (title, content, date) VALUES (%s, %s, %s)"
-    data_posts = (title, content, date)
+    insert_statement_posts = "INSERT INTO posts (title, content, date, tagid) VALUES (%s, %s, %s, %s)"
+    data_posts = (title, content, date, tagid)
     cursor.execute(insert_statement_posts, data_posts)
     mysql.connection.commit()
 
@@ -90,7 +91,8 @@ def createPost():
     posts.content,
     posts.date,
     users.name,
-    users.pfp
+    users.pfp,
+    tagid
     FROM
     posts
     JOIN postrelation ON posts.postid = postrelation.postid
@@ -263,7 +265,8 @@ def getPosts():
         CASE
             WHEN replyrelation.steamid = %s THEN TRUE
             ELSE FALSE
-        END AS is_reply_creator
+        END AS is_reply_creator,
+        tagid
     FROM 
         posts
     JOIN 
@@ -306,6 +309,7 @@ def getPosts():
                 'votes': row[11],
                 'existing_vote_type': row[13],  # Vote type for the post
                 'is_creator': bool(row[17]),  # Boolean variable indicating if the steamID calling getPosts is the creator of each post
+                'tagid': row[19],
                 'replies': []
             }
             posts[postid] = post

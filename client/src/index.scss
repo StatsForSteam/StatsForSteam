@@ -5,7 +5,10 @@ $quaternary-color: #DFF6FF; //other text
 $delete-color: #b80600; //delete button
 $delete-hover-color: #770400; //delete button hover
 $secondary-hover-color: #202024; //cancel button hover
-$clickable-color: #47B5FF; //clickable text
+$clickable-color: #47B5FF; //clickable text and color for none on tags
+$tag1-color: #FFA500; // Tag type 1 color (orange)
+$tag2-color: #00FF7F; // Tag type 2 color (green)
+$tag3-color: #9370DB; // Tag type 3 color (purple)
 
 :root {
     --primary-color: #1C1C1C;

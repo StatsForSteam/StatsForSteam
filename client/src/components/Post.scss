@@ -26,5 +26,25 @@
     margin-left: 10px;  
 }
 
+.badge-tag{
+  background-color: $primary-color;
+  font-weight: 400;
+  padding-left: 9px;
+  padding-right: 9px;
+  border-radius: 20px;
 
+  &.id1{
+    color: $clickable-color;
+  }
+  &.id2{
+    color: $tag1-color;
+  }
+  &.id3{
+   color: $tag2-color;
+  }
+  &.id4{
+   color: $tag3-color;
+  }
+
+}
 

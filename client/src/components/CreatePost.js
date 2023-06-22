@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, FormControl } from 'react-bootstrap';
+import { Form, Button, FormControl, Dropdown, DropdownButton, Row, Col } from 'react-bootstrap';
 import '../index.scss';
 import './CreatePost.scss';
 
@@ -7,6 +7,8 @@ function CreatePost(props) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [tags] = useState(props.tags); // tags is an array of objects with id, name, and color properties from forums.js
+  const [tag, setTag] = useState(tags[0]); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,7 +25,8 @@ function CreatePost(props) {
         body: JSON.stringify({
           title,
           content,
-          appid: props.appid
+          appid: props.appid,
+          tagid: tag.id,
         }),
         credentials: 'include',
       });
@@ -33,6 +36,13 @@ function CreatePost(props) {
     }
   };
   
+  const handleTagSelect = (event) => {
+    const selectedTagName = event.target.textContent;
+    const selectedTag = tags.find(tag => tag.name === selectedTagName);
+    setTag(selectedTag);
+  };
+
+
   return (
     <div id="createpost-container">
       <Form autoComplete="off" className="createpost-form" onSubmit={handleSubmit}>
@@ -65,9 +75,26 @@ function CreatePost(props) {
             {isSubmitted && content && content.length > 255 && "Content should not exceed 255 characters."}
           </FormControl.Feedback>
         </Form.Group>
-        <Button type="submit" id="post-button">
-          Post
-        </Button>
+        
+      
+        <div className="d-flex align-items-center">
+          <Button type="submit" id="post-button">
+            Post
+          </Button>
+
+          <DropdownButton
+            drop="down-centered"
+            title={`Tag: ${tag.name}`}
+            className={`tag-dropdown ${tag.color}`}
+          >
+            {tags.map((tagItem) => (
+              <Dropdown.Item key={tagItem.id} type="button" onClick={handleTagSelect}>
+                {tagItem.name}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
+        </div>
+      
       </Form>
     </div>
   );

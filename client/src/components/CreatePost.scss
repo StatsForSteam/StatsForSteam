@@ -35,3 +35,78 @@
     transition: 0.3s ease-in-out;
     background-color: $secondary-color;
 }
+
+.tag-dropdown {
+    margin-left: 20px;
+    &.id1{
+        .btn-primary {
+            background-color: $primary-color !important;
+            color: $clickable-color !important;
+            &:hover {
+              background-color: $secondary-hover-color !important;
+            }
+          }
+    }
+
+    &.id2{
+        .btn-primary {
+            background-color: $primary-color !important;
+            color: $tag1-color !important;
+            &:hover {
+              background-color: $secondary-hover-color !important;
+            }
+          }
+    }
+
+    &.id3{
+        .btn-primary {
+            background-color: $primary-color !important;
+            color: $tag2-color !important;
+            &:hover {
+              background-color: $secondary-hover-color !important;
+            }
+          }
+    }
+
+    &.id4{
+        .btn-primary {
+            background-color: $primary-color !important;
+            color: $tag3-color !important;
+            &:hover {
+              background-color: $secondary-hover-color !important;
+            }
+          }
+    }
+
+    .dropdown-item {
+      background-color: $primary-color !important;
+      &:hover {
+        background-color: $secondary-hover-color !important;
+      }
+  
+      &:nth-child(1) {
+        color: $clickable-color !important;
+      }
+  
+      &:nth-child(2) {
+        color: $tag1-color !important;
+      }
+  
+      &:nth-child(3) {
+        color: $tag2-color !important;
+      }
+
+        &:nth-child(4) {
+            color: $tag3-color !important;
+        }
+    }
+  
+    .dropdown-menu {
+      background-color: $primary-color !important;
+      border: none !important;
+    }
+  }
+
+
+
+
