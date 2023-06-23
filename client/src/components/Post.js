@@ -140,7 +140,7 @@ function Post(props) {
      <div>
       <Card style={{ backgroundColor: 'var(--secondary-color)' }}>
         
-      {tag.name!= "None" ? <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)'}}>
+      {tag.name!= "None" ? <Card.Header as="div" style={{ backgroundColor: 'var(--secondary-color)', borderBottom:'none'}}>
           <div className="d-flex align-items-center justify-content-between">
             <div className={`badge-tag ${tag.color}`}>
             {tag.name}
