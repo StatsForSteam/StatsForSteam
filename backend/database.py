@@ -17,3 +17,11 @@ def getSteamID(authToken):
     mysql.connection.commit()
     cursor.close()
     return(SteamID)
+
+def getUserCount():
+    cursor = mysql.connection.cursor()
+    cursor.execute("select count(steamid) AS Users from users;")
+    userCount = cursor.fetchone()[0]
+    mysql.connection.commit()
+    cursor.close()
+    return(userCount)

@@ -201,7 +201,7 @@ const filteredPosts = posts.filter((post) => {
       {!showCreateMenu && <div className="card-container">
             <Row xs={1} md={1} lg={1} className="g-4">
               {newPostComponent}
-              {filteredPosts.map((post) => (
+              {filteredPosts.sort((a, b) => b.votes - a.votes).map((post) => (
                 <Post
                   key={post.postid}
                   postid={post.postid}

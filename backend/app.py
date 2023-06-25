@@ -1,5 +1,5 @@
 import OpenIDAuth, json, getData, forums, pytz, datetime
-from database import mysql
+from database import mysql, getUserCount
 from flask import Flask
 from flask_session import Session
 from flask_cors import CORS
@@ -31,9 +31,10 @@ mysql.init_app(app)
 
 @app.route('/')
 def versionCheck():
-	current_datetime_pst = datetime.datetime.now(pst)
-	connectionLaunchTime = current_datetime_pst.strftime("%d-%m-%Y, %H:%M:%S")
-	return(f'<h1>Stats For Steam Backend (v1.0.2)</h1>Server Connected: {connectionLaunchTime}<br>Server Initialized: &nbsp;{serverLaunchTime}<br>Server API Key: &nbsp;&nbsp;&nbsp;&nbsp;{SteamAPIJson["STEAMAPIKEY"]}')
+    userCount = getUserCount()
+    current_datetime_pst = datetime.datetime.now(pst)
+    connectionLaunchTime = current_datetime_pst.strftime("%d-%m-%Y, %H:%M:%S")
+    return(f'<h1>Stats For Steam Backend (v1.0.4)</h1>Server Connected: {connectionLaunchTime}<br>Server Initialized: &nbsp;{serverLaunchTime}<br>Server API Key: &nbsp;&nbsp;&nbsp;&nbsp;{SteamAPIJson["STEAMAPIKEY"][:2]}<br>Unique Logins: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{userCount}')
 
 app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
