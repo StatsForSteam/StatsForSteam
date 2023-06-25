@@ -8,7 +8,6 @@ function Loading() {
         <Spinner style={{color: 'var(--tertiary-color)'}} animation="border" role="status"/> 
         </div>  
     );
+}
 
-    }
-
- export default Loading;
+export default Loading;

@@ -23,6 +23,12 @@ def logout():
     session.pop('SteamID')
     return dumps(True)
 
+def checkSession():
+    if 'SteamID' in session:
+        return make_response('', 200)
+    else:
+        return make_response('', 401)
+
 def authorize():
     received_nonce = request.args.get('nonce')
     stored_nonce = session.get('nonce')

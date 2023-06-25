@@ -34,12 +34,13 @@ def versionCheck():
     userCount = getUserCount()
     current_datetime_pst = datetime.datetime.now(pst)
     connectionLaunchTime = current_datetime_pst.strftime("%d-%m-%Y, %H:%M:%S")
-    return(f'<h1>Stats For Steam Backend (v1.0.4)</h1>Server Connected: {connectionLaunchTime}<br>Server Initialized: &nbsp;{serverLaunchTime}<br>Server API Key: &nbsp;&nbsp;&nbsp;&nbsp;{SteamAPIJson["STEAMAPIKEY"][:2]}<br>Unique Logins: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{userCount}')
+    return(f'<h1>Stats For Steam Backend (v1.0.5)</h1>Server Connected: {connectionLaunchTime}<br>Server Initialized: &nbsp;{serverLaunchTime}<br>Server API Key: &nbsp;&nbsp;&nbsp;&nbsp;{SteamAPIJson["STEAMAPIKEY"][:2]}<br>Unique Logins: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{userCount}')
 
 app.add_url_rule('/api/userAuthentication', view_func=OpenIDAuth.userAuthentication)
 app.add_url_rule('/api/login', view_func=OpenIDAuth.login)
 app.add_url_rule('/api/logout', view_func=OpenIDAuth.logout)
 app.add_url_rule('/api/authorize', view_func=OpenIDAuth.authorize)
+app.add_url_rule('/api/checkSession', view_func=OpenIDAuth.checkSession)
 app.add_url_rule('/api/getUserGames', view_func=getData.getUserGames)
 app.add_url_rule('/api/getAchievements', view_func=getData.getAchievements, methods=["POST"])
 app.add_url_rule('/api/getDashboard', view_func=getData.getDashboard, methods=["POST"])
@@ -52,6 +53,7 @@ app.add_url_rule('/api/updateVote', view_func=forums.updateVote, methods=["POST"
 app.add_url_rule('/api/deleteVote', view_func=forums.deleteVote, methods=["POST"])
 app.add_url_rule('/api/deletePost', view_func=forums.deletePost, methods=["POST"])
 app.add_url_rule('/api/deleteReply', view_func=forums.deleteReply, methods=["POST"])
+
 
 if __name__ == "__main__":
     app.run(debug=True)
