@@ -1,6 +1,7 @@
 <img src="./client/src/images/SFSLogo.png" width=180 align="right" />   
 
 # Stats For Steam
+> The best place to find steam achievements
 
 Stats For Steam provides Steam users with the ability to view their achievements and track their progress. Additionally, the platform allows users to engage in discussions related to these achievements.
 
